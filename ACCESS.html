@@ -1820,6 +1820,11 @@
                             style="background: var(--danger); border-color: var(--danger); color: #fff; box-shadow: 0 0 15px rgba(244, 63, 94, 0.4); padding: 14px; display:flex; align-items:center; justify-content:center; gap:8px;"
                             onclick="executeBan()"><i class="fas fa-biohazard"></i> CRASH DEVICE</button>
                     </div>
+                    <div style="display:flex; justify-content: flex-end; margin-top: 10px;">
+                        <button class="btn-action-sleek hover-pulse elastic-click" style="--c: var(--danger); padding: 8px 12px; font-size: 0.75rem;" onclick="clearAllCrashes()">
+                            <i class="fas fa-trash-alt"></i> CLEAR ALL CRASHES
+                        </button>
+                    </div>
                 </div>
 
                 <div id="list-bans" style="display:flex; flex-direction:column; gap:10px;"></div>
@@ -3088,6 +3093,17 @@
                     delete DB.dp_dialog_controller.security.crash_list[hwid];
                     pushToFirebase();
                     showToast("Device Removed", "var(--success)", "fa-check-circle");
+                    renderBans();
+                }
+            }
+        }
+
+        function clearAllCrashes() {
+            if (confirm("Are you sure you want to clear ALL crashed HWIDs? This action cannot be undone.")) {
+                if (DB.dp_dialog_controller.security.crash_list) {
+                    DB.dp_dialog_controller.security.crash_list = {};
+                    pushToFirebase();
+                    showToast("All Crashes Cleared", "var(--success)", "fa-check-circle");
                     renderBans();
                 }
             }
