@@ -75,6 +75,34 @@
             transition: --theme-color 0.8s ease, --theme-glow 0.8s ease, --theme-faded 0.8s ease;
         }
 
+        body::before {
+            content: "";
+            position: fixed;
+            top: 0; left: 0; width: 100vw; height: 100vh;
+            pointer-events: none;
+            z-index: 9999;
+            background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noiseFilter'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.7' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noiseFilter)'/%3E%3C/svg%3E");
+            opacity: 0.05;
+        }
+
+        .cyber-grid {
+            position: fixed;
+            bottom: -50%; left: -50%; width: 200%; height: 200%;
+            background-image: 
+                linear-gradient(rgba(255, 255, 255, 0.04) 1px, transparent 1px),
+                linear-gradient(90deg, rgba(255, 255, 255, 0.04) 1px, transparent 1px);
+            background-size: 40px 40px;
+            z-index: -4;
+            pointer-events: none;
+            transform: perspective(600px) rotateX(60deg) translateY(0);
+            animation: gridMove 15s linear infinite;
+        }
+        
+        @keyframes gridMove {
+            0% { transform: perspective(600px) rotateX(60deg) translateY(0); }
+            100% { transform: perspective(600px) rotateX(60deg) translateY(40px); }
+        }
+
         /* 🚀 PREMIUM ANIMATION EFFECTS */
         .hover-lift {
             transition: transform 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275), box-shadow 0.3s;
@@ -96,17 +124,16 @@
 
         .hover-pulse:hover {
             animation: pulse 1.5s infinite;
+            box-shadow: 0 0 20px var(--theme-glow);
         }
 
         @keyframes pulse {
             0% {
                 transform: scale(1);
             }
-
             50% {
-                transform: scale(1.05);
+                transform: scale(1.03);
             }
-
             100% {
                 transform: scale(1);
             }
@@ -361,14 +388,28 @@
 
         /* --- 💎 DYNAMIC GLASS COMPONENTS --- */
         .glass-card {
-            background: var(--glass-bg);
+            background: linear-gradient(135deg, rgba(20, 20, 25, 0.6) 0%, rgba(10, 10, 15, 0.8) 100%);
             backdrop-filter: var(--glass-blur);
             -webkit-backdrop-filter: var(--glass-blur);
             border: 1px solid var(--glass-border);
-            box-shadow: var(--glass-shadow), var(--glass-inner);
+            box-shadow: 0 15px 35px rgba(0,0,0,0.8), inset 0 1px 0 rgba(255,255,255,0.1), inset 0 -1px 0 rgba(255,255,255,0.02);
             border-radius: var(--radius-lg);
             position: relative;
             transition: border-color 0.4s ease, box-shadow 0.4s ease, transform 0.4s cubic-bezier(0.34, 1.56, 0.64, 1);
+            overflow: hidden;
+        }
+        
+        .glass-card::before {
+            content: '';
+            position: absolute;
+            top: 0; left: -100%; width: 50%; height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255,255,255,0.05), transparent);
+            transform: skewX(-20deg);
+            transition: 0.5s;
+        }
+        
+        .glass-card:hover::before {
+            left: 150%;
         }
 
         .glass-input {
@@ -390,32 +431,77 @@
         }
 
         .btn-primary {
-            background: transparent;
+            background: linear-gradient(45deg, rgba(255,255,255,0.02), rgba(255,255,255,0.08));
             color: var(--text-main);
             border: 1px solid var(--theme-color);
             border-radius: var(--radius-md);
             font-weight: 800;
             cursor: pointer;
-            transition: all 0.2s;
-            box-shadow: inset 0 0 10px var(--theme-faded);
+            transition: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
+            box-shadow: inset 0 0 15px var(--theme-faded), 0 5px 15px rgba(0,0,0,0.4);
             text-align: center;
             text-transform: uppercase;
             letter-spacing: 1px;
+            position: relative;
+            overflow: hidden;
+            z-index: 1;
+        }
+
+        .btn-primary::before {
+            content: '';
+            position: absolute;
+            top: 0; left: 0; width: 100%; height: 100%;
+            background: var(--theme-color);
+            z-index: -1;
+            transform: scaleX(0);
+            transform-origin: right;
+            transition: transform 0.4s cubic-bezier(0.25, 0.8, 0.25, 1);
+        }
+
+        .btn-primary:hover::before {
+            transform: scaleX(1);
+            transform-origin: left;
+        }
+
+        .btn-primary:hover {
+            color: #fff;
+            box-shadow: 0 10px 25px var(--theme-glow);
+            border-color: transparent;
         }
 
         .btn-primary:active:not(:disabled) {
             transform: scale(0.95);
-            background: var(--theme-color);
-            color: #000;
-            box-shadow: 0 0 20px var(--theme-glow);
         }
 
         .btn-primary:disabled {
             opacity: 0.5;
             cursor: not-allowed;
+            transform: none !important;
         }
 
         /* --- EPIC LOGIN SCREEN UI --- */
+        .cyber-spinner {
+            width: 20px;
+            height: 20px;
+            border: 2px solid rgba(255,255,255,0.1);
+            border-top: 2px solid #fff;
+            border-radius: 50%;
+            animation: spin 0.8s linear infinite;
+            display: inline-block;
+            vertical-align: middle;
+        }
+
+        @keyframes spin { 100% { transform: rotate(360deg); } }
+
+        .flash-glitch {
+            animation: screenFlash 0.5s ease-out forwards;
+        }
+
+        @keyframes screenFlash {
+            0% { filter: invert(1) hue-rotate(180deg) brightness(2); transform: scale(1.02); }
+            100% { filter: invert(0) hue-rotate(0deg) brightness(1); transform: scale(1); }
+        }
+
         .login-wrap {
             width: 100%;
             max-width: 360px;
@@ -500,6 +586,27 @@
             gap: 15px;
             border-radius: 18px;
             width: 100%;
+            position: relative;
+            background: rgba(10, 10, 15, 0.6);
+            backdrop-filter: var(--glass-blur);
+        }
+
+        .login-box::before {
+            content: '';
+            position: absolute;
+            inset: -1px;
+            border-radius: 19px;
+            background: linear-gradient(45deg, transparent, var(--theme-color), transparent);
+            background-size: 200% 200%;
+            animation: traceGlow 3s linear infinite;
+            z-index: -1;
+            opacity: 0.5;
+        }
+
+        @keyframes traceGlow {
+            0% { background-position: 0% 50%; }
+            50% { background-position: 100% 50%; }
+            100% { background-position: 0% 50%; }
         }
 
         .input-wrapper {
@@ -761,6 +868,17 @@
         }
 
         /* --- 💎 ULTRA COMPACT SLEEK CARDS --- */
+        @keyframes cardReveal {
+            from {
+                opacity: 0;
+                transform: perspective(600px) rotateX(15deg) translateY(20px);
+            }
+            to {
+                opacity: 1;
+                transform: perspective(600px) rotateX(0deg) translateY(0);
+            }
+        }
+
         .data-card {
             padding: 8px 12px;
             margin-bottom: 6px;
@@ -770,6 +888,7 @@
             border: 1px solid rgba(255, 255, 255, 0.05);
             border-radius: 14px;
             transition: 0.2s;
+            animation: cardReveal 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275) both;
         }
 
         .data-card:active {
@@ -829,17 +948,23 @@
         /* Card Themes */
         .card-active {
             border-color: rgba(255, 255, 255, 0.06);
+            animation: activeGlow 3s infinite alternate;
+        }
+        
+        @keyframes activeGlow {
+            0% { box-shadow: inset 0 0 10px rgba(16, 185, 129, 0.05); border-color: rgba(16, 185, 129, 0.1); }
+            100% { box-shadow: inset 0 0 20px rgba(16, 185, 129, 0.2), 0 0 10px rgba(16, 185, 129, 0.1); border-color: rgba(16, 185, 129, 0.4); }
         }
 
         .card-active .badge-status {
-            border-color: var(--theme-color);
-            color: var(--theme-color);
-            background: var(--theme-faded);
+            border-color: var(--success);
+            color: var(--success);
+            background: rgba(16, 185, 129, 0.1);
         }
 
         .card-active .status-dot {
-            background: var(--theme-color);
-            box-shadow: 0 0 5px var(--theme-color);
+            background: var(--success);
+            box-shadow: 0 0 8px var(--success);
         }
 
         .card-expired {
@@ -864,22 +989,28 @@
 
         .card-banned {
             border-color: rgba(244, 63, 94, 0.2);
+            animation: bannedGlow 2.5s infinite alternate;
+        }
+
+        @keyframes bannedGlow {
+            0% { box-shadow: inset 0 0 10px rgba(244, 63, 94, 0.05); }
+            100% { box-shadow: inset 0 0 20px rgba(244, 63, 94, 0.2), 0 0 15px rgba(244, 63, 94, 0.2); border-color: rgba(244, 63, 94, 0.5); }
         }
 
         .card-banned .badge-status {
             border-color: var(--danger);
             color: var(--danger);
-            background: rgba(244, 63, 94, 0.1);
+            background: rgba(244, 63, 94, 0.15);
         }
 
         .card-banned .status-dot {
             background: var(--danger);
-            box-shadow: 0 0 5px var(--danger);
+            box-shadow: 0 0 8px var(--danger);
         }
 
         .card-banned .row i {
             color: var(--danger);
-            filter: none;
+            filter: drop-shadow(0 0 5px var(--danger));
         }
 
         .copy-text {
@@ -2275,7 +2406,7 @@
         async function login() {
             const loginBtn = document.getElementById('btn-login');
             if (loginBtn) {
-                loginBtn.innerText = "AUTHENTICATING...";
+                loginBtn.innerHTML = "<div class='cyber-spinner'></div>";
                 loginBtn.disabled = true;
             }
 
@@ -2341,6 +2472,9 @@
                 await cleanDatabase(); // Run the 1-Day Auto-Delete Engine
 
                 switchView('screen-dashboard');
+                document.body.classList.add('flash-glitch');
+                setTimeout(() => document.body.classList.remove('flash-glitch'), 500);
+                
                 refreshUI();
                 showToast("Access Granted", "var(--success)", "fa-check-circle");
 
