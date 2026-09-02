@@ -397,6 +397,8 @@
             position: relative;
             transition: border-color 0.4s ease, box-shadow 0.4s ease, transform 0.4s cubic-bezier(0.34, 1.56, 0.64, 1);
             overflow: hidden;
+            will-change: transform;
+            transform: translateZ(0);
         }
         
         .glass-card::before {
@@ -1870,28 +1872,35 @@
             </div>
 
             <div class="stats-dashboard"
-                style="display: grid; grid-template-columns: 1fr 1fr; gap: 12px; margin-bottom: 20px;">
+                style="display: grid; grid-template-columns: repeat(3, 1fr); gap: 10px; margin-bottom: 20px;">
                 <div class="glass-card stat-card"
-                    style="padding: 10px; display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 4px; border-radius: 12px; border: 1px solid rgba(255,255,255,0.05); background: var(--theme-faded); box-shadow: 0 5px 15px rgba(0,0,0,0.5);">
+                    style="padding: 10px 5px; display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 4px; border-radius: 12px; border: 1px solid rgba(255,255,255,0.05); background: var(--theme-faded); box-shadow: 0 5px 15px rgba(0,0,0,0.5);">
                     <i class="fas fa-users"
-                        style="font-size: 1.5rem; color: var(--theme-color); filter: drop-shadow(0 0 10px var(--theme-glow)); transition: color 0.5s;"></i>
+                        style="font-size: 1.2rem; color: var(--theme-color); filter: drop-shadow(0 0 10px var(--theme-glow)); transition: color 0.5s;"></i>
                     <h2 id="stat-users"
-                        style="font-size: 1.8rem; font-weight: 900; color: #fff; margin: 0; line-height: 1;">0</h2>
+                        style="font-size: 1.4rem; font-weight: 900; color: #fff; margin: 0; line-height: 1;">0</h2>
                     <span
-                        style="color: #fff; font-size: 0.6rem; font-weight: 800; letter-spacing: 1px; text-transform: uppercase;">TOTAL
-                        Keys
-
-                    </span>
+                        style="color: #fff; font-size: 0.55rem; font-weight: 800; letter-spacing: 1px; text-transform: uppercase; text-align: center;">TOTAL
+                        KEYS</span>
                 </div>
                 <div class="glass-card stat-card"
-                    style="padding: 10px; display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 4px; border-radius: 12px; border: 1px solid rgba(255,255,255,0.05); background: var(--theme-faded); box-shadow: 0 5px 15px rgba(0,0,0,0.5);">
+                    style="padding: 10px 5px; display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 4px; border-radius: 12px; border: 1px solid rgba(255,255,255,0.05); background: var(--theme-faded); box-shadow: 0 5px 15px rgba(0,0,0,0.5);">
                     <i class="fas fa-mobile-alt"
-                        style="font-size: 1.5rem; color: var(--theme-color); filter: drop-shadow(0 0 10px var(--theme-glow)); transition: color 0.5s;"></i>
+                        style="font-size: 1.2rem; color: var(--theme-color); filter: drop-shadow(0 0 10px var(--theme-glow)); transition: color 0.5s;"></i>
                     <h2 id="stat-devices"
-                        style="font-size: 1.8rem; font-weight: 900; color: #fff; margin: 0; line-height: 1;">0</h2>
+                        style="font-size: 1.4rem; font-weight: 900; color: #fff; margin: 0; line-height: 1;">0</h2>
                     <span
-                        style="color: #fff; font-size: 0.6rem; font-weight: 800; letter-spacing: 1px; text-transform: uppercase;">BOUND
-                        DEVICES</span>
+                        style="color: #fff; font-size: 0.55rem; font-weight: 800; letter-spacing: 1px; text-transform: uppercase; text-align: center;">BOUND
+                        DEVS</span>
+                </div>
+                <div class="glass-card stat-card"
+                    style="padding: 10px 5px; display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 4px; border-radius: 12px; border: 1px solid rgba(245, 158, 11, 0.2); background: rgba(245, 158, 11, 0.1); box-shadow: 0 5px 15px rgba(0,0,0,0.5);">
+                    <i class="fas fa-hourglass-end"
+                        style="font-size: 1.2rem; color: var(--warning); filter: drop-shadow(0 0 10px rgba(245,158,11,0.5)); transition: color 0.5s;"></i>
+                    <h2 id="stat-expired"
+                        style="font-size: 1.4rem; font-weight: 900; color: #fff; margin: 0; line-height: 1;">0</h2>
+                    <span
+                        style="color: #fff; font-size: 0.55rem; font-weight: 800; letter-spacing: 1px; text-transform: uppercase; text-align: center;">EXPIRED</span>
                 </div>
             </div>
 
@@ -2719,6 +2728,7 @@
         function updateStats() {
             let totalUsers = 0;
             let totalDevices = 0;
+            let totalExpired = 0;
             const keysObj = (DB.dp_dialog_controller.security && DB.dp_dialog_controller.security.authorized_hwids) ? DB.dp_dialog_controller.security.authorized_hwids : {};
 
             Object.values(keysObj).forEach(data => {
@@ -2726,12 +2736,24 @@
                 if (data.linked_devices && typeof data.linked_devices === 'object') {
                     totalDevices += Object.keys(data.linked_devices).length;
                 }
+                
+                let isExpired = false;
+                if (data.expiry_date && data.expiry_date !== "2099-12-31" && data.expiry_date !== "Unknown") {
+                    let timeStr = data.expiry_time || "23:59:59";
+                    if (timeStr.length === 5) timeStr += ":00";
+                    let expDate = new Date(data.expiry_date + "T" + timeStr);
+                    let now = new Date();
+                    if (!isNaN(expDate) && expDate < now) isExpired = true;
+                }
+                if (isExpired) totalExpired++;
             });
 
             const uEl = document.getElementById('stat-users');
             const dEl = document.getElementById('stat-devices');
+            const eEl = document.getElementById('stat-expired');
             if (uEl) uEl.innerText = totalUsers;
             if (dEl) dEl.innerText = totalDevices;
+            if (eEl) eEl.innerText = totalExpired;
         }
 
         function renderKeys() {
