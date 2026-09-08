@@ -78,7 +78,10 @@
         body::before {
             content: "";
             position: fixed;
-            top: 0; left: 0; width: 100vw; height: 100vh;
+            top: 0;
+            left: 0;
+            width: 100vw;
+            height: 100vh;
             pointer-events: none;
             z-index: 9999;
             background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noiseFilter'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.7' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noiseFilter)'/%3E%3C/svg%3E");
@@ -87,8 +90,11 @@
 
         .cyber-grid {
             position: fixed;
-            bottom: -50%; left: -50%; width: 200%; height: 200%;
-            background-image: 
+            bottom: -50%;
+            left: -50%;
+            width: 200%;
+            height: 200%;
+            background-image:
                 linear-gradient(rgba(255, 255, 255, 0.04) 1px, transparent 1px),
                 linear-gradient(90deg, rgba(255, 255, 255, 0.04) 1px, transparent 1px);
             background-size: 40px 40px;
@@ -97,10 +103,15 @@
             transform: perspective(600px) rotateX(60deg) translateY(0);
             animation: gridMove 15s linear infinite;
         }
-        
+
         @keyframes gridMove {
-            0% { transform: perspective(600px) rotateX(60deg) translateY(0); }
-            100% { transform: perspective(600px) rotateX(60deg) translateY(40px); }
+            0% {
+                transform: perspective(600px) rotateX(60deg) translateY(0);
+            }
+
+            100% {
+                transform: perspective(600px) rotateX(60deg) translateY(40px);
+            }
         }
 
         /* 🚀 PREMIUM ANIMATION EFFECTS */
@@ -131,9 +142,11 @@
             0% {
                 transform: scale(1);
             }
+
             50% {
                 transform: scale(1.03);
             }
+
             100% {
                 transform: scale(1);
             }
@@ -392,7 +405,7 @@
             backdrop-filter: var(--glass-blur);
             -webkit-backdrop-filter: var(--glass-blur);
             border: 1px solid var(--glass-border);
-            box-shadow: 0 15px 35px rgba(0,0,0,0.8), inset 0 1px 0 rgba(255,255,255,0.1), inset 0 -1px 0 rgba(255,255,255,0.02);
+            box-shadow: 0 15px 35px rgba(0, 0, 0, 0.8), inset 0 1px 0 rgba(255, 255, 255, 0.1), inset 0 -1px 0 rgba(255, 255, 255, 0.02);
             border-radius: var(--radius-lg);
             position: relative;
             transition: border-color 0.4s ease, box-shadow 0.4s ease, transform 0.4s cubic-bezier(0.34, 1.56, 0.64, 1);
@@ -400,16 +413,19 @@
             will-change: transform;
             transform: translateZ(0);
         }
-        
+
         .glass-card::before {
             content: '';
             position: absolute;
-            top: 0; left: -100%; width: 50%; height: 100%;
-            background: linear-gradient(90deg, transparent, rgba(255,255,255,0.05), transparent);
+            top: 0;
+            left: -100%;
+            width: 50%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.05), transparent);
             transform: skewX(-20deg);
             transition: 0.5s;
         }
-        
+
         .glass-card:hover::before {
             left: 150%;
         }
@@ -433,14 +449,14 @@
         }
 
         .btn-primary {
-            background: linear-gradient(45deg, rgba(255,255,255,0.02), rgba(255,255,255,0.08));
+            background: linear-gradient(45deg, rgba(255, 255, 255, 0.02), rgba(255, 255, 255, 0.08));
             color: var(--text-main);
             border: 1px solid var(--theme-color);
             border-radius: var(--radius-md);
             font-weight: 800;
             cursor: pointer;
             transition: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
-            box-shadow: inset 0 0 15px var(--theme-faded), 0 5px 15px rgba(0,0,0,0.4);
+            box-shadow: inset 0 0 15px var(--theme-faded), 0 5px 15px rgba(0, 0, 0, 0.4);
             text-align: center;
             text-transform: uppercase;
             letter-spacing: 1px;
@@ -452,7 +468,10 @@
         .btn-primary::before {
             content: '';
             position: absolute;
-            top: 0; left: 0; width: 100%; height: 100%;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
             background: var(--theme-color);
             z-index: -1;
             transform: scaleX(0);
@@ -485,7 +504,7 @@
         .cyber-spinner {
             width: 20px;
             height: 20px;
-            border: 2px solid rgba(255,255,255,0.1);
+            border: 2px solid rgba(255, 255, 255, 0.1);
             border-top: 2px solid #fff;
             border-radius: 50%;
             animation: spin 0.8s linear infinite;
@@ -493,15 +512,26 @@
             vertical-align: middle;
         }
 
-        @keyframes spin { 100% { transform: rotate(360deg); } }
+        @keyframes spin {
+            100% {
+                transform: rotate(360deg);
+            }
+        }
 
         .flash-glitch {
             animation: screenFlash 0.5s ease-out forwards;
         }
 
         @keyframes screenFlash {
-            0% { filter: invert(1) hue-rotate(180deg) brightness(2); transform: scale(1.02); }
-            100% { filter: invert(0) hue-rotate(0deg) brightness(1); transform: scale(1); }
+            0% {
+                filter: invert(1) hue-rotate(180deg) brightness(2);
+                transform: scale(1.02);
+            }
+
+            100% {
+                filter: invert(0) hue-rotate(0deg) brightness(1);
+                transform: scale(1);
+            }
         }
 
         .login-wrap {
@@ -606,9 +636,17 @@
         }
 
         @keyframes traceGlow {
-            0% { background-position: 0% 50%; }
-            50% { background-position: 100% 50%; }
-            100% { background-position: 0% 50%; }
+            0% {
+                background-position: 0% 50%;
+            }
+
+            50% {
+                background-position: 100% 50%;
+            }
+
+            100% {
+                background-position: 0% 50%;
+            }
         }
 
         .input-wrapper {
@@ -875,6 +913,7 @@
                 opacity: 0;
                 transform: perspective(600px) rotateX(15deg) translateY(20px);
             }
+
             to {
                 opacity: 1;
                 transform: perspective(600px) rotateX(0deg) translateY(0);
@@ -954,10 +993,17 @@
             border-color: rgba(255, 255, 255, 0.06);
             animation: activeGlow 3s infinite alternate;
         }
-        
+
         @keyframes activeGlow {
-            0% { box-shadow: inset 0 0 10px rgba(16, 185, 129, 0.05); border-color: rgba(16, 185, 129, 0.1); }
-            100% { box-shadow: inset 0 0 20px rgba(16, 185, 129, 0.2), 0 0 10px rgba(16, 185, 129, 0.1); border-color: rgba(16, 185, 129, 0.4); }
+            0% {
+                box-shadow: inset 0 0 10px rgba(16, 185, 129, 0.05);
+                border-color: rgba(16, 185, 129, 0.1);
+            }
+
+            100% {
+                box-shadow: inset 0 0 20px rgba(16, 185, 129, 0.2), 0 0 10px rgba(16, 185, 129, 0.1);
+                border-color: rgba(16, 185, 129, 0.4);
+            }
         }
 
         .card-active .badge-status {
@@ -997,8 +1043,14 @@
         }
 
         @keyframes bannedGlow {
-            0% { box-shadow: inset 0 0 10px rgba(244, 63, 94, 0.05); }
-            100% { box-shadow: inset 0 0 20px rgba(244, 63, 94, 0.2), 0 0 15px rgba(244, 63, 94, 0.2); border-color: rgba(244, 63, 94, 0.5); }
+            0% {
+                box-shadow: inset 0 0 10px rgba(244, 63, 94, 0.05);
+            }
+
+            100% {
+                box-shadow: inset 0 0 20px rgba(244, 63, 94, 0.2), 0 0 15px rgba(244, 63, 94, 0.2);
+                border-color: rgba(244, 63, 94, 0.5);
+            }
         }
 
         .card-banned .badge-status {
@@ -1811,9 +1863,9 @@
                             ALPHA<br>Login System</h1>
                         <div style="display:flex; gap: 6px; margin-top: 6px;">
                             <span
-                                style="background: rgba(255,255,255,0.05); padding: 3px 6px; border-radius: 8px; font-size: 0.55rem; color: #aaa; font-weight: 800; border: 1px solid rgba(255,255,255,0.05);">V.3</span>
+                                style="background: rgba(255,255,255,0.05); padding: 3px 6px; border-radius: 8px; font-size: 0.55rem; color: #aaa; font-weight: 800; border: 1px solid rgba(255,255,255,0.05);">V.8</span>
                             <span
-                                style="background: rgba(255,255,255,0.05); padding: 3px 6px; border-radius: 8px; font-size: 0.55rem; color: #aaa; font-weight: 800; border: 1px solid rgba(255,255,255,0.05);">Testing</span>
+                                style="background: rgba(255,255,255,0.05); padding: 3px 6px; border-radius: 8px; font-size: 0.55rem; color: #aaa; font-weight: 800; border: 1px solid rgba(255,255,255,0.05);">Final</span>
                         </div>
                     </div>
                     <div
@@ -1871,7 +1923,8 @@
                         <p
                             style="color: var(--theme-color); font-weight: 800; font-size: 0.75rem; text-transform: uppercase; letter-spacing: 2px; transition: color 1s ease; margin: 0;">
                             LIVE DATABASE SYNC</p>
-                        <button onclick="disconnectSession()" class="btn-action-sleek hover-pulse elastic-click" style="--c: var(--danger); padding: 4px 10px; font-size: 0.65rem; background: rgba(244, 63, 94, 0.1); border-color: rgba(244, 63, 94, 0.3);">
+                        <button onclick="disconnectSession()" class="btn-action-sleek hover-pulse elastic-click"
+                            style="--c: var(--danger); padding: 4px 10px; font-size: 0.65rem; background: rgba(244, 63, 94, 0.1); border-color: rgba(244, 63, 94, 0.3);">
                             <i class="fas fa-power-off"></i> DISCONNECT
                         </button>
                     </div>
@@ -1937,10 +1990,14 @@
                 </div>
 
                 <div style="display: flex; gap: 10px; margin-bottom: 15px; flex-wrap: wrap;">
-                    <button class="btn-action-sleek hover-pulse elastic-click" style="--c: var(--danger); padding: 8px 12px; font-size: 0.75rem; flex: 1;" onclick="deleteUnusedKeys()">
+                    <button class="btn-action-sleek hover-pulse elastic-click"
+                        style="--c: var(--danger); padding: 8px 12px; font-size: 0.75rem; flex: 1;"
+                        onclick="deleteUnusedKeys()">
                         <i class="fas fa-trash-alt"></i> DELETE UNUSED
                     </button>
-                    <button class="btn-action-sleek hover-pulse elastic-click" style="--c: var(--danger); padding: 8px 12px; font-size: 0.75rem; flex: 1;" onclick="deleteExpiredKeys()">
+                    <button class="btn-action-sleek hover-pulse elastic-click"
+                        style="--c: var(--danger); padding: 8px 12px; font-size: 0.75rem; flex: 1;"
+                        onclick="deleteExpiredKeys()">
                         <i class="fas fa-trash-alt"></i> DELETE EXPIRED
                     </button>
                 </div>
@@ -1971,7 +2028,9 @@
                             onclick="executeBan()"><i class="fas fa-biohazard"></i> CRASH DEVICE</button>
                     </div>
                     <div style="display:flex; justify-content: flex-end; margin-top: 10px;">
-                        <button class="btn-action-sleek hover-pulse elastic-click" style="--c: var(--danger); padding: 8px 12px; font-size: 0.75rem;" onclick="clearAllCrashes()">
+                        <button class="btn-action-sleek hover-pulse elastic-click"
+                            style="--c: var(--danger); padding: 8px 12px; font-size: 0.75rem;"
+                            onclick="clearAllCrashes()">
                             <i class="fas fa-trash-alt"></i> CLEAR ALL CRASHES
                         </button>
                     </div>
@@ -2340,9 +2399,9 @@
             if (!savedLogins.find(l => l.url === urlInput)) {
                 const sessionName = prompt("Enter a name for this session:");
                 if (sessionName === null) return; // User cancelled
-                
-                savedLogins.push({ 
-                    url: urlInput, 
+
+                savedLogins.push({
+                    url: urlInput,
                     secret: secret,
                     name: sessionName.trim() || urlInput.replace('https://', '').replace('.firebaseio.com', '')
                 });
@@ -2538,7 +2597,7 @@
                 switchView('screen-dashboard');
                 document.body.classList.add('flash-glitch');
                 setTimeout(() => document.body.classList.remove('flash-glitch'), 500);
-                
+
                 refreshUI();
                 showToast("Access Granted", "var(--success)", "fa-check-circle");
 
@@ -2590,7 +2649,7 @@
                 const res = await fetch(`${FIREBASE_URL}/.json?auth=${DB_SECRET}`);
                 if (!res.ok) throw new Error("Sync Failed");
                 let data = await res.json();
-                
+
                 const dataStr = JSON.stringify(data);
                 if (silent && window._lastSyncStr === dataStr) return;
                 window._lastSyncStr = dataStr;
@@ -2693,26 +2752,26 @@
         function syncPendingKey(keyStr) {
             const data = DB.dp_dialog_controller.security.authorized_hwids[keyStr];
             if (!data) return;
-            
+
             let days = data.duration_days;
             if (!days || days <= 0) return;
 
             let expDate = new Date(Date.now() + (days * 24 * 60 * 60 * 1000));
-            
+
             // Format strictly as YYYY-MM-DD
             let year = expDate.getFullYear();
             let month = String(expDate.getMonth() + 1).padStart(2, '0');
             let day = String(expDate.getDate()).padStart(2, '0');
-            
+
             // Format strictly as HH:mm:ss
             let hours = String(expDate.getHours()).padStart(2, '0');
             let minutes = String(expDate.getMinutes()).padStart(2, '0');
             let seconds = String(expDate.getSeconds()).padStart(2, '0');
-            
+
             data.expiry_date = `${year}-${month}-${day}`;
             data.expiry_time = `${hours}:${minutes}:${seconds}`;
             data.duration_days = 0;
-            
+
             pushToFirebase();
             showToast("Key Synced Successfully!", "var(--success)", "fa-sync");
             renderKeys();
@@ -2750,7 +2809,7 @@
             let needsPush = false;
             let count = 0;
             const keysObj = (DB.dp_dialog_controller.security && DB.dp_dialog_controller.security.authorized_hwids) ? DB.dp_dialog_controller.security.authorized_hwids : {};
-            
+
             Object.entries(keysObj).forEach(([keyStr, data]) => {
                 let days = data.duration_days;
                 let registeredDevices = [];
@@ -2760,19 +2819,19 @@
 
                 if (days > 0 && registeredDevices.length > 0) {
                     let expDate = new Date(Date.now() + (days * 24 * 60 * 60 * 1000));
-                    
+
                     let year = expDate.getFullYear();
                     let month = String(expDate.getMonth() + 1).padStart(2, '0');
                     let day = String(expDate.getDate()).padStart(2, '0');
-                    
+
                     let hours = String(expDate.getHours()).padStart(2, '0');
                     let minutes = String(expDate.getMinutes()).padStart(2, '0');
                     let seconds = String(expDate.getSeconds()).padStart(2, '0');
-                    
+
                     data.expiry_date = `${year}-${month}-${day}`;
                     data.expiry_time = `${hours}:${minutes}:${seconds}`;
                     data.duration_days = 0;
-                    
+
                     needsPush = true;
                     count++;
                 }
@@ -2805,7 +2864,7 @@
                 if (data.linked_devices && typeof data.linked_devices === 'object') {
                     totalDevices += Object.keys(data.linked_devices).length;
                 }
-                
+
                 let isExpired = false;
                 if (data.expiry_date && data.expiry_date !== "2099-12-31" && data.expiry_date !== "Unknown") {
                     let timeStr = data.expiry_time || "23:59:59";
@@ -3062,9 +3121,9 @@
             document.getElementById('mk-hwid').value = "";
             document.getElementById('mk-duration').value = "30";
             const now = new Date();
-            const y = now.getFullYear(); const m = String(now.getMonth()+1).padStart(2,'0'); const d = String(now.getDate()).padStart(2,'0');
-            const h = String(now.getHours()).padStart(2,'0'); const min = String(now.getMinutes()).padStart(2,'0');
-            
+            const y = now.getFullYear(); const m = String(now.getMonth() + 1).padStart(2, '0'); const d = String(now.getDate()).padStart(2, '0');
+            const h = String(now.getHours()).padStart(2, '0'); const min = String(now.getMinutes()).padStart(2, '0');
+
             document.getElementById('mk-expiry').value = `${y}-${m}-${d}`;
             document.getElementById('mk-expiry-time').value = `${h}:${min}`;
 
@@ -3144,7 +3203,7 @@
                 pushToFirebase();
                 closeModal('m-key');
                 refreshUI();
-                
+
                 if (!EDITING_KEY) {
                     copyToClipboard(keyStr, null);
                     showToast("Key Generated & Copied", "var(--success)", "fa-copy");
