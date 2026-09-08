@@ -891,6 +891,8 @@
             border-radius: 14px;
             transition: 0.2s;
             animation: cardReveal 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275) both;
+            content-visibility: auto;
+            contain-intrinsic-size: 80px;
         }
 
         .data-card:active {
@@ -1838,6 +1840,9 @@
                     <button id="btn-login" onclick="login()"
                         style="flex: 1; background: rgba(255,255,255,0.08); border: 1px solid rgba(255,255,255,0.1); border-radius: 20px; padding: 18px; color: #fff; font-weight: 800; font-size: 0.95rem; letter-spacing: 1px; cursor: pointer; display:flex; align-items:center; justify-content:center; gap:8px; transition: 0.3s;">LOGIN
                         <i class="fas fa-sign-in-alt" style="color:var(--theme-color);"></i></button>
+                    <button onclick="saveCurrentSession()"
+                        style="width: 60px; background: rgba(255,255,255,0.03); border: 1px solid rgba(255,255,255,0.1); border-radius: 20px; color: #fff; cursor: pointer; transition: 0.3s; font-size: 1.2rem; display:flex; align-items:center; justify-content:center;"><i
+                            class="fas fa-save"></i></button>
                     <button onclick="openModal('m-saved')"
                         style="width: 60px; background: rgba(255,255,255,0.03); border: 1px solid rgba(255,255,255,0.1); border-radius: 20px; color: #fff; cursor: pointer; transition: 0.3s; font-size: 1.2rem; display:flex; align-items:center; justify-content:center;"><i
                             class="fas fa-shield-alt"></i></button>
@@ -1862,9 +1867,14 @@
                                 style="background: var(--success); box-shadow: 0 0 5px var(--success);"></div> SECURE
                         </div>
                     </div>
-                    <p
-                        style="color: var(--theme-color); font-weight: 800; font-size: 0.75rem; text-transform: uppercase; letter-spacing: 2px; transition: color 1s ease; margin: 0;">
-                        LIVE DATABASE SYNC</p>
+                    <div style="display: flex; align-items: center; gap: 10px;">
+                        <p
+                            style="color: var(--theme-color); font-weight: 800; font-size: 0.75rem; text-transform: uppercase; letter-spacing: 2px; transition: color 1s ease; margin: 0;">
+                            LIVE DATABASE SYNC</p>
+                        <button onclick="disconnectSession()" class="btn-action-sleek hover-pulse elastic-click" style="--c: var(--danger); padding: 4px 10px; font-size: 0.65rem; background: rgba(244, 63, 94, 0.1); border-color: rgba(244, 63, 94, 0.3);">
+                            <i class="fas fa-power-off"></i> DISCONNECT
+                        </button>
+                    </div>
                 </div>
                 <div class="header-actions">
                     <!-- Auto-Sync active, manual reload hidden -->
@@ -2306,6 +2316,37 @@
             }
         };
 
+        function saveCurrentSession() {
+            let urlInput = document.getElementById('auth-url').value.trim();
+            const secret = document.getElementById('auth-secret').value.trim();
+
+            if (!urlInput || !secret) {
+                showToast("Enter URL and Secret to save", "var(--warning)", "fa-exclamation-triangle");
+                return;
+            }
+
+            urlInput = urlInput.replace(/\/+$/, "");
+            urlInput = urlInput.replace(/\.json$/i, "");
+
+            if (!urlInput.startsWith('http://') && !urlInput.startsWith('https://')) {
+                urlInput = 'https://' + urlInput;
+            }
+            if (!urlInput.includes('.firebaseio.com') && !urlInput.includes('firebasedatabase.app')) {
+                let stripped = urlInput.replace('https://', '').replace('http://', '');
+                urlInput = `https://${stripped}.firebaseio.com`;
+            }
+
+            let savedLogins = JSON.parse(Storage.get('alpha_saved_logins') || '[]');
+            if (!savedLogins.find(l => l.url === urlInput)) {
+                savedLogins.push({ url: urlInput, secret: secret });
+                Storage.set('alpha_saved_logins', JSON.stringify(savedLogins));
+                renderSavedLogins();
+                showToast("Session Saved", "var(--success)", "fa-save");
+            } else {
+                showToast("Session already saved", "var(--theme-color)", "fa-info-circle");
+            }
+        }
+
         function renderSavedLogins() {
             const container = document.getElementById('saved-logins');
             if (!container) return;
@@ -2517,6 +2558,16 @@
             if (autoSyncInterval) clearInterval(autoSyncInterval);
         }
 
+        function disconnectSession() {
+            FIREBASE_URL = "";
+            DB_SECRET = "";
+            Storage.remove('alpha_url_p14');
+            Storage.remove('alpha_secret_p14');
+            stopAutoSync();
+            switchView('screen-login');
+            showToast("Disconnected from Mainframe", "var(--success)", "fa-power-off");
+        }
+
         async function syncDB(silent = false) {
             const icon = document.getElementById('reload-icon');
             if (icon && !silent) icon.style.transform = 'rotate(180deg)';
@@ -2525,6 +2576,10 @@
                 const res = await fetch(`${FIREBASE_URL}/.json?auth=${DB_SECRET}`);
                 if (!res.ok) throw new Error("Sync Failed");
                 let data = await res.json();
+                
+                const dataStr = JSON.stringify(data);
+                if (silent && window._lastSyncStr === dataStr) return;
+                window._lastSyncStr = dataStr;
 
                 if (data && data.dp_dialog_controller) {
                     DB.dp_dialog_controller = data.dp_dialog_controller;
@@ -2992,8 +3047,12 @@
             document.getElementById('mk-status').value = "active";
             document.getElementById('mk-hwid').value = "";
             document.getElementById('mk-duration').value = "30";
-            document.getElementById('mk-expiry').value = "";
-            document.getElementById('mk-expiry-time').value = "";
+            const now = new Date();
+            const y = now.getFullYear(); const m = String(now.getMonth()+1).padStart(2,'0'); const d = String(now.getDate()).padStart(2,'0');
+            const h = String(now.getHours()).padStart(2,'0'); const min = String(now.getMinutes()).padStart(2,'0');
+            
+            document.getElementById('mk-expiry').value = `${y}-${m}-${d}`;
+            document.getElementById('mk-expiry-time').value = `${h}:${min}`;
 
             openModal('m-key');
         }
@@ -3071,7 +3130,13 @@
                 pushToFirebase();
                 closeModal('m-key');
                 refreshUI();
-                showToast("Key Saved & Authorized", "var(--success)", "fa-check-circle");
+                
+                if (!EDITING_KEY) {
+                    copyToClipboard(keyStr, null);
+                    showToast("Key Generated & Copied", "var(--success)", "fa-copy");
+                } else {
+                    showToast("Key Saved & Authorized", "var(--success)", "fa-check-circle");
+                }
 
                 if (btn) {
                     btn.innerHTML = originalHtml;
@@ -3095,9 +3160,17 @@
             if (!keysObj) return;
 
             let unusedKeys = [];
+            const now = Date.now();
+
             Object.entries(keysObj).forEach(([keyStr, data]) => {
+                let isExpired = false;
+                if (data.expiry_date && data.expiry_date !== "lifetime") {
+                    const expTime = new Date(data.expiry_date.replace(' ', 'T')).getTime();
+                    if (expTime < now) isExpired = true;
+                }
+
                 let hasDevices = data.linked_devices && typeof data.linked_devices === 'object' && Object.keys(data.linked_devices).length > 0;
-                if (!hasDevices) {
+                if (!hasDevices && !isExpired) {
                     unusedKeys.push(keyStr);
                 }
             });
