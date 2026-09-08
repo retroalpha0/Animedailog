@@ -1860,7 +1860,7 @@
                     </div>
                     <div style="z-index: 2; position: relative; flex: 1;">
                         <h1 style="font-size: 1.15rem; font-weight: 900; color: #fff; line-height: 1.2; margin: 0;">
-                            ALPHA<br>Login System</h1>
+                            ALPHA<br>Login Console</h1>
                         <div style="display:flex; gap: 6px; margin-top: 6px;">
                             <span
                                 style="background: rgba(255,255,255,0.05); padding: 3px 6px; border-radius: 8px; font-size: 0.55rem; color: #aaa; font-weight: 800; border: 1px solid rgba(255,255,255,0.05);">V.8</span>
@@ -1874,7 +1874,7 @@
                 </div>
 
                 <p style="text-align: center; color: #ddd; font-weight: 500; font-size: 0.85rem; margin-bottom: 20px;">
-                    Welcome to ALPHA System</p>
+                    Welcome to Admin Console</p>
 
                 <div class="input-wrapper" style="margin-bottom: 15px;">
                     <input type="text" id="auth-url"
@@ -2557,7 +2557,7 @@
             FIREBASE_URL = urlInput;
             DB_SECRET = secret;
 
-            showToast("Bypassing Mainframe...", "var(--theme-color)", "fa-satellite-dish");
+            showToast("Connecting Server...", "var(--theme-color)", "fa-satellite-dish");
 
             try {
                 const res = await fetch(`${FIREBASE_URL}/.json?auth=${secret}`);
@@ -2599,7 +2599,7 @@
                 setTimeout(() => document.body.classList.remove('flash-glitch'), 500);
 
                 refreshUI();
-                showToast("Access Granted", "var(--success)", "fa-check-circle");
+                showToast("Connection Establised ✓", "var(--success)", "fa-check-circle");
 
                 startAutoSync();
 
