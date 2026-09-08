@@ -2366,11 +2366,16 @@
             saved.forEach((login, idx) => {
                 const displayName = login.name || login.url.replace('https://', '').replace('.firebaseio.com', '');
                 html += `
-                    <div class="glass-card" style="padding: 10px; margin-bottom: 8px; display:flex; justify-content:space-between; align-items:center; cursor:pointer;" onclick="fillLogin('${login.url}', '${login.secret}')">
-                        <div style="font-size:0.75rem; font-family:var(--font-code); white-space:nowrap; overflow:hidden; text-overflow:ellipsis; max-width:200px;">
-                            ${displayName}
+                    <div class="glass-card" style="padding: 12px; margin-bottom: 10px; display:flex; flex-direction:column; gap:10px;">
+                        <div style="display:flex; justify-content:space-between; align-items:center;">
+                            <div style="font-size:0.8rem; font-weight:800; white-space:nowrap; overflow:hidden; text-overflow:ellipsis; max-width:200px; color: #fff;">
+                                ${displayName}
+                            </div>
+                            <button class="btn-card-action delete" style="width:28px; height:28px; font-size:0.7rem; display:flex; align-items:center; justify-content:center;" onclick="removeLogin(${idx})"><i class="fas fa-trash"></i></button>
                         </div>
-                        <button class="btn-card-action delete" style="width:24px; height:24px; font-size:0.6rem;" onclick="event.stopPropagation(); removeLogin(${idx})"><i class="fas fa-trash"></i></button>
+                        <button onclick="fillLogin('${login.url}', '${login.secret}')" style="width: 100%; background: rgba(255,255,255,0.05); border: 1px solid rgba(255,255,255,0.1); border-radius: 8px; padding: 8px; color: var(--theme-color); font-weight: 800; font-size: 0.75rem; cursor: pointer; transition: 0.3s; display:flex; justify-content:center; align-items:center; gap:6px;">
+                            <i class="fas fa-plug"></i> CONNECT
+                        </button>
                     </div>
                 `;
             });
@@ -2379,6 +2384,7 @@
         function fillLogin(url, secret) {
             document.getElementById('auth-url').value = url;
             document.getElementById('auth-secret').value = secret;
+            closeModal('m-saved');
         }
         function removeLogin(idx) {
             let saved = JSON.parse(Storage.get('alpha_saved_logins') || '[]');
