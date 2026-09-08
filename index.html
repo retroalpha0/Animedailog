@@ -1893,10 +1893,10 @@
                         style="flex: 1; background: rgba(255,255,255,0.08); border: 1px solid rgba(255,255,255,0.1); border-radius: 20px; padding: 18px; color: #fff; font-weight: 800; font-size: 0.95rem; letter-spacing: 1px; cursor: pointer; display:flex; align-items:center; justify-content:center; gap:8px; transition: 0.3s;">LOGIN
                         <i class="fas fa-sign-in-alt" style="color:var(--theme-color);"></i></button>
                     <button onclick="saveCurrentSession()"
-                        style="width: 60px; background: rgba(255,255,255,0.03); border: 1px solid rgba(255,255,255,0.1); border-radius: 20px; color: #fff; cursor: pointer; transition: 0.3s; font-size: 1.2rem; display:flex; align-items:center; justify-content:center;"><i
+                        style="width: 60px; height: 60px; background: rgba(255,255,255,0.03); border: 1px solid rgba(255,255,255,0.1); border-radius: 50%; color: #fff; cursor: pointer; transition: 0.3s; font-size: 1.2rem; display:flex; align-items:center; justify-content:center;"><i
                             class="fas fa-save"></i></button>
                     <button onclick="openModal('m-saved')"
-                        style="width: 60px; background: rgba(255,255,255,0.03); border: 1px solid rgba(255,255,255,0.1); border-radius: 20px; color: #fff; cursor: pointer; transition: 0.3s; font-size: 1.2rem; display:flex; align-items:center; justify-content:center;"><i
+                        style="width: 60px; height: 60px; background: rgba(255,255,255,0.03); border: 1px solid rgba(255,255,255,0.1); border-radius: 50%; color: #fff; cursor: pointer; transition: 0.3s; font-size: 1.2rem; display:flex; align-items:center; justify-content:center;"><i
                             class="fas fa-shield-alt"></i></button>
                 </div>
             </div>
@@ -2444,6 +2444,7 @@
             document.getElementById('auth-url').value = url;
             document.getElementById('auth-secret').value = secret;
             closeModal('m-saved');
+            login();
         }
         function removeLogin(idx) {
             let saved = JSON.parse(Storage.get('alpha_saved_logins') || '[]');
