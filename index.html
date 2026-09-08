@@ -2338,7 +2338,14 @@
 
             let savedLogins = JSON.parse(Storage.get('alpha_saved_logins') || '[]');
             if (!savedLogins.find(l => l.url === urlInput)) {
-                savedLogins.push({ url: urlInput, secret: secret });
+                const sessionName = prompt("Enter a name for this session:");
+                if (sessionName === null) return; // User cancelled
+                
+                savedLogins.push({ 
+                    url: urlInput, 
+                    secret: secret,
+                    name: sessionName.trim() || urlInput.replace('https://', '').replace('.firebaseio.com', '')
+                });
                 Storage.set('alpha_saved_logins', JSON.stringify(savedLogins));
                 renderSavedLogins();
                 showToast("Session Saved", "var(--success)", "fa-save");
@@ -2357,10 +2364,11 @@
             }
             let html = '';
             saved.forEach((login, idx) => {
+                const displayName = login.name || login.url.replace('https://', '').replace('.firebaseio.com', '');
                 html += `
                     <div class="glass-card" style="padding: 10px; margin-bottom: 8px; display:flex; justify-content:space-between; align-items:center; cursor:pointer;" onclick="fillLogin('${login.url}', '${login.secret}')">
                         <div style="font-size:0.75rem; font-family:var(--font-code); white-space:nowrap; overflow:hidden; text-overflow:ellipsis; max-width:200px;">
-                            ${login.url.replace('https://', '').replace('.firebaseio.com', '')}
+                            ${displayName}
                         </div>
                         <button class="btn-card-action delete" style="width:24px; height:24px; font-size:0.6rem;" onclick="event.stopPropagation(); removeLogin(${idx})"><i class="fas fa-trash"></i></button>
                     </div>
