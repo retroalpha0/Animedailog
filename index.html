@@ -26,7 +26,7 @@
             --glass-border: rgba(255, 255, 255, 0.05);
             --glass-shadow: 0 10px 30px rgba(0, 0, 0, 0.6);
             --glass-inner: inset 0 1px 0 rgba(255, 255, 255, 0.1);
-            --glass-blur: blur(25px) saturate(120%);
+            --glass-blur: blur(12px) saturate(120%);
 
             --glass-input: rgba(8, 8, 12, 0.8);
 
@@ -86,6 +86,8 @@
             z-index: 9999;
             background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noiseFilter'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.7' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noiseFilter)'/%3E%3C/svg%3E");
             opacity: 0.05;
+            will-change: transform;
+            transform: translateZ(0);
         }
 
         .cyber-grid {
@@ -101,6 +103,7 @@
             z-index: -4;
             pointer-events: none;
             transform: perspective(600px) rotateX(60deg) translateY(0);
+            will-change: transform;
             animation: gridMove 15s linear infinite;
         }
 
@@ -301,6 +304,8 @@
             filter: blur(80px);
             animation: float 10s infinite alternate ease-in-out;
             pointer-events: none;
+            will-change: transform;
+            transform: translateZ(0);
         }
 
         .ambient-orbs::after {
@@ -316,6 +321,8 @@
             filter: blur(80px);
             animation: float 12s infinite alternate-reverse ease-in-out;
             pointer-events: none;
+            will-change: transform;
+            transform: translateZ(0);
         }
 
         #particles-js {
@@ -988,21 +995,17 @@
 
         /* Card Themes */
         .card-active {
-            border-color: rgba(255, 255, 255, 0.06);
-            animation: activeGlow 3s infinite alternate;
+            border-color: rgba(16, 185, 129, 0.3);
+            box-shadow: inset 0 0 15px rgba(16, 185, 129, 0.1), 0 0 10px rgba(16, 185, 129, 0.05);
+            transition: 0.3s ease;
         }
 
-        @keyframes activeGlow {
-            0% {
-                box-shadow: inset 0 0 10px rgba(16, 185, 129, 0.05);
-                border-color: rgba(16, 185, 129, 0.1);
-            }
-
-            100% {
-                box-shadow: inset 0 0 20px rgba(16, 185, 129, 0.2), 0 0 10px rgba(16, 185, 129, 0.1);
-                border-color: rgba(16, 185, 129, 0.4);
-            }
+        .card-active:hover {
+            box-shadow: inset 0 0 20px rgba(16, 185, 129, 0.2), 0 0 15px rgba(16, 185, 129, 0.1);
+            border-color: rgba(16, 185, 129, 0.5);
         }
+
+        /* Deprecated activeGlow */
 
         .card-active .badge-status {
             border-color: var(--success);
@@ -1036,20 +1039,17 @@
         }
 
         .card-banned {
-            border-color: rgba(244, 63, 94, 0.2);
-            animation: bannedGlow 2.5s infinite alternate;
+            border-color: rgba(244, 63, 94, 0.4);
+            box-shadow: inset 0 0 15px rgba(244, 63, 94, 0.1), 0 0 10px rgba(244, 63, 94, 0.1);
+            transition: 0.3s ease;
         }
 
-        @keyframes bannedGlow {
-            0% {
-                box-shadow: inset 0 0 10px rgba(244, 63, 94, 0.05);
-            }
-
-            100% {
-                box-shadow: inset 0 0 20px rgba(244, 63, 94, 0.2), 0 0 15px rgba(244, 63, 94, 0.2);
-                border-color: rgba(244, 63, 94, 0.5);
-            }
+        .card-banned:hover {
+            box-shadow: inset 0 0 20px rgba(244, 63, 94, 0.2), 0 0 15px rgba(244, 63, 94, 0.2);
+            border-color: rgba(244, 63, 94, 0.6);
         }
+
+        /* Deprecated bannedGlow */
 
         .card-banned .badge-status {
             border-color: var(--danger);
@@ -2993,7 +2993,7 @@
                         <div class="card-header" style="margin-bottom: 0px; cursor: pointer; transition: 0.2s;" onclick="const menu = this.nextElementSibling; menu.style.display = menu.style.display === 'none' ? 'block' : 'none'; const icon = this.querySelector('.fa-chevron-down'); if(icon) icon.style.transform = menu.style.display === 'block' ? 'rotate(180deg)' : 'rotate(0deg)';">
                             <div class="card-title" style="display:flex; align-items:center; gap:6px;">
                                 <i class="fas fa-chevron-down" style="color:var(--text-sub); font-size: 0.8rem; transition: transform 0.3s; margin-right: 4px;"></i>
-                                <i class="fas fa-fingerprint" style="color:var(--theme-color); font-size: 1rem; filter: drop-shadow(0 0 5px var(--theme-glow));"></i>
+                                <i class="fas fa-fingerprint" style="color:var(--theme-color); font-size: 1rem; text-shadow: 0 0 5px var(--theme-glow);"></i>
                                 <span class="copy-text" style="font-size:0.9rem; font-family: var(--font-code); font-weight: 800; padding:0; background:transparent;" onclick="event.stopPropagation(); copyToClipboard('${keyString}', event)">${keyString}</span>
                                 <button style="padding: 3px 8px; font-size: 0.55rem; font-weight: 800; border-radius: 6px; background: rgba(255,255,255,0.08); color: var(--text-sub); border: 1px solid rgba(255,255,255,0.1); cursor: pointer; display: flex; align-items: center; gap: 4px; transition: 0.2s;" onclick="event.stopPropagation(); copyToClipboard('${keyString}', event)">COPY</button>
                             </div>
