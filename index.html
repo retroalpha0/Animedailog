@@ -2317,20 +2317,17 @@
         const Storage = {
             get: (k) => { 
                 try { 
-                    if (k === 'alpha_url_p14' || k === 'alpha_secret_p14') return sessionStorage.getItem(k);
                     return localStorage.getItem(k); 
                 } catch (e) { return null; } 
             },
             set: (k, v) => { 
                 try { 
-                    if (k === 'alpha_url_p14' || k === 'alpha_secret_p14') sessionStorage.setItem(k, v);
-                    else localStorage.setItem(k, v); 
+                    localStorage.setItem(k, v); 
                 } catch (e) { } 
             },
             remove: (k) => { 
                 try { 
-                    if (k === 'alpha_url_p14' || k === 'alpha_secret_p14') sessionStorage.removeItem(k);
-                    else localStorage.removeItem(k); 
+                    localStorage.removeItem(k); 
                 } catch (e) { } 
             }
         };
