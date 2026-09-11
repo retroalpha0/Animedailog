@@ -1998,6 +1998,11 @@
                         onclick="deleteExpiredKeys()">
                         <i class="fas fa-trash-alt"></i> DELETE EXPIRED
                     </button>
+                    <button class="btn-action-sleek hover-pulse elastic-click"
+                        style="--c: var(--warning); padding: 8px 12px; font-size: 0.75rem; flex: 1;"
+                        onclick="unbindAllKeys()">
+                        <i class="fas fa-unlink"></i> UNBIND ALL KEYS
+                    </button>
                 </div>
 
                 <div id="list-keys"></div>
@@ -3272,6 +3277,29 @@
                 }
             } else {
                 showToast("No unused keys found", "var(--warning)", "fa-info-circle");
+            }
+        }
+
+        function unbindAllKeys() {
+            const keysObj = DB.dp_dialog_controller?.security?.authorized_hwids;
+            if (!keysObj) return;
+
+            if (confirm("Are you sure you want to unbind ALL devices from ALL keys?")) {
+                let count = 0;
+                Object.values(keysObj).forEach(data => {
+                    if (data.linked_devices) {
+                        delete data.linked_devices;
+                        count++;
+                    }
+                });
+                
+                if (count > 0) {
+                    pushToFirebase();
+                    refreshUI();
+                    showToast(`Unbound devices for ${count} keys`, "var(--success)", "fa-unlink");
+                } else {
+                    showToast("No bound devices found", "var(--warning)", "fa-info-circle");
+                }
             }
         }
 
