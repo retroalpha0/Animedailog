@@ -461,6 +461,34 @@
 
         #screen-dashboard {
             pointer-events: auto;
+            position: relative;
+        }
+
+        #screen-dashboard.active::before {
+            content: '';
+            position: fixed;
+            inset: 0;
+            backdrop-filter: blur(24px) saturate(150%);
+            -webkit-backdrop-filter: blur(24px) saturate(150%);
+            background: radial-gradient(circle at 50% 25%, rgba(6, 8, 14, 0.38) 0%, rgba(4, 6, 12, 0.72) 100%);
+            z-index: -1;
+            pointer-events: none;
+            animation: fadeInBlur 0.5s ease forwards;
+        }
+
+        @keyframes fadeInBlur {
+            from {
+                opacity: 0;
+            }
+
+            to {
+                opacity: 1;
+            }
+        }
+
+        #screen-dashboard .app-container {
+            position: relative;
+            z-index: 1;
         }
 
         #screen-login.active {
@@ -762,14 +790,19 @@
             transform: scale(0.9);
         }
 
-        /* 🧭 TOP DASHBOARD HEADER */
+        /* 🧭 TOP DASHBOARD HEADER (FROSTED GLASS) */
         .dash-header {
-            padding: max(14px, env(safe-area-inset-top)) 0 10px 0;
+            padding: max(14px, env(safe-area-inset-top)) 16px 12px 16px;
             display: flex;
             justify-content: space-between;
             align-items: center;
-            margin-bottom: 12px;
-            border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+            margin-bottom: 14px;
+            background: rgba(10, 14, 22, 0.72);
+            backdrop-filter: blur(20px) saturate(150%);
+            -webkit-backdrop-filter: blur(20px) saturate(150%);
+            border: 1px solid rgba(255, 255, 255, 0.08);
+            border-radius: 20px;
+            box-shadow: 0 10px 30px -10px rgba(0, 0, 0, 0.7);
         }
 
         .dash-header-title-box h1 {
@@ -1865,8 +1898,15 @@
         }
 
         @keyframes planetPulse {
-            0% { transform: scale(0.94); filter: brightness(0.95); }
-            100% { transform: scale(1.06); filter: brightness(1.2) drop-shadow(0 0 25px var(--theme-glow)); }
+            0% {
+                transform: scale(0.94);
+                filter: brightness(0.95);
+            }
+
+            100% {
+                transform: scale(1.06);
+                filter: brightness(1.2) drop-shadow(0 0 25px var(--theme-glow));
+            }
         }
 
         /* 3D Gyroscope Orbital Rings */
@@ -1927,23 +1967,43 @@
         }
 
         @keyframes gyroSpin1 {
-            0% { transform: rotateX(65deg) rotateY(15deg) rotateZ(0deg); }
-            100% { transform: rotateX(65deg) rotateY(15deg) rotateZ(360deg); }
+            0% {
+                transform: rotateX(65deg) rotateY(15deg) rotateZ(0deg);
+            }
+
+            100% {
+                transform: rotateX(65deg) rotateY(15deg) rotateZ(360deg);
+            }
         }
 
         @keyframes gyroSpin2 {
-            0% { transform: rotateX(30deg) rotateY(65deg) rotateZ(0deg); }
-            100% { transform: rotateX(30deg) rotateY(65deg) rotateZ(360deg); }
+            0% {
+                transform: rotateX(30deg) rotateY(65deg) rotateZ(0deg);
+            }
+
+            100% {
+                transform: rotateX(30deg) rotateY(65deg) rotateZ(360deg);
+            }
         }
 
         @keyframes gyroSpin3 {
-            0% { transform: rotateX(75deg) rotateY(70deg) rotateZ(0deg); }
-            100% { transform: rotateX(75deg) rotateY(70deg) rotateZ(360deg); }
+            0% {
+                transform: rotateX(75deg) rotateY(70deg) rotateZ(0deg);
+            }
+
+            100% {
+                transform: rotateX(75deg) rotateY(70deg) rotateZ(360deg);
+            }
         }
 
         @keyframes moonOrbit {
-            0% { transform: rotateZ(0deg); }
-            100% { transform: rotateZ(360deg); }
+            0% {
+                transform: rotateZ(0deg);
+            }
+
+            100% {
+                transform: rotateZ(360deg);
+            }
         }
 
         .gyro-title {
@@ -2174,7 +2234,7 @@
                 <div style="display: flex; gap: 10px; align-items: stretch;">
                     <button type="button" id="btn-login" onclick="login()"
                         class="btn-primary ripple-click elastic-click" style="flex:1; padding:16px;">
-                        INITIALIZE CONSOLE <i class="fas fa-arrow-right"></i>
+                        INITIALIZE <i class="fas fa-arrow-right"></i>
                     </button>
                     <button type="button" onclick="saveCurrentSession()" class="btn-icon-circular elastic-click"
                         title="Save Active Session">
