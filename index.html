@@ -5,7 +5,7 @@
     <meta charset="UTF-8">
     <meta name="viewport"
         content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
-    <title>DPAdmin - Cyber Console</title>
+    <title>DPAdmin - Mobile Controller</title>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link
@@ -14,12 +14,12 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <script src="https://cdn.jsdelivr.net/particles.js/2.0.0/particles.min.js"></script>
     <style>
-        /* 🌌 ULTRA-MODERN CYBER CHIC DESIGN SYSTEM */
+        /* 📱 100% EXCLUSIVE MOBILE CYBER DESIGN SYSTEM */
         :root {
             --bg-base: #06080E;
             --bg-surface: #0B0E17;
-            --bg-card: rgba(15, 19, 29, 0.72);
-            --bg-card-hover: rgba(22, 28, 42, 0.85);
+            --bg-card: rgba(14, 18, 28, 0.78);
+            --bg-card-hover: rgba(20, 26, 40, 0.9);
 
             /* Dynamic Monet Accents */
             --theme-color: #F43F5E;
@@ -28,13 +28,12 @@
             --theme-border: rgba(244, 63, 94, 0.35);
 
             /* Glassmorphism Specs */
-            --glass-bg: rgba(14, 18, 28, 0.65);
+            --glass-bg: rgba(14, 18, 28, 0.75);
             --glass-border: rgba(255, 255, 255, 0.08);
-            --glass-border-subtle: rgba(255, 255, 255, 0.04);
-            --glass-shadow: 0 20px 40px -15px rgba(0, 0, 0, 0.75);
+            --glass-shadow: 0 16px 36px -10px rgba(0, 0, 0, 0.85);
             --glass-inner: inset 0 1px 0 rgba(255, 255, 255, 0.12);
             --glass-blur: blur(20px) saturate(160%);
-            --glass-input: rgba(8, 10, 16, 0.82);
+            --glass-input: rgba(8, 10, 16, 0.88);
 
             /* State Indicators */
             --danger: #FF3B5C;
@@ -46,8 +45,6 @@
             --warning: #F59E0B;
             --warning-glow: rgba(245, 158, 11, 0.45);
             --warning-bg: rgba(245, 158, 11, 0.12);
-            --cyan: #06B6D4;
-            --cyan-glow: rgba(6, 182, 212, 0.45);
 
             /* Typography */
             --text-main: #FFFFFF;
@@ -62,7 +59,6 @@
             --font-main: 'Plus Jakarta Sans', -apple-system, BlinkMacSystemFont, sans-serif;
             --font-display: 'Space Grotesk', sans-serif;
             --font-code: 'JetBrains Mono', monospace;
-            --nav-h: 75px;
         }
 
         * {
@@ -70,17 +66,22 @@
             margin: 0;
             padding: 0;
             -webkit-tap-highlight-color: transparent;
+            user-select: none;
+            -webkit-user-select: none;
         }
 
         ::-webkit-scrollbar {
             display: none;
         }
 
+        /* 📱 STRICT 16PX FONT ON ALL INPUTS TO PREVENT IOS ZOOM */
         input,
         textarea,
         select {
             user-select: auto !important;
             -webkit-user-select: auto !important;
+            font-size: 16px !important;
+            font-family: var(--font-main);
         }
 
         body {
@@ -89,11 +90,23 @@
             font-family: var(--font-main);
             overflow-x: hidden;
             min-height: 100dvh;
-            transition: background-color 0.5s ease;
+            width: 100vw;
             position: relative;
+            touch-action: manipulation;
+            -webkit-font-smoothing: antialiased;
         }
 
-        /* 🌌 Glowing Multi-Layer Aurora Atmosphere */
+        /* 📱 EXCLUSIVE MOBILE WRAPPER (Never exceeds phone width) */
+        .mobile-shell {
+            width: 100%;
+            max-width: 440px;
+            margin: 0 auto;
+            padding: 0 16px;
+            position: relative;
+            box-sizing: border-box;
+        }
+
+        /* 🌌 Ambient Aurora Atmosphere */
         .aurora-bg {
             position: fixed;
             inset: 0;
@@ -105,53 +118,36 @@
         .aurora-orb {
             position: absolute;
             border-radius: 50%;
-            filter: blur(90px);
-            opacity: 0.35;
+            filter: blur(80px);
+            opacity: 0.32;
             will-change: transform;
-            animation: orbFloat 18s ease-in-out infinite alternate;
+            animation: orbFloat 16s ease-in-out infinite alternate;
         }
 
         .aurora-orb-1 {
-            top: -15%;
+            top: -10%;
             left: -15%;
-            width: 70vw;
-            height: 70vw;
+            width: 80vw;
+            height: 80vw;
             background: radial-gradient(circle, var(--theme-color) 0%, transparent 70%);
         }
 
         .aurora-orb-2 {
-            bottom: -20%;
+            bottom: -15%;
             right: -15%;
-            width: 75vw;
-            height: 75vw;
+            width: 85vw;
+            height: 85vw;
             background: radial-gradient(circle, #3B82F6 0%, transparent 70%);
-            animation-duration: 22s;
+            animation-duration: 20s;
             animation-direction: alternate-reverse;
         }
 
-        .aurora-orb-3 {
-            top: 40%;
-            left: 30%;
-            width: 50vw;
-            height: 50vw;
-            background: radial-gradient(circle, var(--theme-glow) 0%, transparent 65%);
-            animation-duration: 26s;
-            opacity: 0.2;
-        }
-
         @keyframes orbFloat {
-            0% {
-                transform: translate(0, 0) scale(1);
-            }
-            50% {
-                transform: translate(60px, -40px) scale(1.08);
-            }
-            100% {
-                transform: translate(-40px, 60px) scale(0.95);
-            }
+            0% { transform: translate(0, 0) scale(1); }
+            50% { transform: translate(30px, -20px) scale(1.05); }
+            100% { transform: translate(-20px, 30px) scale(0.95); }
         }
 
-        /* Ambient Subtle Noise Texture */
         body::before {
             content: "";
             position: fixed;
@@ -159,35 +155,23 @@
             pointer-events: none;
             z-index: 9999;
             background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noiseFilter'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noiseFilter)'/%3E%3C/svg%3E");
-            opacity: 0.035;
+            opacity: 0.03;
             transform: translateZ(0);
         }
 
-        /* Futuristic Perspective Grid */
         .cyber-grid {
             position: fixed;
-            bottom: -60%;
+            bottom: -50%;
             left: -50%;
             width: 200%;
             height: 200%;
             background-image:
-                linear-gradient(rgba(255, 255, 255, 0.025) 1px, transparent 1px),
-                linear-gradient(90deg, rgba(255, 255, 255, 0.025) 1px, transparent 1px);
-            background-size: 50px 50px;
+                linear-gradient(rgba(255, 255, 255, 0.02) 1px, transparent 1px),
+                linear-gradient(90deg, rgba(255, 255, 255, 0.02) 1px, transparent 1px);
+            background-size: 40px 40px;
             z-index: -4;
             pointer-events: none;
-            transform: perspective(700px) rotateX(65deg) translateY(0);
-            will-change: transform;
-            animation: gridMove 20s linear infinite;
-        }
-
-        @keyframes gridMove {
-            0% {
-                transform: perspective(700px) rotateX(65deg) translateY(0);
-            }
-            100% {
-                transform: perspective(700px) rotateX(65deg) translateY(50px);
-            }
+            transform: perspective(600px) rotateX(65deg) translateY(0);
         }
 
         #particles-js {
@@ -195,7 +179,7 @@
             inset: 0;
             z-index: -2;
             pointer-events: none;
-            opacity: 0.45;
+            opacity: 0.4;
         }
 
         /* 🌊 Dynamic Gradient Waves */
@@ -204,11 +188,11 @@
             bottom: 0;
             left: 0;
             width: 100%;
-            height: 140px;
+            height: 110px;
             overflow: hidden;
             z-index: -3;
             pointer-events: none;
-            opacity: 0.35;
+            opacity: 0.3;
         }
 
         .wave {
@@ -223,35 +207,22 @@
 
         .wave1 {
             animation: waveMove 16s linear infinite;
-            bottom: -15px;
+            bottom: -10px;
             opacity: 0.12;
         }
 
         .wave2 {
-            animation: waveMoveReverse 20s linear infinite;
-            bottom: -8px;
-            opacity: 0.08;
-        }
-
-        .wave3 {
-            animation: waveMove 28s linear infinite;
-            bottom: 0px;
-            opacity: 0.04;
+            animation: waveMove 22s linear infinite reverse;
+            bottom: -5px;
+            opacity: 0.07;
         }
 
         @keyframes waveMove {
-            0% { transform: translateX(0) scaleY(1); }
-            50% { transform: translateX(-25%) scaleY(0.92); }
-            100% { transform: translateX(-50%) scaleY(1); }
+            0% { transform: translateX(0); }
+            100% { transform: translateX(-50%); }
         }
 
-        @keyframes waveMoveReverse {
-            0% { transform: translateX(-50%) scaleY(1); }
-            50% { transform: translateX(-25%) scaleY(1.08); }
-            100% { transform: translateX(0) scaleY(1); }
-        }
-
-        /* 💎 PREMIUM FROSTED GLASS CARDS */
+        /* 💎 MOBILE FROSTED GLASS CARDS */
         .glass-card {
             background: var(--bg-card);
             backdrop-filter: var(--glass-blur);
@@ -260,124 +231,48 @@
             box-shadow: var(--glass-shadow), var(--glass-inner);
             border-radius: var(--radius-lg);
             position: relative;
-            transition: all 0.35s cubic-bezier(0.16, 1, 0.3, 1);
+            transition: transform 0.2s ease, border-color 0.2s ease, box-shadow 0.2s ease;
             overflow: hidden;
         }
 
-        .glass-card::before {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: -120%;
-            width: 60%;
-            height: 100%;
-            background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.06), transparent);
-            transform: skewX(-25deg);
-            transition: left 0.7s ease;
-            pointer-events: none;
+        /* 📱 MOBILE TOUCH FEEDBACK */
+        button:active,
+        .btn-primary:active,
+        .nav-item:active,
+        .filter-chip:active,
+        .btn-card-ctrl:active,
+        .btn-icon-circular:active,
+        .btn-strip-action:active {
+            transform: scale(0.94) !important;
+            opacity: 0.88;
+            transition: transform 0.12s ease !important;
         }
 
-        .glass-card:hover::before {
-            left: 160%;
-        }
-
-        /* Responsive Container */
-        .app-container {
-            width: 100%;
-            max-width: 500px;
-            margin: 0 auto;
-            padding: 0 16px;
-        }
-
-        @media (min-width: 768px) {
-            .app-container {
-                max-width: 1240px;
-                padding: 0 36px;
-            }
-        }
-
-        /* 🌟 Ultra-Tactile Interactive Effects */
-        .hover-lift {
-            transition: transform 0.28s cubic-bezier(0.16, 1, 0.3, 1), box-shadow 0.28s ease, border-color 0.28s ease;
-        }
-
-        .hover-lift:hover {
-            transform: translateY(-4px);
-            box-shadow: 0 20px 40px -10px rgba(0, 0, 0, 0.8), 0 0 20px var(--theme-faded);
-            border-color: rgba(255, 255, 255, 0.16);
-        }
-
-        .hover-glow:hover {
-            box-shadow: 0 0 30px var(--theme-glow), inset 0 0 15px var(--theme-faded);
-        }
-
-        .hover-pulse:hover {
-            animation: softPulse 1.6s infinite;
-        }
-
-        @keyframes softPulse {
-            0%, 100% { transform: scale(1); }
-            50% { transform: scale(1.025); }
-        }
-
-        .elastic-click {
-            transition: transform 0.18s cubic-bezier(0.34, 1.56, 0.64, 1);
-        }
-
-        .elastic-click:active {
-            transform: scale(0.92);
-        }
-
-        .ripple-click {
-            position: relative;
-            overflow: hidden;
-        }
-
-        .ripple-click::after {
-            content: "";
-            position: absolute;
-            background: rgba(255, 255, 255, 0.15);
-            border-radius: 50%;
-            top: 50%;
-            left: 50%;
-            width: 0;
-            height: 0;
-            transform: translate(-50%, -50%);
-            transition: width 0.4s ease-out, height 0.4s ease-out, opacity 0.4s ease-out;
-            opacity: 0;
-            pointer-events: none;
-        }
-
-        .ripple-click:active::after {
-            width: 280px;
-            height: 280px;
-            opacity: 1;
-            transition: 0s;
-        }
-
-        /* 🚀 Dynamic Notification Toast */
+        /* 🚀 Toast Notification */
         #toast {
             position: fixed;
-            top: max(24px, env(safe-area-inset-top));
+            top: max(18px, env(safe-area-inset-top));
             left: 50%;
             transform: translate(-50%, -30px) scale(0.9);
-            background: rgba(12, 16, 26, 0.94);
+            background: rgba(12, 16, 26, 0.95);
             backdrop-filter: var(--glass-blur);
             border: 1px solid var(--theme-color);
             color: #FFFFFF;
-            padding: 13px 26px;
+            padding: 12px 20px;
             border-radius: 50px;
             font-weight: 700;
-            font-size: 0.88rem;
+            font-size: 0.84rem;
             opacity: 0;
             pointer-events: none;
-            transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+            transition: all 0.35s cubic-bezier(0.16, 1, 0.3, 1);
             z-index: 10000;
             display: flex;
             align-items: center;
-            gap: 12px;
-            box-shadow: 0 16px 45px var(--theme-glow);
+            gap: 10px;
+            box-shadow: 0 12px 35px var(--theme-glow);
             white-space: nowrap;
+            max-width: 90vw;
+            box-sizing: border-box;
         }
 
         #toast.show {
@@ -392,47 +287,27 @@
             min-height: 100dvh;
             flex-direction: column;
             align-items: center;
-            padding-bottom: 120px;
+            padding-bottom: calc(115px + env(safe-area-inset-bottom));
+            box-sizing: border-box;
         }
 
         #screen-login {
             justify-content: center;
-            padding: 20px;
+            padding: 16px;
+            min-height: 100dvh;
         }
 
         #screen-login.active {
             display: flex;
-            animation: fadeInView 0.5s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+            animation: fadeInView 0.4s ease forwards;
         }
 
         #screen-dashboard.active {
             display: flex;
-            animation: fadeInView 0.5s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+            animation: fadeInView 0.4s ease forwards;
         }
 
         @keyframes fadeInView {
-            from {
-                opacity: 0;
-                transform: translateY(18px) scale(0.98);
-                filter: blur(4px);
-            }
-            to {
-                opacity: 1;
-                transform: translateY(0) scale(1);
-                filter: blur(0);
-            }
-        }
-
-        .tab-content {
-            display: none;
-            animation: tabFadeIn 0.35s cubic-bezier(0.16, 1, 0.3, 1) forwards;
-        }
-
-        .tab-content.active {
-            display: block;
-        }
-
-        @keyframes tabFadeIn {
             from {
                 opacity: 0;
                 transform: translateY(14px);
@@ -443,46 +318,44 @@
             }
         }
 
-        /* 🛸 HOLOGRAPHIC CYBER LOGIN SCREEN */
+        .tab-content {
+            display: none;
+            width: 100%;
+        }
+
+        .tab-content.active {
+            display: block;
+            animation: tabFadeIn 0.3s ease forwards;
+        }
+
+        @keyframes tabFadeIn {
+            from { opacity: 0; transform: translateY(10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        /* 🛸 HOLOGRAPHIC CYBER LOGIN SCREEN (Mobile Optimized) */
         .login-card-outer {
             width: 100%;
-            max-width: 420px;
+            max-width: 400px;
             position: relative;
-        }
-
-        .login-card-outer::before {
-            content: '';
-            position: absolute;
-            inset: -2px;
-            background: linear-gradient(135deg, var(--theme-color), rgba(59, 130, 246, 0.6), transparent 70%);
-            border-radius: 34px;
-            z-index: 0;
-            opacity: 0.5;
-            filter: blur(14px);
-            animation: borderPulse 4s ease-in-out infinite alternate;
-        }
-
-        @keyframes borderPulse {
-            0% { opacity: 0.35; transform: scale(0.99); }
-            100% { opacity: 0.7; transform: scale(1.01); }
         }
 
         .login-glass-box {
             position: relative;
-            z-index: 1;
-            background: rgba(11, 14, 22, 0.88);
+            background: rgba(11, 14, 22, 0.9);
             backdrop-filter: blur(28px) saturate(180%);
+            -webkit-backdrop-filter: blur(28px) saturate(180%);
             border: 1px solid rgba(255, 255, 255, 0.1);
-            border-radius: 32px;
-            padding: 40px 32px;
-            box-shadow: 0 30px 60px rgba(0, 0, 0, 0.85), inset 0 1px 0 rgba(255, 255, 255, 0.15);
+            border-radius: 28px;
+            padding: 32px 22px;
+            box-shadow: 0 24px 50px rgba(0, 0, 0, 0.9), inset 0 1px 0 rgba(255, 255, 255, 0.15);
         }
 
         .login-avatar-wrap {
             position: relative;
-            width: 90px;
-            height: 90px;
-            margin: 0 auto 24px auto;
+            width: 80px;
+            height: 80px;
+            margin: 0 auto 18px auto;
             display: flex;
             align-items: center;
             justify-content: center;
@@ -499,10 +372,9 @@
 
         .login-avatar-halo {
             position: absolute;
-            inset: -12px;
+            inset: -10px;
             border-radius: 50%;
             background: radial-gradient(circle, var(--theme-glow) 0%, transparent 70%);
-            animation: softPulse 2.5s infinite;
         }
 
         @keyframes ringSpin {
@@ -510,8 +382,8 @@
         }
 
         .login-avatar-img {
-            width: 82px;
-            height: 82px;
+            width: 74px;
+            height: 74px;
             border-radius: 50%;
             border: 2px solid rgba(255, 255, 255, 0.15);
             background: #000;
@@ -523,7 +395,7 @@
 
         .login-brand-title {
             font-family: var(--font-display);
-            font-size: 1.6rem;
+            font-size: 1.5rem;
             font-weight: 800;
             text-align: center;
             letter-spacing: -0.5px;
@@ -537,22 +409,22 @@
             justify-content: center;
             align-items: center;
             gap: 8px;
-            margin-bottom: 24px;
+            margin-bottom: 20px;
         }
 
         .login-pill-tag {
-            font-size: 0.65rem;
+            font-size: 0.62rem;
             font-weight: 800;
-            letter-spacing: 1.5px;
+            letter-spacing: 1.2px;
             text-transform: uppercase;
-            padding: 4px 12px;
+            padding: 4px 10px;
             border-radius: 50px;
             background: rgba(255, 255, 255, 0.05);
             border: 1px solid rgba(255, 255, 255, 0.08);
             color: var(--text-sub);
             display: inline-flex;
             align-items: center;
-            gap: 6px;
+            gap: 5px;
         }
 
         .login-pill-tag.online {
@@ -561,151 +433,100 @@
             background: var(--theme-faded);
         }
 
-        /* 💎 MODERN INPUT FIELDS */
+        /* 💎 MOBILE INPUT FIELDS */
         .field-group {
             position: relative;
-            margin-bottom: 18px;
+            margin-bottom: 14px;
         }
 
         .input-icon {
             position: absolute;
-            left: 18px;
+            left: 16px;
             top: 50%;
             transform: translateY(-50%);
             color: var(--text-muted);
             font-size: 1rem;
-            transition: all 0.3s ease;
             pointer-events: none;
             z-index: 3;
         }
 
         .sleek-input {
             width: 100%;
+            min-height: 48px;
             background: var(--glass-input);
             border: 1px solid rgba(255, 255, 255, 0.08);
             border-radius: var(--radius-md);
-            padding: 16px 18px 16px 48px;
+            padding: 13px 16px 13px 44px;
             color: #FFFFFF;
-            font-family: var(--font-main);
-            font-size: 0.92rem;
             font-weight: 500;
             outline: none;
-            transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+            transition: border-color 0.25s ease, box-shadow 0.25s ease;
             box-shadow: inset 0 2px 4px rgba(0, 0, 0, 0.4);
+            box-sizing: border-box;
         }
 
         .sleek-input:focus {
             border-color: var(--theme-color);
-            background: rgba(12, 16, 26, 0.95);
-            box-shadow: 0 0 0 3px var(--theme-faded), inset 0 2px 5px rgba(0, 0, 0, 0.5), 0 0 20px var(--theme-glow);
-        }
-
-        .field-group:focus-within .input-icon {
-            color: var(--theme-color);
-            transform: translateY(-50%) scale(1.1);
+            background: rgba(14, 18, 28, 0.98);
+            box-shadow: 0 0 0 3px var(--theme-faded), 0 0 15px var(--theme-glow);
         }
 
         /* 🔘 BUTTON STYLES */
         .btn-primary {
+            min-height: 50px;
             background: linear-gradient(135deg, var(--theme-color) 0%, #D9264E 100%);
             color: #FFFFFF;
             border: 1px solid rgba(255, 255, 255, 0.2);
             border-radius: var(--radius-md);
             font-family: var(--font-main);
             font-weight: 800;
-            font-size: 0.92rem;
-            letter-spacing: 0.8px;
+            font-size: 0.88rem;
+            letter-spacing: 0.6px;
             cursor: pointer;
-            transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
-            box-shadow: 0 10px 25px -5px var(--theme-glow), inset 0 1px 0 rgba(255, 255, 255, 0.25);
+            box-shadow: 0 10px 22px -5px var(--theme-glow), inset 0 1px 0 rgba(255, 255, 255, 0.25);
             display: inline-flex;
             align-items: center;
             justify-content: center;
-            gap: 10px;
+            gap: 8px;
             text-transform: uppercase;
-            position: relative;
-            overflow: hidden;
-        }
-
-        .btn-primary::after {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: -100%;
-            width: 50%;
-            height: 100%;
-            background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.2), transparent);
-            transform: skewX(-25deg);
-            transition: left 0.6s ease;
-        }
-
-        .btn-primary:hover::after {
-            left: 150%;
-        }
-
-        .btn-primary:hover:not(:disabled) {
-            transform: translateY(-2px);
-            box-shadow: 0 16px 35px var(--theme-glow);
-            filter: brightness(1.1);
-        }
-
-        .btn-primary:active:not(:disabled) {
-            transform: scale(0.96);
-        }
-
-        .btn-primary:disabled {
-            opacity: 0.5;
-            cursor: not-allowed;
-            transform: none !important;
         }
 
         .btn-icon-circular {
-            width: 54px;
-            height: 54px;
+            width: 50px;
+            height: 50px;
+            min-width: 50px;
             border-radius: 50%;
             background: rgba(255, 255, 255, 0.04);
-            border: 1px solid rgba(255, 255, 255, 0.08);
+            border: 1px solid rgba(255, 255, 255, 0.1);
             color: var(--text-sub);
             font-size: 1.15rem;
             display: inline-flex;
             align-items: center;
             justify-content: center;
             cursor: pointer;
-            transition: all 0.28s ease;
             box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.05);
             flex-shrink: 0;
         }
 
-        .btn-icon-circular:hover {
-            color: #FFFFFF;
-            background: rgba(255, 255, 255, 0.08);
-            border-color: var(--theme-color);
-            transform: translateY(-2px);
-            box-shadow: 0 8px 20px var(--theme-faded);
-        }
-
-        .btn-icon-circular:active {
-            transform: scale(0.9);
-        }
-
-        /* 🧭 TOP DASHBOARD HEADER */
+        /* 🧭 TOP MOBILE DASHBOARD HEADER */
         .dash-header {
-            padding: max(28px, env(safe-area-inset-top)) 0 18px 0;
+            padding: max(20px, env(safe-area-inset-top)) 0 14px 0;
             display: flex;
             justify-content: space-between;
             align-items: center;
-            margin-bottom: 22px;
+            margin-bottom: 16px;
             border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+            width: 100%;
         }
 
         .dash-header-title-box h1 {
             font-family: var(--font-display);
-            font-size: 1.85rem;
+            font-size: 1.65rem;
             font-weight: 800;
             letter-spacing: -0.5px;
             text-transform: uppercase;
             line-height: 1.1;
-            margin-bottom: 4px;
+            margin-bottom: 3px;
             background: linear-gradient(135deg, #FFFFFF 0%, #CBD5E1 100%);
             -webkit-background-clip: text;
             -webkit-text-fill-color: transparent;
@@ -714,86 +535,65 @@
         .live-status-pill {
             display: inline-flex;
             align-items: center;
-            gap: 8px;
+            gap: 6px;
             background: rgba(16, 185, 129, 0.1);
             border: 1px solid rgba(16, 185, 129, 0.35);
             color: var(--success);
-            padding: 4px 12px;
+            padding: 3px 10px;
             border-radius: 50px;
-            font-size: 0.68rem;
+            font-size: 0.64rem;
             font-weight: 800;
-            letter-spacing: 1px;
+            letter-spacing: 0.8px;
             text-transform: uppercase;
         }
 
         .live-status-dot {
-            width: 7px;
-            height: 7px;
+            width: 6px;
+            height: 6px;
             border-radius: 50%;
             background: var(--success);
-            box-shadow: 0 0 10px var(--success);
-            position: relative;
-        }
-
-        .live-status-dot::after {
-            content: '';
-            position: absolute;
-            inset: -3px;
-            border-radius: 50%;
-            border: 1px solid var(--success);
-            animation: radarPing 2s cubic-bezier(0, 0, 0.2, 1) infinite;
-        }
-
-        @keyframes radarPing {
-            0% { transform: scale(1); opacity: 0.8; }
-            100% { transform: scale(2.6); opacity: 0; }
+            box-shadow: 0 0 8px var(--success);
         }
 
         .btn-disconnect {
-            background: rgba(255, 59, 92, 0.1);
+            min-height: 38px;
+            background: rgba(255, 59, 92, 0.12);
             border: 1px solid rgba(255, 59, 92, 0.3);
             color: var(--danger);
-            padding: 8px 16px;
+            padding: 6px 14px;
             border-radius: var(--radius-sm);
-            font-size: 0.72rem;
+            font-size: 0.68rem;
             font-weight: 800;
-            letter-spacing: 0.8px;
+            letter-spacing: 0.6px;
             text-transform: uppercase;
             cursor: pointer;
             display: inline-flex;
             align-items: center;
-            gap: 8px;
-            transition: all 0.28s ease;
+            gap: 6px;
         }
 
-        .btn-disconnect:hover {
-            background: var(--danger);
-            color: #FFFFFF;
-            box-shadow: 0 6px 20px var(--danger-glow);
-            transform: translateY(-2px);
-        }
-
-        /* 📊 BENTO STATS DASHBOARD */
+        /* 📊 MOBILE BENTO STATS (Tuned for 360px-420px screens) */
         .stats-bento {
             display: grid;
             grid-template-columns: repeat(3, 1fr);
-            gap: 12px;
-            margin-bottom: 24px;
+            gap: 8px;
+            margin-bottom: 18px;
+            width: 100%;
         }
 
         .stat-bento-card {
             background: rgba(14, 18, 28, 0.75);
             border: 1px solid rgba(255, 255, 255, 0.06);
             border-radius: var(--radius-md);
-            padding: 16px 12px;
+            padding: 12px 6px;
             display: flex;
             flex-direction: column;
             align-items: center;
             justify-content: center;
-            gap: 6px;
+            gap: 3px;
             position: relative;
             overflow: hidden;
-            transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+            box-sizing: border-box;
         }
 
         .stat-bento-card::before {
@@ -804,52 +604,47 @@
             right: 0;
             height: 2px;
             background: var(--accent-color, var(--theme-color));
-            box-shadow: 0 0 10px var(--accent-color, var(--theme-color));
-        }
-
-        .stat-bento-card:hover {
-            transform: translateY(-3px);
-            border-color: rgba(255, 255, 255, 0.14);
-            box-shadow: 0 12px 28px -8px rgba(0, 0, 0, 0.6);
+            box-shadow: 0 0 8px var(--accent-color, var(--theme-color));
         }
 
         .stat-icon-badge {
-            width: 36px;
-            height: 36px;
-            border-radius: 10px;
+            width: 32px;
+            height: 32px;
+            border-radius: 8px;
             background: var(--icon-bg, var(--theme-faded));
             color: var(--accent-color, var(--theme-color));
             display: flex;
             align-items: center;
             justify-content: center;
-            font-size: 1.1rem;
-            margin-bottom: 4px;
-            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
+            font-size: 1rem;
+            margin-bottom: 2px;
         }
 
         .stat-number {
             font-family: var(--font-display);
-            font-size: 1.6rem;
+            font-size: 1.35rem;
             font-weight: 800;
             color: #FFFFFF;
             line-height: 1;
         }
 
         .stat-label {
-            font-size: 0.62rem;
+            font-size: 0.58rem;
             font-weight: 800;
-            letter-spacing: 1.2px;
+            letter-spacing: 0.8px;
             color: var(--text-sub);
             text-transform: uppercase;
             text-align: center;
+            white-space: nowrap;
         }
 
         /* 🔍 SEARCH & FILTERS */
         .search-row {
             display: flex;
-            gap: 12px;
+            gap: 10px;
             align-items: center;
-            margin-bottom: 16px;
+            margin-bottom: 12px;
+            width: 100%;
         }
 
         .search-capsule {
@@ -859,213 +654,176 @@
 
         .search-capsule i {
             position: absolute;
-            left: 18px;
+            left: 16px;
             top: 50%;
             transform: translateY(-50%);
             color: var(--theme-color);
-            font-size: 1rem;
-            filter: drop-shadow(0 0 8px var(--theme-glow));
+            font-size: 0.95rem;
         }
 
         .search-capsule input {
             width: 100%;
+            min-height: 48px;
             background: rgba(12, 16, 26, 0.7);
             border: 1px solid rgba(255, 255, 255, 0.08);
             border-radius: 50px;
-            padding: 14px 20px 14px 48px;
+            padding: 12px 18px 12px 42px;
             color: #FFFFFF;
-            font-family: var(--font-main);
-            font-size: 0.88rem;
             font-weight: 600;
             outline: none;
-            transition: all 0.3s ease;
-            box-shadow: inset 0 2px 6px rgba(0, 0, 0, 0.5);
+            box-shadow: inset 0 2px 5px rgba(0, 0, 0, 0.5);
+            box-sizing: border-box;
         }
 
         .search-capsule input:focus {
             border-color: var(--theme-color);
-            background: rgba(16, 22, 34, 0.9);
-            box-shadow: 0 0 0 3px var(--theme-faded), 0 0 20px var(--theme-glow);
+            box-shadow: 0 0 0 3px var(--theme-faded);
         }
 
         .fab-add {
-            width: 50px;
-            height: 50px;
+            width: 48px;
+            height: 48px;
+            min-width: 48px;
             border-radius: 50%;
             background: linear-gradient(135deg, var(--theme-color) 0%, #D9264E 100%);
             color: #FFFFFF;
             border: none;
-            box-shadow: 0 8px 22px var(--theme-glow);
-            font-size: 1.35rem;
+            box-shadow: 0 6px 18px var(--theme-glow);
+            font-size: 1.25rem;
             display: inline-flex;
             align-items: center;
             justify-content: center;
             cursor: pointer;
-            transition: all 0.28s ease;
             flex-shrink: 0;
         }
 
-        .fab-add:hover {
-            transform: scale(1.08) rotate(90deg);
-            box-shadow: 0 12px 30px var(--theme-glow);
-        }
-
-        .fab-add:active {
-            transform: scale(0.92);
-        }
-
-        /* 🏷️ FILTER CHIPS */
+        /* 🏷️ FILTER CHIPS (Horizontal touch swipe) */
         .filter-row {
             display: flex;
             gap: 8px;
             overflow-x: auto;
-            margin-bottom: 16px;
+            margin-bottom: 14px;
             padding-bottom: 4px;
+            width: 100%;
+            scrollbar-width: none;
+            -webkit-overflow-scrolling: touch;
         }
 
         .filter-chip {
-            padding: 7px 18px;
+            min-height: 36px;
+            padding: 8px 16px;
             border-radius: 50px;
-            font-size: 0.68rem;
+            font-size: 0.66rem;
             font-weight: 800;
-            letter-spacing: 0.8px;
+            letter-spacing: 0.6px;
             text-transform: uppercase;
             cursor: pointer;
-            transition: all 0.25s ease;
             background: rgba(255, 255, 255, 0.03);
             border: 1px solid rgba(255, 255, 255, 0.08);
             color: var(--text-sub);
             white-space: nowrap;
-        }
-
-        .filter-chip:hover {
-            color: #FFFFFF;
-            border-color: rgba(255, 255, 255, 0.2);
-            background: rgba(255, 255, 255, 0.06);
+            flex-shrink: 0;
         }
 
         .filter-chip.active {
             border-color: var(--theme-color);
             color: #FFFFFF;
             background: var(--theme-faded);
-            box-shadow: 0 0 16px var(--theme-faded);
+            box-shadow: 0 0 14px var(--theme-faded);
         }
 
-        /* ⚡ ACTION STRIP */
+        /* ⚡ ACTION STRIP (Mobile 3-column Grid) */
         .quick-action-strip {
-            display: flex;
-            gap: 8px;
-            margin-bottom: 20px;
-            flex-wrap: wrap;
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 6px;
+            margin-bottom: 16px;
+            width: 100%;
         }
 
         .btn-strip-action {
-            flex: 1;
-            min-width: 100px;
+            min-height: 40px;
             background: rgba(20, 24, 36, 0.6);
             border: 1px solid rgba(255, 255, 255, 0.06);
             color: var(--btn-color, var(--text-main));
-            padding: 9px 12px;
+            padding: 8px 6px;
             border-radius: var(--radius-sm);
-            font-size: 0.68rem;
+            font-size: 0.64rem;
             font-weight: 800;
-            letter-spacing: 0.6px;
+            letter-spacing: 0.5px;
             text-transform: uppercase;
             cursor: pointer;
             display: inline-flex;
             align-items: center;
             justify-content: center;
-            gap: 7px;
-            transition: all 0.25s ease;
+            gap: 5px;
+            white-space: nowrap;
+            box-sizing: border-box;
         }
 
-        .btn-strip-action:hover {
-            background: rgba(255, 255, 255, 0.06);
-            border-color: var(--btn-color, rgba(255, 255, 255, 0.2));
-            transform: translateY(-2px);
-            box-shadow: 0 6px 16px rgba(0, 0, 0, 0.4);
-        }
-
-        .btn-strip-action:active {
-            transform: scale(0.94);
-        }
-
-        /* 📇 SLEEK CARD DESIGNS (Containment + rAF Performance) */
+        /* 📇 MOBILE CARD LISTS */
         #list-keys,
         #list-bans,
         #list-devices {
+            width: 100%;
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
             contain: layout style paint;
         }
 
-        @media (min-width: 768px) {
-            #list-keys,
-            #list-bans,
-            #list-devices {
-                display: grid;
-                grid-template-columns: repeat(auto-fill, minmax(360px, 1fr));
-                gap: 16px;
-                align-items: start;
-            }
-        }
-
         .data-card {
-            padding: 14px 16px;
+            width: 100%;
+            padding: 14px 14px;
             border-radius: var(--radius-md);
-            margin-bottom: 10px;
-            background: rgba(14, 18, 28, 0.65);
+            background: rgba(14, 18, 28, 0.72);
             border: 1px solid rgba(255, 255, 255, 0.06);
-            border-left: 3px solid var(--card-accent, rgba(255, 255, 255, 0.15));
+            border-left: 3.5px solid var(--card-accent, rgba(255, 255, 255, 0.15));
             opacity: 0;
-            transform: translateY(16px) scale(0.98);
-            transition: opacity 0.35s cubic-bezier(0.16, 1, 0.3, 1), transform 0.35s cubic-bezier(0.16, 1, 0.3, 1), box-shadow 0.28s ease, border-color 0.28s ease;
+            transform: translateY(14px) scale(0.98);
+            transition: opacity 0.3s ease, transform 0.3s ease;
+            box-sizing: border-box;
         }
 
-        .data-card:hover {
-            transform: translateY(-3px) scale(1.005);
-            box-shadow: 0 16px 36px -10px rgba(0, 0, 0, 0.8), 0 0 20px var(--theme-faded);
-            border-color: rgba(255, 255, 255, 0.14);
-        }
-
-        .card-active {
-            --card-accent: var(--success);
-        }
-
-        .card-expired {
-            --card-accent: var(--warning);
-        }
-
-        .card-banned {
-            --card-accent: var(--danger);
-        }
+        .card-active { --card-accent: var(--success); }
+        .card-expired { --card-accent: var(--warning); }
+        .card-banned { --card-accent: var(--danger); }
 
         .card-header-bar {
             display: flex;
             justify-content: space-between;
             align-items: center;
             cursor: pointer;
+            width: 100%;
+            min-height: 32px;
         }
 
         .card-key-badge {
             font-family: var(--font-code);
-            font-size: 0.92rem;
+            font-size: 0.88rem;
             font-weight: 700;
             color: #FFFFFF;
-            letter-spacing: 0.5px;
+            letter-spacing: 0.4px;
             display: inline-flex;
             align-items: center;
             gap: 6px;
+            overflow: hidden;
+            text-overflow: ellipsis;
+            white-space: nowrap;
+            flex: 1;
         }
 
         .badge-status-pill {
             display: inline-flex;
             align-items: center;
-            gap: 6px;
-            padding: 4px 10px;
+            gap: 5px;
+            padding: 4px 9px;
             border-radius: 50px;
-            font-size: 0.62rem;
+            font-size: 0.6rem;
             font-weight: 800;
-            letter-spacing: 0.8px;
+            letter-spacing: 0.6px;
             text-transform: uppercase;
+            flex-shrink: 0;
             border: 1px solid transparent;
         }
 
@@ -1099,25 +857,26 @@
             margin-top: 12px;
             padding-top: 12px;
             border-top: 1px solid rgba(255, 255, 255, 0.05);
+            width: 100%;
         }
 
         .card-info-chips {
             display: flex;
             flex-wrap: wrap;
-            gap: 8px;
-            margin-bottom: 12px;
+            gap: 6px;
+            margin-bottom: 10px;
         }
 
         .info-chip {
             background: rgba(255, 255, 255, 0.03);
             border: 1px solid rgba(255, 255, 255, 0.06);
             border-radius: 8px;
-            padding: 5px 10px;
-            font-size: 0.7rem;
+            padding: 5px 8px;
+            font-size: 0.68rem;
             color: var(--text-sub);
             display: inline-flex;
             align-items: center;
-            gap: 6px;
+            gap: 5px;
         }
 
         .info-chip b {
@@ -1128,7 +887,7 @@
         .hwid-badge-code {
             background: rgba(6, 182, 212, 0.08);
             border: 1px solid rgba(6, 182, 212, 0.25);
-            padding: 6px 12px;
+            padding: 6px 10px;
             border-radius: 8px;
             font-family: var(--font-code);
             font-size: 0.68rem;
@@ -1147,35 +906,26 @@
             grid-template-columns: repeat(4, 1fr);
             gap: 6px;
             margin-top: 10px;
+            width: 100%;
         }
 
         .btn-card-ctrl {
+            min-height: 38px;
             background: rgba(255, 255, 255, 0.04);
             border: 1px solid rgba(255, 255, 255, 0.08);
             color: var(--c, #FFFFFF);
-            padding: 8px 4px;
+            padding: 6px 2px;
             border-radius: 8px;
             font-size: 0.62rem;
             font-weight: 800;
-            letter-spacing: 0.5px;
+            letter-spacing: 0.4px;
             text-transform: uppercase;
             cursor: pointer;
             display: inline-flex;
             align-items: center;
             justify-content: center;
-            gap: 5px;
-            transition: all 0.22s ease;
-        }
-
-        .btn-card-ctrl:hover {
-            background: rgba(255, 255, 255, 0.1);
-            border-color: var(--c, #FFFFFF);
-            transform: translateY(-2px);
-            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.4);
-        }
-
-        .btn-card-ctrl:active {
-            transform: scale(0.92);
+            gap: 4px;
+            box-sizing: border-box;
         }
 
         /* 📄 PAGINATION CONTROLS */
@@ -1183,33 +933,23 @@
             display: flex;
             align-items: center;
             justify-content: center;
-            gap: 14px;
-            padding: 24px 0 12px 0;
+            gap: 12px;
+            padding: 20px 0 10px 0;
             width: 100%;
-            grid-column: 1 / -1;
         }
 
         .pagination-bar button {
+            min-height: 40px;
             background: rgba(255, 255, 255, 0.05);
             border: 1px solid rgba(255, 255, 255, 0.1);
             color: #FFFFFF;
-            padding: 9px 20px;
+            padding: 8px 16px;
             border-radius: 50px;
             cursor: pointer;
             font-family: var(--font-main);
             font-weight: 800;
             font-size: 0.72rem;
-            transition: all 0.25s ease;
             text-transform: uppercase;
-            letter-spacing: 0.6px;
-        }
-
-        .pagination-bar button:hover:not(:disabled) {
-            background: var(--theme-faded);
-            border-color: var(--theme-color);
-            color: var(--theme-color);
-            transform: translateY(-2px);
-            box-shadow: 0 6px 16px var(--theme-faded);
         }
 
         .pagination-bar button:disabled {
@@ -1220,44 +960,39 @@
         .pagination-info {
             color: var(--text-sub);
             font-family: var(--font-code);
-            font-size: 0.72rem;
+            font-size: 0.7rem;
             font-weight: 600;
         }
 
-        /* 🏝️ FLOATING DOCK NAVBAR */
+        /* 🏝️ MOBILE BOTTOM DOCK NAVBAR */
         .navbar-container {
             position: fixed;
-            bottom: 24px;
+            bottom: max(12px, env(safe-area-inset-bottom));
             left: 0;
             width: 100%;
             display: none;
             justify-content: center;
             z-index: 1000;
-            padding-bottom: env(safe-area-inset-bottom);
             pointer-events: none;
+            padding: 0 16px;
+            box-sizing: border-box;
         }
 
         .navbar {
-            background: rgba(12, 16, 26, 0.88);
+            background: rgba(12, 16, 26, 0.92);
             backdrop-filter: blur(24px) saturate(180%);
             -webkit-backdrop-filter: blur(24px) saturate(180%);
-            border: 1px solid rgba(255, 255, 255, 0.1);
-            box-shadow: 0 20px 50px rgba(0, 0, 0, 0.9), 0 0 20px var(--theme-faded);
+            border: 1px solid rgba(255, 255, 255, 0.12);
+            box-shadow: 0 16px 40px rgba(0, 0, 0, 0.95), 0 0 20px var(--theme-faded);
             border-radius: 50px;
             display: flex;
-            justify-content: space-between;
+            justify-content: space-around;
             align-items: center;
-            padding: 6px 10px;
-            width: 92%;
+            padding: 6px 8px;
+            width: 100%;
             max-width: 420px;
             pointer-events: auto;
-        }
-
-        @media (min-width: 768px) {
-            .navbar {
-                max-width: 580px;
-                padding: 8px 18px;
-            }
+            box-sizing: border-box;
         }
 
         .nav-item {
@@ -1267,57 +1002,46 @@
             align-items: center;
             justify-content: center;
             gap: 3px;
-            font-size: 0.62rem;
+            font-size: 0.6rem;
             font-weight: 800;
-            letter-spacing: 0.8px;
+            letter-spacing: 0.6px;
             cursor: pointer;
             flex: 1;
-            padding: 8px 6px;
+            min-height: 48px;
+            padding: 4px;
             border-radius: 40px;
-            transition: all 0.28s cubic-bezier(0.16, 1, 0.3, 1);
+            transition: all 0.2s ease;
             text-transform: uppercase;
-        }
-
-        @media (min-width: 768px) {
-            .nav-item {
-                flex-direction: row;
-                gap: 8px;
-                font-size: 0.75rem;
-                padding: 10px 14px;
-            }
         }
 
         .nav-item i {
             font-size: 1.15rem;
-            transition: transform 0.25s ease;
-        }
-
-        .nav-item:hover {
-            color: #FFFFFF;
         }
 
         .nav-item.active {
             background: var(--theme-faded);
             color: var(--theme-color);
-            box-shadow: 0 0 20px var(--theme-faded);
+            box-shadow: 0 0 15px var(--theme-faded);
         }
 
         .nav-item.active i {
-            transform: scale(1.15);
-            filter: drop-shadow(0 0 10px var(--theme-glow));
+            transform: scale(1.1);
+            filter: drop-shadow(0 0 8px var(--theme-glow));
         }
 
-        /* 🪟 LUXURY MODALS */
+        /* 🪟 MOBILE BOTTOM/CENTERED MODALS */
         .modal {
             position: fixed;
             inset: 0;
-            background: rgba(4, 6, 12, 0.85);
-            backdrop-filter: blur(16px);
+            background: rgba(4, 6, 12, 0.88);
+            backdrop-filter: blur(14px);
+            -webkit-backdrop-filter: blur(14px);
             z-index: 2000;
             display: none;
             justify-content: center;
             align-items: center;
             padding: 16px;
+            box-sizing: border-box;
         }
 
         .modal.active {
@@ -1332,19 +1056,22 @@
 
         .modal-box {
             width: 100%;
-            max-width: 440px;
-            padding: 32px 26px;
+            max-width: 400px;
+            padding: 24px 18px;
             display: flex;
             flex-direction: column;
             position: relative;
-            max-height: 90vh;
+            max-height: 85vh;
             overflow-y: auto;
+            -webkit-overflow-scrolling: touch;
+            overscroll-behavior: contain;
             border: 1px solid var(--theme-border);
-            box-shadow: 0 24px 60px rgba(0, 0, 0, 0.95), 0 0 30px var(--theme-faded);
+            box-shadow: 0 20px 50px rgba(0, 0, 0, 0.95), 0 0 25px var(--theme-faded);
             border-radius: var(--radius-xl);
-            background: rgba(14, 18, 28, 0.94);
-            transform: scale(0.92) translateY(20px);
-            transition: transform 0.35s cubic-bezier(0.16, 1, 0.3, 1);
+            background: rgba(14, 18, 28, 0.96);
+            transform: scale(0.94) translateY(15px);
+            transition: transform 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+            box-sizing: border-box;
         }
 
         .modal.active .modal-box {
@@ -1353,59 +1080,49 @@
 
         .modal-title {
             font-family: var(--font-display);
-            font-size: 1.25rem;
+            font-size: 1.15rem;
             font-weight: 800;
             color: #FFFFFF;
             letter-spacing: -0.5px;
             text-transform: uppercase;
             display: flex;
             align-items: center;
-            gap: 10px;
+            gap: 8px;
         }
 
         .modal-title i {
             color: var(--theme-color);
-            filter: drop-shadow(0 0 10px var(--theme-glow));
         }
 
         .btn-close {
             position: absolute;
-            top: 24px;
-            right: 24px;
+            top: 20px;
+            right: 18px;
             background: rgba(255, 255, 255, 0.05);
             border: 1px solid rgba(255, 255, 255, 0.08);
             color: var(--text-sub);
-            width: 34px;
-            height: 34px;
+            width: 32px;
+            height: 32px;
             border-radius: 50%;
-            font-size: 1rem;
+            font-size: 0.9rem;
             cursor: pointer;
-            transition: all 0.2s ease;
             display: flex;
             align-items: center;
             justify-content: center;
         }
 
-        .btn-close:hover {
-            background: var(--danger);
-            border-color: var(--danger);
-            color: #FFFFFF;
-            transform: scale(1.08);
-        }
-
         .btn-gen {
+            min-height: 44px;
             width: 100%;
             background: var(--theme-faded);
             border: 1px solid var(--theme-color);
             color: var(--theme-color);
-            padding: 13px;
+            padding: 10px;
             border-radius: var(--radius-sm);
             font-weight: 800;
-            font-size: 0.8rem;
-            margin-bottom: 18px;
+            font-size: 0.78rem;
+            margin-bottom: 14px;
             cursor: pointer;
-            transition: all 0.25s ease;
-            box-shadow: inset 0 0 12px var(--theme-faded);
             display: flex;
             align-items: center;
             justify-content: center;
@@ -1413,47 +1130,41 @@
             text-transform: uppercase;
         }
 
-        .btn-gen:hover {
-            background: var(--theme-color);
-            color: #FFFFFF;
-            box-shadow: 0 0 20px var(--theme-glow);
-        }
-
         .cfg-label {
-            font-size: 0.68rem;
+            font-size: 0.66rem;
             font-weight: 800;
             color: var(--text-sub);
-            margin-bottom: 6px;
-            margin-left: 4px;
+            margin-bottom: 5px;
+            margin-left: 2px;
             display: block;
             text-transform: uppercase;
-            letter-spacing: 0.8px;
+            letter-spacing: 0.6px;
         }
 
         .toggle-row {
             display: flex;
             justify-content: space-between;
             align-items: center;
-            padding: 14px 18px;
-            margin-bottom: 12px;
+            padding: 12px 16px;
+            margin-bottom: 10px;
             border-radius: var(--radius-sm);
             background: rgba(8, 10, 16, 0.7);
             border: 1px solid rgba(255, 255, 255, 0.06);
+            min-height: 48px;
         }
 
         .toggle-row span {
             font-weight: 700;
             color: #FFFFFF;
-            font-size: 0.85rem;
+            font-size: 0.82rem;
             text-transform: uppercase;
-            letter-spacing: 0.5px;
+            letter-spacing: 0.4px;
         }
 
-        /* Modern Toggle Switch */
         .switch {
             position: relative;
-            width: 46px;
-            height: 26px;
+            width: 44px;
+            height: 24px;
             appearance: none;
             background: rgba(255, 255, 255, 0.1);
             border-radius: 50px;
@@ -1466,13 +1177,11 @@
         .switch:checked {
             background: var(--theme-color);
             border-color: var(--theme-color);
-            box-shadow: 0 0 14px var(--theme-glow);
         }
 
         .switch.danger:checked {
             background: var(--danger);
             border-color: var(--danger);
-            box-shadow: 0 0 14px var(--danger-glow);
         }
 
         .switch::after {
@@ -1480,12 +1189,11 @@
             position: absolute;
             top: 2px;
             left: 2px;
-            width: 20px;
-            height: 20px;
+            width: 18px;
+            height: 18px;
             background: #FFFFFF;
             border-radius: 50%;
-            transition: all 0.28s cubic-bezier(0.34, 1.56, 0.64, 1);
-            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.4);
+            transition: all 0.25s ease;
         }
 
         .switch:checked::after {
@@ -1495,10 +1203,9 @@
         .grid-2 {
             display: grid;
             grid-template-columns: 1fr 1fr;
-            gap: 10px;
+            gap: 8px;
         }
 
-        /* 🌀 Micro Spinners */
         .cyber-spinner {
             width: 20px;
             height: 20px;
@@ -1509,18 +1216,10 @@
             display: inline-block;
         }
 
-        @keyframes spin {
-            100% { transform: rotate(360deg); }
-        }
+        @keyframes spin { 100% { transform: rotate(360deg); } }
 
-        .flash-glitch {
-            animation: screenFlash 0.45s ease-out forwards;
-        }
-
-        @keyframes screenFlash {
-            0% { filter: invert(0.8) brightness(1.8); }
-            100% { filter: invert(0) brightness(1); }
-        }
+        .flash-glitch { animation: screenFlash 0.4s ease-out forwards; }
+        @keyframes screenFlash { 0% { filter: invert(0.8); } 100% { filter: invert(0); } }
     </style>
 </head>
 
@@ -1532,22 +1231,17 @@
     <div class="aurora-bg">
         <div class="aurora-orb aurora-orb-1"></div>
         <div class="aurora-orb aurora-orb-2"></div>
-        <div class="aurora-orb aurora-orb-3"></div>
     </div>
 
-    <!-- 🌐 Perspective Cyber Grid & Particles -->
     <div class="cyber-grid"></div>
     <div id="particles-js"></div>
 
-    <!-- 🌊 Smooth Dynamic Waves -->
+    <!-- 🌊 Waves -->
     <div class="wave-container">
         <svg class="wave wave1" viewBox="0 0 2000 200" preserveAspectRatio="none">
             <path d="M0,100 C250,200 250,0 500,100 C750,200 750,0 1000,100 C1250,200 1250,0 1500,100 C1750,200 1750,0 2000,100 L2000,200 L0,200 Z" />
         </svg>
         <svg class="wave wave2" viewBox="0 0 2000 200" preserveAspectRatio="none">
-            <path d="M0,100 C250,200 250,0 500,100 C750,200 750,0 1000,100 C1250,200 1250,0 1500,100 C1750,200 1750,0 2000,100 L2000,200 L0,200 Z" />
-        </svg>
-        <svg class="wave wave3" viewBox="0 0 2000 200" preserveAspectRatio="none">
             <path d="M0,100 C250,200 250,0 500,100 C750,200 750,0 1000,100 C1250,200 1250,0 1500,100 C1750,200 1750,0 2000,100 L2000,200 L0,200 Z" />
         </svg>
     </div>
@@ -1571,31 +1265,31 @@
                         alt="Avatar">
                 </div>
 
-                <h1 class="login-brand-title">ALPHA<br><span style="color:var(--theme-color); font-size:1.15rem; font-weight:700;">COMMAND TERMINAL</span></h1>
+                <h1 class="login-brand-title">ALPHA<br><span style="color:var(--theme-color); font-size:1.05rem; font-weight:700;">COMMAND TERMINAL</span></h1>
 
                 <div class="login-badge-row">
-                    <span class="login-pill-tag online"><span class="status-dot-mini" style="background:var(--theme-color);"></span> v2.4 SECURE</span>
+                    <span class="login-pill-tag online"><span class="status-dot-mini" style="background:var(--theme-color);"></span> v2.4 MOBILE</span>
                     <span class="login-pill-tag">FIREBASE REST</span>
                 </div>
 
                 <div class="field-group">
                     <i class="fas fa-database input-icon"></i>
-                    <input type="text" id="auth-url" class="sleek-input" placeholder="Firebase Database URL...">
+                    <input type="text" id="auth-url" class="sleek-input" placeholder="Firebase Database URL..." autocapitalize="none" spellcheck="false">
                 </div>
 
-                <div class="field-group" style="margin-bottom: 24px;">
+                <div class="field-group" style="margin-bottom: 20px;">
                     <i class="fas fa-key input-icon"></i>
-                    <input type="password" id="auth-secret" class="sleek-input" placeholder="Master Secret Token...">
+                    <input type="password" id="auth-secret" class="sleek-input" placeholder="Master Secret Token..." autocapitalize="none" spellcheck="false">
                 </div>
 
-                <div style="display: flex; gap: 10px; align-items: stretch;">
-                    <button id="btn-login" onclick="login()" class="btn-primary ripple-click elastic-click" style="flex:1; padding:16px;">
-                        INITIALIZE CONSOLE <i class="fas fa-arrow-right"></i>
+                <div style="display: flex; gap: 8px; align-items: stretch;">
+                    <button id="btn-login" onclick="login()" class="btn-primary" style="flex:1;">
+                        INITIALIZE <i class="fas fa-arrow-right"></i>
                     </button>
-                    <button onclick="saveCurrentSession()" class="btn-icon-circular elastic-click" title="Save Active Session">
+                    <button onclick="saveCurrentSession()" class="btn-icon-circular" title="Save Active Session">
                         <i class="fas fa-save"></i>
                     </button>
-                    <button onclick="openModal('m-saved')" class="btn-icon-circular elastic-click" title="Saved Connections">
+                    <button onclick="openModal('m-saved')" class="btn-icon-circular" title="Saved Connections">
                         <i class="fas fa-shield-alt"></i>
                     </button>
                 </div>
@@ -1603,29 +1297,29 @@
         </div>
     </div>
 
-    <!-- 🚀 DASHBOARD SCREEN -->
+    <!-- 🚀 MOBILE DASHBOARD SCREEN -->
     <div id="screen-dashboard" class="view-section">
-        <div class="app-container">
+        <div class="mobile-shell">
 
             <!-- Top Header -->
             <div class="dash-header">
                 <div class="dash-header-title-box">
                     <h1>CONTROLLER</h1>
-                    <div style="display:flex; align-items:center; gap:10px;">
+                    <div style="display:flex; align-items:center; gap:8px;">
                         <div class="live-status-pill">
-                            <div class="live-status-dot"></div> SYSTEM ONLINE
+                            <div class="live-status-dot"></div> ONLINE
                         </div>
-                        <span style="font-size:0.7rem; font-weight:700; color:var(--text-muted); text-transform:uppercase; letter-spacing:1px;">LIVE SYNC</span>
+                        <span style="font-size:0.65rem; font-weight:700; color:var(--text-muted); text-transform:uppercase; letter-spacing:0.8px;">LIVE SYNC</span>
                     </div>
                 </div>
                 <div>
-                    <button onclick="disconnectSession()" class="btn-disconnect elastic-click">
-                        <i class="fas fa-power-off"></i> DISCONNECT
+                    <button onclick="disconnectSession()" class="btn-disconnect">
+                        <i class="fas fa-power-off"></i> LOGOUT
                     </button>
                 </div>
             </div>
 
-            <!-- Bento Stats Grid -->
+            <!-- Bento Stats Grid (Optimized for Mobile) -->
             <div class="stats-bento">
                 <div class="stat-bento-card" style="--accent-color: var(--theme-color); --icon-bg: var(--theme-faded);">
                     <div class="stat-icon-badge"><i class="fas fa-key"></i></div>
@@ -1649,9 +1343,9 @@
                 <div class="search-row">
                     <div class="search-capsule">
                         <i class="fas fa-search"></i>
-                        <input type="text" id="search-input" placeholder="Search access key, phone or HWID...">
+                        <input type="text" id="search-input" placeholder="Search key, phone, HWID..." autocapitalize="none">
                     </div>
-                    <button class="fab-add elastic-click" onclick="openAddKeyModal()" title="Authorize New Key">
+                    <button class="fab-add" onclick="openAddKeyModal()" title="Add Key">
                         <i class="fas fa-plus"></i>
                     </button>
                 </div>
@@ -1664,13 +1358,13 @@
                 </div>
 
                 <div class="quick-action-strip">
-                    <button class="btn-strip-action elastic-click" style="--btn-color: var(--danger);" onclick="deleteUnusedKeys()">
-                        <i class="fas fa-trash-alt"></i> DELETE UNUSED
+                    <button class="btn-strip-action" style="--btn-color: var(--danger);" onclick="deleteUnusedKeys()">
+                        <i class="fas fa-trash-alt"></i> UNUSED
                     </button>
-                    <button class="btn-strip-action elastic-click" style="--btn-color: var(--danger);" onclick="deleteExpiredKeys()">
-                        <i class="fas fa-calendar-times"></i> DELETE EXPIRED
+                    <button class="btn-strip-action" style="--btn-color: var(--danger);" onclick="deleteExpiredKeys()">
+                        <i class="fas fa-calendar-times"></i> EXPIRED
                     </button>
-                    <button class="btn-strip-action elastic-click" style="--btn-color: var(--warning);" onclick="unbindAllKeys()">
+                    <button class="btn-strip-action" style="--btn-color: var(--warning);" onclick="unbindAllKeys()">
                         <i class="fas fa-unlink"></i> UNBIND ALL
                     </button>
                 </div>
@@ -1680,23 +1374,23 @@
 
             <!-- 💀 TAB 2: CRASH -->
             <div id="tab-bans" class="tab-content">
-                <h2 style="font-family:var(--font-display); font-size:1.4rem; font-weight:800; color:#fff; margin-bottom:16px; display:flex; align-items:center; gap:10px;">
-                    <i class="fas fa-skull" style="color:var(--danger); filter:drop-shadow(0 0 10px var(--danger-glow));"></i> CRASH & BAN ENGINE
+                <h2 style="font-family:var(--font-display); font-size:1.25rem; font-weight:800; color:#fff; margin-bottom:14px; display:flex; align-items:center; gap:8px;">
+                    <i class="fas fa-skull" style="color:var(--danger);"></i> CRASH MANAGEMENT
                 </h2>
 
-                <div class="glass-card hover-lift" style="padding:22px 18px; margin-bottom:24px; border-color:rgba(255,59,92,0.3);">
-                    <h3 style="font-size:0.85rem; font-weight:800; color:var(--danger); margin-bottom:12px; text-transform:uppercase; letter-spacing:1px;">
+                <div class="glass-card" style="padding:16px 14px; margin-bottom:18px; border-color:rgba(255,59,92,0.3);">
+                    <h3 style="font-size:0.8rem; font-weight:800; color:var(--danger); margin-bottom:10px; text-transform:uppercase; letter-spacing:0.8px;">
                         <i class="fas fa-biohazard"></i> Manual HWID Killswitch
                     </h3>
-                    <div style="display:flex; gap:10px; margin-bottom:12px;">
-                        <input type="text" id="ban-hwid-input" class="sleek-input" style="padding:14px 18px; font-family:var(--font-code);" placeholder="Paste device HWID to crash...">
-                        <button class="btn-primary elastic-click" style="background:var(--danger); border-color:var(--danger); padding:14px 20px; white-space:nowrap;" onclick="executeBan()">
+                    <div style="display:flex; gap:8px; margin-bottom:10px;">
+                        <input type="text" id="ban-hwid-input" class="sleek-input" style="padding:12px 14px; font-family:var(--font-code); font-size:14px !important;" placeholder="HWID to crash..." autocapitalize="none">
+                        <button class="btn-primary" style="background:var(--danger); border-color:var(--danger); padding:10px 16px; min-height:46px; white-space:nowrap; font-size:0.75rem;" onclick="executeBan()">
                             <i class="fas fa-bomb"></i> CRASH
                         </button>
                     </div>
                     <div style="display:flex; justify-content:flex-end;">
-                        <button class="btn-strip-action elastic-click" style="--btn-color:var(--danger); max-width:180px;" onclick="clearAllCrashes()">
-                            <i class="fas fa-trash"></i> CLEAR ALL CRASHES
+                        <button class="btn-strip-action" style="--btn-color:var(--danger); width:auto; padding:6px 14px;" onclick="clearAllCrashes()">
+                            <i class="fas fa-trash"></i> CLEAR ALL
                         </button>
                     </div>
                 </div>
@@ -1706,14 +1400,14 @@
 
             <!-- 📱 TAB 3: DEVICES -->
             <div id="tab-devices" class="tab-content">
-                <h2 style="font-family:var(--font-display); font-size:1.4rem; font-weight:800; color:#fff; margin-bottom:16px; display:flex; align-items:center; gap:10px;">
-                    <i class="fas fa-mobile-alt" style="color:var(--theme-color); filter:drop-shadow(0 0 10px var(--theme-glow));"></i> CONNECTED HARDWARE
+                <h2 style="font-family:var(--font-display); font-size:1.25rem; font-weight:800; color:#fff; margin-bottom:14px; display:flex; align-items:center; gap:8px;">
+                    <i class="fas fa-mobile-alt" style="color:var(--theme-color);"></i> CONNECTED DEVICES
                 </h2>
 
-                <div class="search-row" style="margin-bottom:20px;">
+                <div class="search-row" style="margin-bottom:16px;">
                     <div class="search-capsule">
                         <i class="fas fa-search"></i>
-                        <input type="text" id="search-devices" placeholder="Search device model or hardware ID...">
+                        <input type="text" id="search-devices" placeholder="Search device model or HWID..." autocapitalize="none">
                     </div>
                 </div>
 
@@ -1722,32 +1416,30 @@
 
             <!-- ⚙️ TAB 4: SETTINGS -->
             <div id="tab-config" class="tab-content">
-                <h2 style="font-family:var(--font-display); font-size:1.4rem; font-weight:800; color:#fff; margin-bottom:20px; display:flex; align-items:center; gap:10px;">
+                <h2 style="font-family:var(--font-display); font-size:1.25rem; font-weight:800; color:#fff; margin-bottom:16px; display:flex; align-items:center; gap:8px;">
                     <i class="fas fa-sliders-h" style="color:var(--theme-color);"></i> SYSTEM SETTINGS
                 </h2>
 
                 <!-- Theme Selector -->
-                <div class="glass-card" style="padding:22px 18px; margin-bottom:16px;">
+                <div class="glass-card" style="padding:16px 14px; margin-bottom:14px;">
                     <label class="cfg-label"><i class="fas fa-palette"></i> Active Theme Preset</label>
-                    <div class="field-group" style="margin-bottom:0;">
-                        <select id="cfg-theme" class="sleek-input" style="padding:14px 18px; appearance:none; cursor:pointer;" onchange="changeTheme()">
-                            <option value="neon_purple">Neon Purple</option>
-                            <option value="cyber_red">Cyberpunk Red</option>
-                            <option value="matrix_green">Matrix Green</option>
-                            <option value="midnight_blue">Midnight Blue</option>
-                            <option value="sunset_orange">Sunset Orange</option>
-                            <option value="ocean_teal">Ocean Teal</option>
-                            <option value="sakura_pink">Sakura Pink</option>
-                            <option value="golden_luxe">Golden Luxe</option>
-                            <option value="electric_cyan">Electric Cyan</option>
-                            <option value="deep_space">Deep Space</option>
-                        </select>
-                    </div>
+                    <select id="cfg-theme" class="sleek-input" style="appearance:none; padding:12px 14px;" onchange="changeTheme()">
+                        <option value="neon_purple">Neon Purple</option>
+                        <option value="cyber_red">Cyberpunk Red</option>
+                        <option value="matrix_green">Matrix Green</option>
+                        <option value="midnight_blue">Midnight Blue</option>
+                        <option value="sunset_orange">Sunset Orange</option>
+                        <option value="ocean_teal">Ocean Teal</option>
+                        <option value="sakura_pink">Sakura Pink</option>
+                        <option value="golden_luxe">Golden Luxe</option>
+                        <option value="electric_cyan">Electric Cyan</option>
+                        <option value="deep_space">Deep Space</option>
+                    </select>
                 </div>
 
                 <!-- Client App Overrides -->
-                <div class="glass-card" style="padding:22px 18px; margin-bottom:16px;">
-                    <h3 style="font-size:0.88rem; font-weight:800; color:#fff; margin-bottom:16px; text-transform:uppercase; letter-spacing:0.8px;">
+                <div class="glass-card" style="padding:16px 14px; margin-bottom:14px;">
+                    <h3 style="font-size:0.82rem; font-weight:800; color:#fff; margin-bottom:12px; text-transform:uppercase;">
                         Client UI Overrides
                     </h3>
 
@@ -1756,67 +1448,67 @@
                         <input type="checkbox" id="cfg-maint" class="switch danger">
                     </div>
                     <label class="cfg-label">Maintenance Notice</label>
-                    <textarea id="cfg-maint-msg" class="sleek-input" style="min-height:75px; resize:vertical; margin-bottom:16px; padding:12px;"></textarea>
+                    <textarea id="cfg-maint-msg" class="sleek-input" style="min-height:70px; resize:vertical; margin-bottom:12px; padding:10px;"></textarea>
 
                     <div class="toggle-row">
                         <span>Broadcast Alert</span>
                         <input type="checkbox" id="cfg-broadcast" class="switch">
                     </div>
                     <label class="cfg-label">Broadcast Banner Text</label>
-                    <textarea id="cfg-broadcast-msg" class="sleek-input" style="min-height:75px; resize:vertical; margin-bottom:16px; padding:12px;"></textarea>
+                    <textarea id="cfg-broadcast-msg" class="sleek-input" style="min-height:70px; resize:vertical; margin-bottom:12px; padding:10px;"></textarea>
 
                     <label class="cfg-label">App Title Name</label>
-                    <input type="text" id="cfg-main-name" class="sleek-input" style="margin-bottom:14px; padding:12px 16px;">
+                    <input type="text" id="cfg-main-name" class="sleek-input" style="margin-bottom:12px;">
 
                     <label class="cfg-label">Main Bio Tagline</label>
-                    <input type="text" id="cfg-main-bio" class="sleek-input" style="margin-bottom:14px; padding:12px 16px;">
+                    <input type="text" id="cfg-main-bio" class="sleek-input" style="margin-bottom:12px;">
 
-                    <div class="grid-2" style="margin-bottom:14px;">
+                    <div class="grid-2" style="margin-bottom:12px;">
                         <div>
                             <label class="cfg-label">Tag 1</label>
-                            <input type="text" id="cfg-tag1" class="sleek-input" style="padding:12px 16px;">
+                            <input type="text" id="cfg-tag1" class="sleek-input">
                         </div>
                         <div>
                             <label class="cfg-label">Tag 2</label>
-                            <input type="text" id="cfg-tag2" class="sleek-input" style="padding:12px 16px;">
+                            <input type="text" id="cfg-tag2" class="sleek-input">
                         </div>
                     </div>
 
                     <label class="cfg-label">Verify Button Text</label>
-                    <input type="text" id="cfg-verify-btn" class="sleek-input" style="padding:12px 16px;">
+                    <input type="text" id="cfg-verify-btn" class="sleek-input">
                 </div>
 
                 <!-- Info & Links -->
-                <div class="glass-card" style="padding:22px 18px; margin-bottom:20px;">
-                    <h3 style="font-size:0.88rem; font-weight:800; color:#fff; margin-bottom:16px; text-transform:uppercase; letter-spacing:0.8px;">
-                        Info & Developer Profile
+                <div class="glass-card" style="padding:16px 14px; margin-bottom:20px;">
+                    <h3 style="font-size:0.82rem; font-weight:800; color:#fff; margin-bottom:12px; text-transform:uppercase;">
+                        Info & Profile
                     </h3>
 
                     <label class="cfg-label">Dialog Title</label>
-                    <input type="text" id="cfg-title" class="sleek-input" style="margin-bottom:12px; padding:12px 16px;">
+                    <input type="text" id="cfg-title" class="sleek-input" style="margin-bottom:10px;">
 
                     <label class="cfg-label">Developer Alias</label>
-                    <input type="text" id="cfg-dev-name" class="sleek-input" style="margin-bottom:12px; padding:12px 16px;">
+                    <input type="text" id="cfg-dev-name" class="sleek-input" style="margin-bottom:10px;">
 
                     <label class="cfg-label">Developer Skills</label>
-                    <input type="text" id="cfg-dev-skills" class="sleek-input" style="margin-bottom:12px; padding:12px 16px;">
+                    <input type="text" id="cfg-dev-skills" class="sleek-input" style="margin-bottom:10px;">
 
                     <label class="cfg-label">Close Button Label</label>
-                    <input type="text" id="cfg-close-btn" class="sleek-input" style="margin-bottom:12px; padding:12px 16px;">
+                    <input type="text" id="cfg-close-btn" class="sleek-input" style="margin-bottom:10px;">
 
-                    <label class="cfg-label">Developer Telegram Handle</label>
-                    <input type="text" id="cfg-dev-tele" class="sleek-input" style="margin-bottom:12px; padding:12px 16px;" placeholder="t.me/...">
+                    <label class="cfg-label">Developer Telegram</label>
+                    <input type="text" id="cfg-dev-tele" class="sleek-input" style="margin-bottom:10px;" placeholder="t.me/...">
 
                     <label class="cfg-label">Support / Admin Link</label>
-                    <input type="text" id="cfg-admin-link" class="sleek-input" style="margin-bottom:20px; padding:12px 16px;" placeholder="https://t.me/...">
+                    <input type="text" id="cfg-admin-link" class="sleek-input" style="margin-bottom:18px;" placeholder="https://t.me/...">
 
-                    <button class="btn-primary ripple-click elastic-click" style="width:100%; padding:16px;" onclick="saveConfig()">
-                        <i class="fas fa-cloud-upload-alt"></i> PUSH CONFIG TO DATABASE
+                    <button class="btn-primary" style="width:100%; min-height:48px;" onclick="saveConfig()">
+                        <i class="fas fa-cloud-upload-alt"></i> PUSH SETTINGS
                     </button>
                 </div>
             </div>
 
-            <div style="text-align:center; margin:30px 0 10px 0; color:var(--text-muted); font-size:0.68rem; font-weight:700; letter-spacing:2px; text-transform:uppercase;">
+            <div style="text-align:center; margin:20px 0 10px 0; color:var(--text-muted); font-size:0.65rem; font-weight:700; letter-spacing:1.5px; text-transform:uppercase;">
                 POWERED BY <span style="color:var(--theme-color); font-weight:800;">ALPHA OS</span>
             </div>
 
@@ -1825,17 +1517,17 @@
 
     <!-- 🏝️ FLOATING DOCK NAVBAR -->
     <div class="navbar-container" id="navbar-wrap">
-        <div class="navbar hover-glow">
-            <div class="nav-item active ripple-click elastic-click" onclick="nav('keys', this)">
+        <div class="navbar">
+            <div class="nav-item active" onclick="nav('keys', this)">
                 <i class="fas fa-key"></i><span>KEYS</span>
             </div>
-            <div class="nav-item ripple-click elastic-click" onclick="nav('bans', this)">
+            <div class="nav-item" onclick="nav('bans', this)">
                 <i class="fas fa-skull"></i><span>CRASH</span>
             </div>
-            <div class="nav-item ripple-click elastic-click" onclick="nav('devices', this)">
+            <div class="nav-item" onclick="nav('devices', this)">
                 <i class="fas fa-mobile-alt"></i><span>DEVICES</span>
             </div>
-            <div class="nav-item ripple-click elastic-click" onclick="nav('config', this)">
+            <div class="nav-item" onclick="nav('config', this)">
                 <i class="fas fa-sliders-h"></i><span>SETTINGS</span>
             </div>
         </div>
@@ -1844,122 +1536,136 @@
     <!-- 🔑 MODAL: AUTHORIZE KEY -->
     <div class="modal" id="m-key">
         <div class="modal-box glass-card">
-            <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:22px;">
+            <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:18px;">
                 <div class="modal-title">
                     <i class="fas fa-key"></i> <span id="mk-title">AUTHORIZE KEY</span>
                 </div>
                 <button class="btn-close" onclick="closeModal('m-key')"><i class="fas fa-times"></i></button>
             </div>
 
-            <label class="cfg-label">Access Key String</label>
-            <div style="position:relative; margin-bottom:14px;">
-                <input type="text" id="mk-key" class="sleek-input" style="padding-right:75px; font-family:var(--font-code); font-weight:700;" placeholder="DP-KEY-XXXXXX">
+            <label class="cfg-label">Key String</label>
+            <div style="position:relative; margin-bottom:12px;">
+                <input type="text" id="mk-key" class="sleek-input" style="padding-right:70px; font-family:var(--font-code); font-weight:700;" placeholder="DP-KEY-XXXXXX" autocapitalize="none">
                 <button onclick="copyToClipboard(document.getElementById('mk-key').value, event)"
-                    style="position:absolute; right:8px; top:50%; transform:translateY(-50%); background:rgba(255,255,255,0.1); border:none; color:#fff; padding:6px 12px; border-radius:8px; font-weight:800; font-size:0.65rem; cursor:pointer;">
+                    style="position:absolute; right:8px; top:50%; transform:translateY(-50%); background:rgba(255,255,255,0.1); border:none; color:#fff; padding:6px 10px; border-radius:6px; font-weight:800; font-size:0.65rem; cursor:pointer;">
                     COPY
                 </button>
             </div>
 
-            <label class="cfg-label">Remarks / Customer Note</label>
-            <input type="text" id="mk-remarks" class="sleek-input" style="margin-bottom:14px; padding:12px 16px;" placeholder="e.g. VIP Customer">
+            <label class="cfg-label">Remarks / Note</label>
+            <input type="text" id="mk-remarks" class="sleek-input" style="margin-bottom:12px;" placeholder="Optional remarks">
 
             <label class="cfg-label">Bulk Key Count</label>
-            <input type="number" id="mk-bulk" class="sleek-input" style="margin-bottom:16px; padding:12px 16px;" value="1" min="1">
+            <input type="number" id="mk-bulk" class="sleek-input" style="margin-bottom:14px;" value="1" min="1">
 
-            <button class="btn-gen elastic-click" onclick="genRandomKey()">
+            <button class="btn-gen" onclick="genRandomKey()">
                 <i class="fas fa-dice"></i> GENERATE RANDOM KEY
             </button>
 
-            <label class="cfg-label" style="margin-top:6px;">Duration (Days) - Starts on Bind</label>
-            <input type="number" id="mk-duration" class="sleek-input" style="margin-bottom:10px; padding:12px 16px;" value="30" min="0">
+            <label class="cfg-label" style="margin-top:4px;">Duration (Days) - Starts on Bind</label>
+            <input type="number" id="mk-duration" class="sleek-input" style="margin-bottom:8px;" value="30" min="0">
 
-            <div style="display:flex; gap:6px; margin-bottom:18px;">
-                <button class="filter-chip" style="flex:1; padding:8px 0; text-align:center;" onclick="addDaysToInput(8)">+8 DAYS</button>
-                <button class="filter-chip" style="flex:1; padding:8px 0; text-align:center;" onclick="addDaysToInput(16)">+16 DAYS</button>
-                <button class="filter-chip" style="flex:1; padding:8px 0; text-align:center;" onclick="addDaysToInput(30)">+30 DAYS</button>
-                <button class="filter-chip" style="flex:1; padding:8px 0; text-align:center; color:var(--theme-color); border-color:var(--theme-color);" onclick="setLifetime()">LIFETIME</button>
+            <div style="display:flex; gap:6px; margin-bottom:14px;">
+                <button class="filter-chip" style="flex:1; padding:6px 0; text-align:center;" onclick="addDaysToInput(8)">+8D</button>
+                <button class="filter-chip" style="flex:1; padding:6px 0; text-align:center;" onclick="addDaysToInput(16)">+16D</button>
+                <button class="filter-chip" style="flex:1; padding:6px 0; text-align:center;" onclick="addDaysToInput(30)">+30D</button>
+                <button class="filter-chip" style="flex:1; padding:6px 0; text-align:center; color:var(--theme-color); border-color:var(--theme-color);" onclick="setLifetime()">LIFETIME</button>
             </div>
 
-            <div class="grid-2" style="margin-bottom:16px;">
+            <div class="grid-2" style="margin-bottom:14px;">
                 <div>
                     <label class="cfg-label">Max Devices</label>
-                    <input type="number" id="mk-max" class="sleek-input" style="padding:12px 16px; margin-bottom:12px;" value="1" min="1">
+                    <input type="number" id="mk-max" class="sleek-input" style="margin-bottom:10px;" value="1" min="1">
 
                     <label class="cfg-label">Status</label>
-                    <select id="mk-status" class="sleek-input" style="padding:12px 16px; appearance:none;">
-                        <option value="active">Active Access</option>
-                        <option value="banned">Revoked Access</option>
+                    <select id="mk-status" class="sleek-input" style="appearance:none;">
+                        <option value="active">Active</option>
+                        <option value="banned">Revoked</option>
                     </select>
                 </div>
                 <div>
                     <label class="cfg-label">Expiry Date</label>
-                    <input type="date" id="mk-expiry" class="sleek-input" style="padding:12px 16px; margin-bottom:12px; font-family:var(--font-code);">
+                    <input type="date" id="mk-expiry" class="sleek-input" style="margin-bottom:10px; font-family:var(--font-code);">
 
                     <label class="cfg-label">Expiry Time</label>
-                    <input type="time" id="mk-expiry-time" class="sleek-input" style="padding:12px 16px; font-family:var(--font-code);" value="23:59">
+                    <input type="time" id="mk-expiry-time" class="sleek-input" style="font-family:var(--font-code);" value="23:59">
                 </div>
             </div>
 
             <input type="hidden" id="mk-hwid">
 
-            <button id="btn-save-key" class="btn-primary ripple-click elastic-click" style="width:100%; padding:16px; background:var(--success); border-color:var(--success);" onclick="saveKey()">
-                <i class="fas fa-check-circle"></i> SAVE & AUTHORIZE KEY
+            <button id="btn-save-key" class="btn-primary" style="width:100%; background:var(--success); border-color:var(--success);" onclick="saveKey()">
+                <i class="fas fa-check-circle"></i> SAVE & AUTHORIZE
             </button>
         </div>
     </div>
 
-    <!-- 🛡️ MODAL: SAVED CONNECTIONS -->
+    <!-- 🛡️ MODAL: SAVED CONNECTIONS (Glitch-Free Mobile Manager) -->
     <div class="modal" id="m-saved">
-        <div class="modal-box glass-card" style="padding:26px;">
-            <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:18px;">
-                <h2 style="font-family:var(--font-display); font-size:1.15rem; font-weight:800; color:#fff; display:flex; align-items:center; gap:8px;">
+        <div class="modal-box glass-card" style="padding:22px 18px;">
+            <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:14px;">
+                <h2 style="font-family:var(--font-display); font-size:1.1rem; font-weight:800; color:#fff; display:flex; align-items:center; gap:8px;">
                     <i class="fas fa-shield-alt" style="color:var(--theme-color);"></i> SAVED SESSIONS
                 </h2>
                 <button class="btn-close" onclick="closeModal('m-saved')"><i class="fas fa-times"></i></button>
             </div>
-            <div id="saved-logins" style="max-height:340px; overflow-y:auto; display:flex; flex-direction:column; gap:10px;"></div>
+
+            <!-- In-Modal Quick Save Card (No prompts on mobile!) -->
+            <div style="background:rgba(255,255,255,0.03); border:1px solid rgba(255,255,255,0.08); border-radius:var(--radius-md); padding:12px; margin-bottom:16px;">
+                <div style="font-size:0.68rem; font-weight:800; color:var(--text-sub); text-transform:uppercase; margin-bottom:6px;">
+                    <i class="fas fa-save" style="color:var(--theme-color);"></i> Store Active Credentials
+                </div>
+                <div style="display:flex; gap:8px;">
+                    <input type="text" id="save-session-name" placeholder="Session label (e.g. Server 1)..." class="sleek-input" style="flex:1; min-height:42px; padding:8px 12px; font-size:14px !important;" autocapitalize="none">
+                    <button onclick="confirmSaveSession()" class="btn-primary" style="min-height:42px; padding:0 14px; font-size:0.75rem; white-space:nowrap;">
+                        SAVE
+                    </button>
+                </div>
+            </div>
+
+            <div id="saved-logins" style="max-height:300px; overflow-y:auto; -webkit-overflow-scrolling:touch; display:flex; flex-direction:column; gap:8px;"></div>
         </div>
     </div>
 
-    <!-- 🌌 PARTICLES SETUP -->
+    <!-- 🌌 PARTICLES SETUP (Mobile Lightweight) -->
     <script>
         try {
             particlesJS("particles-js", {
                 "particles": {
-                    "number": { "value": 35, "density": { "enable": true, "value_area": 900 } },
-                    "color": { "value": ["#F43F5E", "#38BDF8", "#818CF8"] },
+                    "number": { "value": 22, "density": { "enable": true, "value_area": 800 } },
+                    "color": { "value": ["#F43F5E", "#38BDF8"] },
                     "shape": { "type": "circle" },
-                    "opacity": { "value": 0.45, "random": true },
+                    "opacity": { "value": 0.35, "random": true },
                     "size": { "value": 1.2, "random": true },
                     "line_linked": { "enable": false },
-                    "move": { "enable": true, "speed": 0.5, "direction": "none", "random": true, "straight": false, "out_mode": "out", "bounce": false }
+                    "move": { "enable": true, "speed": 0.4, "direction": "none", "random": true, "straight": false, "out_mode": "out" }
                 },
-                "interactivity": { "detect_on": "canvas", "events": { "onhover": { "enable": false }, "onclick": { "enable": false }, "resize": true } },
-                "retina_detect": true
+                "interactivity": { "events": { "onhover": { "enable": false }, "onclick": { "enable": false } } },
+                "retina_detect": false
             });
         } catch (e) { }
     </script>
 
     <!-- 🚀 CORE CONTROLLER JAVASCRIPT -->
     <script>
-        // Safe Storage Helper
+        // Safe Storage Wrapper
         const Storage = {
             get: (k) => { try { return localStorage.getItem(k); } catch (e) { return null; } },
             set: (k, v) => { try { localStorage.setItem(k, v); } catch (e) { } },
             remove: (k) => { try { localStorage.removeItem(k); } catch (e) { } }
         };
 
-        // Performance Debounce
+        // Performance Debounce Utility
         function debounce(fn, ms) {
             let t;
             return (...args) => { clearTimeout(t); t = setTimeout(() => fn(...args), ms); };
         }
 
-        // Animated Smooth Number Counter
+        // Smooth Counter
         function animateCount(el, target) {
             const start = parseInt(el.innerText) || 0;
             if (start === target) return;
-            const dur = 400;
+            const dur = 350;
             const startTime = performance.now();
             const tick = (now) => {
                 const p = Math.min((now - startTime) / dur, 1);
@@ -1995,20 +1701,20 @@
             dp_dialog_controller: {
                 ui_settings: {
                     maintenance: false,
-                    maintenance_msg: "Servers are currently undergoing upgrades. Check back in 1 hour.",
+                    maintenance_msg: "Servers are undergoing upgrades. Check back soon.",
                     show_broadcast: true,
-                    broadcast_msg: "Welcome to Alpha v2.0! Dynamic backgrounds are now live.",
+                    broadcast_msg: "Welcome to Alpha v2.4 Mobile Console.",
                     main_name: "ALPHA ENGINE",
                     main_bio: "Premium Access Terminal",
-                    tag_1: "v2.0",
-                    tag_2: "Secure",
+                    tag_1: "v2.4",
+                    tag_2: "Mobile",
                     verify_btn_text: "AUTHENTICATE"
                 },
                 info_dialog: {
                     title: "SYSTEM ARCHITECT",
                     dev_name: "Admin",
                     dev_telegram: "@AlphaSupport",
-                    dev_skills: "Java / Reverse Engineering"
+                    dev_skills: "Reverse Engineering"
                 },
                 links: {
                     admin_redirect_url: "https://t.me/AlphaSupport"
@@ -2044,12 +1750,50 @@
             }
         };
 
+        // ===================== 🛡️ GLITCH-FREE SAVED SESSIONS ENGINE =====================
+
+        function cleanUrlForDisplay(url) {
+            if (!url) return "Session";
+            return url.replace(/^https?:\/\//i, '').replace(/\.firebaseio\.com.*/i, '').replace(/\.firebasedatabase\.app.*/i, '');
+        }
+
+        function getSavedLogins() {
+            try {
+                const raw = Storage.get('alpha_saved_logins');
+                if (!raw) return [];
+                const parsed = JSON.parse(raw);
+                if (!Array.isArray(parsed)) return [];
+                return parsed.filter(item => item && typeof item === 'object' && item.url && item.secret);
+            } catch (e) {
+                return [];
+            }
+        }
+
+        // Tap Save on Login Screen: Prepares save modal without broken window.prompt()
         function saveCurrentSession() {
             let urlInput = document.getElementById('auth-url').value.trim();
             const secret = document.getElementById('auth-secret').value.trim();
 
             if (!urlInput || !secret) {
-                showToast("Enter URL and Secret to save", "var(--warning)", "fa-exclamation-triangle");
+                showToast("Fill URL & Secret first", "var(--warning)", "fa-exclamation-triangle");
+                return;
+            }
+
+            openModal('m-saved');
+            const nameInput = document.getElementById('save-session-name');
+            if (nameInput) {
+                nameInput.value = cleanUrlForDisplay(urlInput);
+                nameInput.focus();
+            }
+        }
+
+        // Confirms saving from within the modal
+        function confirmSaveSession() {
+            let urlInput = document.getElementById('auth-url').value.trim();
+            const secret = document.getElementById('auth-secret').value.trim();
+
+            if (!urlInput || !secret) {
+                showToast("Enter URL and Secret on login screen", "var(--warning)", "fa-exclamation-triangle");
                 return;
             }
 
@@ -2062,22 +1806,25 @@
                 urlInput = `https://${stripped}.firebaseio.com`;
             }
 
-            let savedLogins = JSON.parse(Storage.get('alpha_saved_logins') || '[]');
-            if (!savedLogins.find(l => l.url === urlInput)) {
-                const sessionName = prompt("Enter a name for this session:");
-                if (sessionName === null) return;
+            const nameInput = document.getElementById('save-session-name');
+            const customName = nameInput ? nameInput.value.trim() : "";
+            const finalName = customName || cleanUrlForDisplay(urlInput);
 
-                savedLogins.push({
-                    url: urlInput,
-                    secret: secret,
-                    name: sessionName.trim() || urlInput.replace('https://', '').replace('.firebaseio.com', '')
-                });
-                Storage.set('alpha_saved_logins', JSON.stringify(savedLogins));
-                renderSavedLogins();
-                showToast("Session Saved", "var(--success)", "fa-save");
+            let saved = getSavedLogins();
+            const existingIdx = saved.findIndex(l => l.url === urlInput);
+
+            if (existingIdx !== -1) {
+                saved[existingIdx].secret = secret;
+                saved[existingIdx].name = finalName;
+                showToast(`Updated "${finalName}"`, "var(--success)", "fa-check-circle");
             } else {
-                showToast("Session already saved", "var(--theme-color)", "fa-info-circle");
+                saved.push({ url: urlInput, secret: secret, name: finalName });
+                showToast(`Saved "${finalName}"`, "var(--success)", "fa-save");
             }
+
+            Storage.set('alpha_saved_logins', JSON.stringify(saved));
+            if (nameInput) nameInput.value = "";
+            renderSavedLogins();
         }
 
         const sanitize = s => String(s || '').replace(/</g, '&lt;').replace(/>/g, '&gt;').replace(/"/g, '&quot;');
@@ -2085,29 +1832,34 @@
         function renderSavedLogins() {
             const container = document.getElementById('saved-logins');
             if (!container) return;
-            const saved = JSON.parse(Storage.get('alpha_saved_logins') || '[]');
+            const saved = getSavedLogins();
+
             if (saved.length === 0) {
-                container.innerHTML = '<span style="color:var(--text-sub); font-size:0.75rem; text-align:center; padding:16px;">No saved connections found.</span>';
+                container.innerHTML = '<div style="color:var(--text-sub); font-size:0.75rem; text-align:center; padding:20px;"><i class="fas fa-folder-open" style="font-size:1.5rem; opacity:0.3; margin-bottom:8px; display:block;"></i>No saved connections yet.</div>';
                 return;
             }
+
             let html = '';
-            saved.forEach((login, idx) => {
-                const rawName = login.name || login.url.replace('https://', '').replace('.firebaseio.com', '');
-                const displayName = sanitize(rawName);
-                const safeUrl = sanitize(login.url);
-                const safeSecret = sanitize(login.secret);
+            saved.forEach((loginItem, idx) => {
+                const displayName = sanitize(loginItem.name || cleanUrlForDisplay(loginItem.url));
+                const domain = sanitize(cleanUrlForDisplay(loginItem.url));
 
                 html += `
-                    <div class="glass-card" style="padding:14px; border-radius:var(--radius-sm); display:flex; flex-direction:column; gap:8px;">
+                    <div class="glass-card" style="padding:12px; border-radius:var(--radius-md); display:flex; flex-direction:column; gap:8px;">
                         <div style="display:flex; justify-content:space-between; align-items:center;">
-                            <div style="font-size:0.85rem; font-weight:800; color:#fff; overflow:hidden; text-overflow:ellipsis; white-space:nowrap; max-width:260px;">
-                                <i class="fas fa-server" style="color:var(--theme-color); margin-right:6px;"></i> ${displayName}
+                            <div style="flex:1; overflow:hidden; padding-right:8px;">
+                                <div style="font-size:0.85rem; font-weight:800; color:#fff; overflow:hidden; text-overflow:ellipsis; white-space:nowrap;">
+                                    <i class="fas fa-server" style="color:var(--theme-color); margin-right:5px;"></i> ${displayName}
+                                </div>
+                                <div style="font-size:0.68rem; font-family:var(--font-code); color:var(--text-muted); overflow:hidden; text-overflow:ellipsis; white-space:nowrap;">
+                                    ${domain}
+                                </div>
                             </div>
                             <button class="btn-strip-action" style="--btn-color:var(--danger); width:32px; height:32px; min-width:32px; padding:0; border-radius:50%;" onclick="removeLogin(${idx})">
                                 <i class="fas fa-trash"></i>
                             </button>
                         </div>
-                        <button onclick="fillLogin('${safeUrl}', '${safeSecret}')" class="btn-primary elastic-click" style="width:100%; padding:10px; font-size:0.75rem;">
+                        <button onclick="fillLogin(${idx})" class="btn-primary" style="width:100%; min-height:40px; padding:8px; font-size:0.72rem;">
                             <i class="fas fa-plug"></i> CONNECT
                         </button>
                     </div>
@@ -2116,18 +1868,31 @@
             container.innerHTML = html;
         }
 
-        function fillLogin(url, secret) {
-            document.getElementById('auth-url').value = url;
-            document.getElementById('auth-secret').value = secret;
-            closeModal('m-saved');
-            login();
+        // Fills credentials via index - 100% immune to quote/escaping glitches
+        function fillLogin(idx) {
+            try {
+                const saved = getSavedLogins();
+                if (saved && saved[idx]) {
+                    document.getElementById('auth-url').value = saved[idx].url || "";
+                    document.getElementById('auth-secret').value = saved[idx].secret || "";
+                    closeModal('m-saved');
+                    showToast("Loaded: " + (saved[idx].name || "Session"), "var(--theme-color)", "fa-plug");
+                    login();
+                }
+            } catch (e) {
+                showToast("Failed to load session", "var(--danger)", "fa-times-circle");
+            }
         }
 
         function removeLogin(idx) {
-            let saved = JSON.parse(Storage.get('alpha_saved_logins') || '[]');
-            saved.splice(idx, 1);
-            Storage.set('alpha_saved_logins', JSON.stringify(saved));
-            renderSavedLogins();
+            let saved = getSavedLogins();
+            if (saved[idx]) {
+                const name = saved[idx].name || "Session";
+                saved.splice(idx, 1);
+                Storage.set('alpha_saved_logins', JSON.stringify(saved));
+                renderSavedLogins();
+                showToast(`Removed "${name}"`, "var(--danger)", "fa-trash");
+            }
         }
 
         function showToast(msg, color = "var(--theme-color)", icon = "fa-check-circle") {
@@ -2135,9 +1900,9 @@
             document.getElementById('toast-icon').className = `fas ${icon}`;
             document.getElementById('toast-msg').innerHTML = msg;
             t.style.borderColor = color;
-            t.style.boxShadow = `0 12px 35px ${color.replace(')', ', 0.45)').replace('rgb', 'rgba')}`;
+            t.style.boxShadow = `0 10px 30px ${color.replace(')', ', 0.4)').replace('rgb', 'rgba')}`;
             t.classList.add('show');
-            setTimeout(() => t.classList.remove('show'), 3500);
+            setTimeout(() => t.classList.remove('show'), 3200);
         }
 
         function switchView(viewId) {
@@ -2151,7 +1916,7 @@
             }
         }
 
-        // Theme Definitions
+        // Themes
         const THEMES = {
             "neon_purple": [168, 85, 247],
             "cyber_red": [244, 63, 94],
@@ -2193,12 +1958,12 @@
         function resetLoginBtn() {
             const btn = document.getElementById('btn-login');
             if (btn) {
-                btn.innerHTML = 'INITIALIZE CONSOLE <i class="fas fa-arrow-right"></i>';
+                btn.innerHTML = 'INITIALIZE <i class="fas fa-arrow-right"></i>';
                 btn.disabled = false;
             }
         }
 
-        // Firebase Login & Engine Sync
+        // Firebase Login & Realtime Sync
         async function login() {
             const loginBtn = document.getElementById('btn-login');
             if (loginBtn) {
@@ -2251,18 +2016,19 @@
                 Storage.set('alpha_url_p14', FIREBASE_URL);
                 Storage.set('alpha_secret_p14', secret);
 
-                let savedLogins = JSON.parse(Storage.get('alpha_saved_logins') || '[]');
-                if (!savedLogins.find(l => l.url === FIREBASE_URL)) {
-                    savedLogins.push({ url: FIREBASE_URL, secret: secret });
-                    Storage.set('alpha_saved_logins', JSON.stringify(savedLogins));
-                    renderSavedLogins();
+                // Update secret in saved logins if this connection was already saved
+                let saved = getSavedLogins();
+                const matched = saved.find(l => l.url === FIREBASE_URL);
+                if (matched && matched.secret !== secret) {
+                    matched.secret = secret;
+                    Storage.set('alpha_saved_logins', JSON.stringify(saved));
                 }
 
                 await cleanDatabase();
 
                 switchView('screen-dashboard');
                 document.body.classList.add('flash-glitch');
-                setTimeout(() => document.body.classList.remove('flash-glitch'), 450);
+                setTimeout(() => document.body.classList.remove('flash-glitch'), 400);
 
                 refreshUI();
                 showToast("Connected Successfully ✓", "var(--success)", "fa-check-circle");
@@ -2275,9 +2041,9 @@
                 stopAutoSync();
 
                 if (e.message === "Invalid Secret Token") {
-                    showToast("Auth Failed: Wrong Secret", "var(--danger)", "fa-times-circle");
+                    showToast("Wrong Secret Token", "var(--danger)", "fa-times-circle");
                 } else if (e.message.includes("Failed to fetch") || e.message.includes("NetworkError")) {
-                    showToast("Auth Failed: Unreachable URL", "var(--danger)", "fa-wifi");
+                    showToast("Cannot reach Firebase URL", "var(--danger)", "fa-wifi");
                 } else {
                     showToast(`Error: ${e.message}`, "var(--danger)", "fa-times-circle");
                 }
@@ -2322,7 +2088,7 @@
                 }
 
                 const hasModalOpen = document.querySelector('.modal.active') !== null;
-                const isConfigTab = document.getElementById('tab-config').classList.contains('active');
+                const isConfigTab = document.getElementById('tab-config')?.classList.contains('active');
                 const hasTextSelected = window.getSelection().toString() !== "";
 
                 if (!hasModalOpen && !isConfigTab && !hasTextSelected) {
@@ -2398,7 +2164,7 @@
         }
 
         function syncPendingKey(keyStr) {
-            const data = DB.dp_dialog_controller.security.authorized_hwids[keyStr];
+            const data = DB.dp_dialog_controller?.security?.authorized_hwids?.[keyStr];
             if (!data) return;
 
             let days = data.duration_days;
@@ -2440,7 +2206,7 @@
             document.getElementById('mk-duration').value = days;
             document.getElementById('mk-expiry').value = "";
             document.getElementById('mk-expiry-time').value = "";
-            showToast("Set Duration to " + days + " Days", "var(--success)", "fa-clock");
+            showToast("Set Duration: " + days + " Days", "var(--success)", "fa-clock");
         }
 
         function setLifetime() {
@@ -2532,7 +2298,7 @@
             const totalPages = Math.max(1, Math.ceil(totalFiltered / PAGE_SIZE));
             return `<div class="pagination-bar">
                 <button onclick="KEY_PAGE=Math.max(0,KEY_PAGE-1);renderKeys();" ${KEY_PAGE === 0 ? 'disabled' : ''}>&#8592; Prev</button>
-                <span class="pagination-info">Page ${KEY_PAGE + 1} of ${totalPages} &nbsp;(${totalFiltered} keys)</span>
+                <span class="pagination-info">Page ${KEY_PAGE + 1} of ${totalPages} &nbsp;(${totalFiltered})</span>
                 <button onclick="KEY_PAGE=Math.min(${totalPages - 1},KEY_PAGE+1);renderKeys();" ${KEY_PAGE >= totalPages - 1 ? 'disabled' : ''}>Next &#8594;</button>
             </div>`;
         }
@@ -2541,7 +2307,7 @@
             const totalPages = Math.max(1, Math.ceil(totalFiltered / PAGE_SIZE));
             return `<div class="pagination-bar">
                 <button onclick="DEVICE_PAGE=Math.max(0,DEVICE_PAGE-1);renderDevices();" ${DEVICE_PAGE === 0 ? 'disabled' : ''}>&#8592; Prev</button>
-                <span class="pagination-info">Page ${DEVICE_PAGE + 1} of ${totalPages} &nbsp;(${totalFiltered} devices)</span>
+                <span class="pagination-info">Page ${DEVICE_PAGE + 1} of ${totalPages} &nbsp;(${totalFiltered})</span>
                 <button onclick="DEVICE_PAGE=Math.min(${totalPages - 1},DEVICE_PAGE+1);renderDevices();" ${DEVICE_PAGE >= totalPages - 1 ? 'disabled' : ''}>Next &#8594;</button>
             </div>`;
         }
@@ -2549,6 +2315,7 @@
         // Render Keys List
         function renderKeys() {
             const list = document.getElementById('list-keys');
+            if (!list) return;
             const search = (document.getElementById('search-input')?.value || '').toLowerCase();
 
             const keysObj = DB.dp_dialog_controller?.security?.authorized_hwids || {};
@@ -2604,9 +2371,9 @@
             let html = '';
 
             if (pageEntries.length === 0) {
-                html = `<div style="text-align:center; padding:60px 20px; color:var(--text-sub); grid-column:1/-1;">
-                    <i class="fas fa-search" style="font-size:2.2rem; margin-bottom:14px; display:block; opacity:0.35;"></i>
-                    <div style="font-size:0.9rem; font-weight:800; text-transform:uppercase; letter-spacing:1.2px;">No keys found</div>
+                html = `<div style="text-align:center; padding:50px 16px; color:var(--text-sub);">
+                    <i class="fas fa-search" style="font-size:2rem; margin-bottom:12px; display:block; opacity:0.35;"></i>
+                    <div style="font-size:0.85rem; font-weight:800; text-transform:uppercase;">No keys found</div>
                 </div>`;
             } else {
                 pageEntries.forEach(({ keyString, data, calculatedStatus, isBanned, registeredDevices, hwidDisplay, remarksDisplay }) => {
@@ -2620,7 +2387,7 @@
                         }
                     } else if (data.duration_days > 0) {
                         let hasDevices = (data.linked_devices && typeof data.linked_devices === 'object' && Object.keys(data.linked_devices).length > 0);
-                        displayExp = data.duration_days + (hasDevices ? " Days (Pending Sync)" : " Days (Unbound)");
+                        displayExp = data.duration_days + (hasDevices ? " Days (Pending)" : " Days (Unbound)");
                     } else {
                         displayExp = "Unknown";
                     }
@@ -2650,10 +2417,10 @@
                         <div class="glass-card data-card ${cardClass}">
                             <div class="card-header-bar" onclick="const menu = this.nextElementSibling; menu.style.display = menu.style.display === 'none' ? 'block' : 'none'; const icon = this.querySelector('.fa-chevron-down'); if(icon) icon.style.transform = menu.style.display === 'block' ? 'rotate(180deg)' : 'rotate(0deg)';">
                                 <div class="card-key-badge">
-                                    <i class="fas fa-chevron-down" style="color:var(--text-muted); font-size:0.78rem; transition:transform 0.3s; margin-right:4px;"></i>
-                                    <i class="fas fa-fingerprint" style="color:var(--theme-color); font-size:1rem; filter:drop-shadow(0 0 8px var(--theme-glow));"></i>
+                                    <i class="fas fa-chevron-down" style="color:var(--text-muted); font-size:0.75rem; transition:transform 0.25s; margin-right:2px;"></i>
+                                    <i class="fas fa-fingerprint" style="color:var(--theme-color); font-size:0.95rem;"></i>
                                     <span onclick="event.stopPropagation(); copyToClipboard('${keyString}', event)">${keyString}</span>
-                                    <button style="padding:3px 8px; font-size:0.58rem; font-weight:800; border-radius:6px; background:rgba(255,255,255,0.06); color:var(--text-sub); border:1px solid rgba(255,255,255,0.08); cursor:pointer;" onclick="event.stopPropagation(); copyToClipboard('${keyString}', event)">COPY</button>
+                                    <button style="padding:2px 7px; font-size:0.56rem; font-weight:800; border-radius:6px; background:rgba(255,255,255,0.06); color:var(--text-sub); border:1px solid rgba(255,255,255,0.08);" onclick="event.stopPropagation(); copyToClipboard('${keyString}', event)">COPY</button>
                                 </div>
                                 ${badgeHtml}
                             </div>
@@ -2662,17 +2429,17 @@
                                 <div class="card-info-chips">
                                     <div class="info-chip"><i class="fas fa-comment"></i> <b>${sanitize(remarksDisplay)}</b></div>
                                     <div class="info-chip"><i class="fas fa-calendar-alt"></i> <b style="font-family:var(--font-code);">${displayExp}</b></div>
-                                    <div class="info-chip"><i class="fas fa-mobile-alt"></i> <b style="font-family:var(--font-code);">${registeredDevices.length} / ${data.max_devices || 1} DEVS</b></div>
+                                    <div class="info-chip"><i class="fas fa-mobile-alt"></i> <b style="font-family:var(--font-code);">${registeredDevices.length}/${data.max_devices || 1} DEVS</b></div>
                                 </div>
                                 
                                 ${registeredDevices.length > 0 ? `
-                                <div style="margin-bottom:12px; display:flex; justify-content:space-between; align-items:center; gap:8px;">
+                                <div style="margin-bottom:10px; display:flex; justify-content:space-between; align-items:center; gap:6px;">
                                     <div class="hwid-badge-code" style="flex:1;"><i class="fas fa-microchip"></i> ${sanitize(hwidDisplay)}</div>
                                     ${data.duration_days > 0 ? `
-                                    <button class="btn-card-ctrl elastic-click" style="--c:var(--theme-color); padding:6px 12px;" onclick="syncPendingKey('${keyString}')">
+                                    <button class="btn-card-ctrl" style="--c:var(--theme-color); padding:6px 10px;" onclick="syncPendingKey('${keyString}')">
                                         <i class="fas fa-sync"></i> SYNC
                                     </button>` : ''}
-                                    <button class="btn-card-ctrl elastic-click" style="--c:var(--warning); padding:6px 12px;" onclick="resetDevice('${keyString}')">
+                                    <button class="btn-card-ctrl" style="--c:var(--warning); padding:6px 10px;" onclick="resetDevice('${keyString}')">
                                         <i class="fas fa-unlink"></i> UNBIND
                                     </button>
                                 </div>` : ''}
@@ -2740,35 +2507,35 @@
             let html = '';
 
             if (pageDevices.length === 0) {
-                html = `<div style="text-align:center; padding:60px 20px; color:var(--text-sub); grid-column:1/-1;">
-                    <i class="fas fa-mobile-alt" style="font-size:2.2rem; margin-bottom:14px; display:block; opacity:0.35;"></i>
-                    <div style="font-size:0.9rem; font-weight:800; text-transform:uppercase; letter-spacing:1.2px;">No devices found</div>
+                html = `<div style="text-align:center; padding:50px 16px; color:var(--text-sub);">
+                    <i class="fas fa-mobile-alt" style="font-size:2rem; margin-bottom:12px; display:block; opacity:0.35;"></i>
+                    <div style="font-size:0.85rem; font-weight:800; text-transform:uppercase;">No devices found</div>
                 </div>`;
             } else {
                 pageDevices.forEach(({ keyString, hwid, model, isCrashed }) => {
                     html += `
-                        <div class="glass-card data-card ${isCrashed ? 'card-banned' : 'card-active'}" style="padding:14px 16px;">
-                            <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:8px;">
-                                <div style="font-size:0.9rem; font-weight:800; color:#fff; display:flex; align-items:center; gap:8px;">
+                        <div class="glass-card data-card ${isCrashed ? 'card-banned' : 'card-active'}">
+                            <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:6px;">
+                                <div style="font-size:0.85rem; font-weight:800; color:#fff; display:flex; align-items:center; gap:6px;">
                                     <i class="fas fa-mobile-alt" style="color:var(--theme-color);"></i> ${sanitize(model)}
                                 </div>
                                 <div class="badge-status-pill ${isCrashed ? 'banned' : 'active'}">
                                     <div class="status-dot-mini"></div> ${isCrashed ? 'CRASHED' : 'BOUND'}
                                 </div>
                             </div>
-                            <div style="font-family:var(--font-code); font-size:0.75rem; color:var(--text-sub); margin-bottom:4px; overflow:hidden; text-overflow:ellipsis; white-space:nowrap;">
+                            <div style="font-family:var(--font-code); font-size:0.72rem; color:var(--text-sub); margin-bottom:3px; overflow:hidden; text-overflow:ellipsis; white-space:nowrap;">
                                 HWID: <span style="color:#67E8F9;">${sanitize(hwid)}</span>
                             </div>
-                            <div style="font-family:var(--font-code); font-size:0.75rem; color:var(--text-sub); margin-bottom:12px;">
+                            <div style="font-family:var(--font-code); font-size:0.72rem; color:var(--text-sub); margin-bottom:10px;">
                                 KEY: <b style="color:#FFFFFF; cursor:pointer;" onclick="copyToClipboard('${keyString}', event)">${keyString}</b>
                             </div>
                             <div style="display:flex; gap:8px;">
-                                <button class="btn-card-ctrl elastic-click" style="--c:var(--warning); flex:1; padding:8px;" onclick="unbindSpecificDevice('${keyString}', '${hwid}')">
+                                <button class="btn-card-ctrl" style="--c:var(--warning); flex:1;" onclick="unbindSpecificDevice('${keyString}', '${hwid}')">
                                     <i class="fas fa-unlink"></i> UNBIND
                                 </button>
                                 ${isCrashed ?
-                                    `<button class="btn-card-ctrl elastic-click" style="--c:var(--success); flex:1; padding:8px;" onclick="removeBan('${hwid}')"><i class="fas fa-check-circle"></i> REMOVE CRASH</button>` :
-                                    `<button class="btn-card-ctrl elastic-click" style="--c:var(--danger); flex:1; padding:8px;" onclick="crashSpecificDevice('${hwid}')"><i class="fas fa-skull"></i> CRASH</button>`
+                                    `<button class="btn-card-ctrl" style="--c:var(--success); flex:1;" onclick="removeBan('${hwid}')"><i class="fas fa-check-circle"></i> RESTORE</button>` :
+                                    `<button class="btn-card-ctrl" style="--c:var(--danger); flex:1;" onclick="crashSpecificDevice('${hwid}')"><i class="fas fa-skull"></i> CRASH</button>`
                                 }
                             </div>
                         </div>
@@ -2787,7 +2554,7 @@
         }
 
         function unbindSpecificDevice(keyStr, hwid) {
-            if (confirm(`Unbind device ${hwid} from key ${keyStr}?`)) {
+            if (confirm(`Unbind device ${hwid}?`)) {
                 if (DB.dp_dialog_controller?.security?.authorized_hwids?.[keyStr]?.linked_devices) {
                     delete DB.dp_dialog_controller.security.authorized_hwids[keyStr].linked_devices[hwid];
                     pushToFirebase();
@@ -2817,22 +2584,22 @@
             const banArray = Object.keys(crashList);
 
             if (banArray.length === 0) {
-                html = `<div style="text-align:center; padding:40px 20px; color:var(--text-sub); grid-column:1/-1;">
-                    <i class="fas fa-shield-alt" style="font-size:2rem; margin-bottom:12px; display:block; opacity:0.35;"></i>
-                    <div style="font-size:0.85rem; font-weight:800; text-transform:uppercase; letter-spacing:1px;">No active device crashes</div>
+                html = `<div style="text-align:center; padding:35px 16px; color:var(--text-sub);">
+                    <i class="fas fa-shield-alt" style="font-size:1.8rem; margin-bottom:10px; display:block; opacity:0.35;"></i>
+                    <div style="font-size:0.82rem; font-weight:800; text-transform:uppercase;">No active crashes</div>
                 </div>`;
             } else {
                 banArray.forEach(hwid => {
                     html += `
-                        <div class="glass-card data-card card-banned" style="padding:14px 16px; display:flex; justify-content:space-between; align-items:center;">
-                            <div style="display:flex; align-items:center; gap:10px; overflow:hidden; flex:1; margin-right:10px;">
-                                <div style="background:rgba(255,59,92,0.12); width:32px; height:32px; border-radius:50%; color:var(--danger); display:flex; align-items:center; justify-content:center; flex-shrink:0;">
+                        <div class="glass-card data-card card-banned" style="padding:12px 14px; display:flex; justify-content:space-between; align-items:center;">
+                            <div style="display:flex; align-items:center; gap:8px; overflow:hidden; flex:1; margin-right:8px;">
+                                <div style="background:rgba(255,59,92,0.12); width:30px; height:30px; border-radius:50%; color:var(--danger); display:flex; align-items:center; justify-content:center; flex-shrink:0;">
                                     <i class="fas fa-ban"></i>
                                 </div>
-                                <b style="color:#FFFFFF; font-family:var(--font-code); font-size:0.82rem; word-break:break-all;">${sanitize(hwid)}</b>
+                                <b style="color:#FFFFFF; font-family:var(--font-code); font-size:0.78rem; word-break:break-all;">${sanitize(hwid)}</b>
                             </div>
-                            <button class="btn-card-ctrl elastic-click" style="--c:var(--danger); padding:8px 14px; flex-shrink:0;" onclick="removeBan('${hwid}')">
-                                <i class="fas fa-trash"></i> REMOVE
+                            <button class="btn-card-ctrl" style="--c:var(--danger); padding:6px 10px; flex-shrink:0;" onclick="removeBan('${hwid}')">
+                                <i class="fas fa-trash"></i> DEL
                             </button>
                         </div>
                     `;
@@ -2846,9 +2613,9 @@
         }
 
         function populateConfig() {
-            const ui = DB.dp_dialog_controller.ui_settings || {};
-            const info = DB.dp_dialog_controller.info_dialog || {};
-            const links = DB.dp_dialog_controller.links || {};
+            const ui = DB.dp_dialog_controller?.ui_settings || {};
+            const info = DB.dp_dialog_controller?.info_dialog || {};
+            const links = DB.dp_dialog_controller?.links || {};
 
             document.getElementById('cfg-maint').checked = ui.maintenance === true;
             document.getElementById('cfg-maint-msg').value = ui.maintenance_msg || "";
@@ -2956,7 +2723,7 @@
             let originalHtml = "";
             if (btn) {
                 originalHtml = btn.innerHTML;
-                btn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> AUTHORIZING...';
+                btn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> SAVING...';
                 btn.style.opacity = '0.7';
             }
 
@@ -3023,20 +2790,20 @@
                     showToast(`Generated ${bulkCount} Keys`, "var(--success)", "fa-layer-group");
                 } else if (!EDITING_KEY) {
                     copyToClipboard(keysGenerated[0], null);
-                    showToast("Key Generated & Copied", "var(--success)", "fa-copy");
+                    showToast("Key Authorized & Copied", "var(--success)", "fa-copy");
                 } else {
-                    showToast("Key Saved & Authorized", "var(--success)", "fa-check-circle");
+                    showToast("Key Updated", "var(--success)", "fa-check-circle");
                 }
 
                 if (btn) {
                     btn.innerHTML = originalHtml;
                     btn.style.opacity = '1';
                 }
-            }, 500);
+            }, 400);
         }
 
         function deleteKeyDirect(keyStr) {
-            if (confirm(`Delete key: ${keyStr} permanently?`)) {
+            if (confirm(`Delete key ${keyStr}?`)) {
                 delete DB.dp_dialog_controller.security.authorized_hwids[keyStr];
                 pushToFirebase();
                 refreshUI();
@@ -3117,9 +2884,7 @@
                     let now = new Date();
                     if (!isNaN(expDate) && expDate < now) isExpired = true;
                 }
-                if (isExpired) {
-                    expiredKeys.push(keyStr);
-                }
+                if (isExpired) expiredKeys.push(keyStr);
             });
 
             if (expiredKeys.length > 0) {
@@ -3146,7 +2911,7 @@
             }
 
             if (registeredDevices.length === 0) {
-                showToast("Let the key bind first", "var(--warning)", "fa-exclamation-circle");
+                showToast("Let key bind a device first", "var(--warning)", "fa-exclamation-circle");
                 return;
             }
 
@@ -3163,11 +2928,11 @@
 
                 if (count > 0) {
                     pushToFirebase();
-                    showToast(`${count} devices added to crash list`, "var(--danger)", "fa-skull");
+                    showToast(`${count} devices sent to crash list`, "var(--danger)", "fa-skull");
                     renderKeys();
                     renderBans();
                 } else {
-                    showToast("Devices already in crash list", "var(--warning)", "fa-exclamation-circle");
+                    showToast("Devices already crashed", "var(--warning)", "fa-exclamation-circle");
                 }
             }
         }
@@ -3183,7 +2948,7 @@
 
             if (registeredDevices.length === 0) return;
 
-            if (confirm(`Remove crash block for all devices bound to ${keyStr}?`)) {
+            if (confirm(`Remove crash block for ${keyStr}?`)) {
                 if (!DB.dp_dialog_controller.security.crash_list) return;
 
                 let count = 0;
@@ -3208,7 +2973,7 @@
                 DB.dp_dialog_controller.security.authorized_hwids[keyStr].status = banStatus ? "banned" : "active";
                 pushToFirebase();
                 refreshUI();
-                showToast(banStatus ? "Key Banned" : "Key Unbanned", banStatus ? "var(--warning)" : "var(--success)", banStatus ? "fa-ban" : "fa-check-circle");
+                showToast(banStatus ? "Key Banned" : "Key Restored", banStatus ? "var(--warning)" : "var(--success)", banStatus ? "fa-ban" : "fa-check-circle");
             }
         }
 
@@ -3223,7 +2988,7 @@
                 pushToFirebase();
                 showToast("Device Crashed", "var(--danger)", "fa-ban");
             } else {
-                showToast("Device already in crash list", "var(--warning)", "fa-exclamation-circle");
+                showToast("Device already crashed", "var(--warning)", "fa-exclamation-circle");
             }
 
             document.getElementById('ban-hwid-input').value = "";
@@ -3231,7 +2996,7 @@
         }
 
         function removeBan(hwid) {
-            if (confirm("Remove this HWID from crash list?")) {
+            if (confirm("Remove crash for this HWID?")) {
                 if (DB.dp_dialog_controller?.security?.crash_list?.[hwid]) {
                     delete DB.dp_dialog_controller.security.crash_list[hwid];
                     pushToFirebase();
@@ -3252,7 +3017,7 @@
             }
         }
 
-        // Keyboard Shortcuts
+        // Keyboard Shortcuts (when using external mobile keyboard)
         document.addEventListener('keydown', (e) => {
             if (['INPUT', 'TEXTAREA', 'SELECT'].includes(e.target.tagName)) return;
 
@@ -3263,7 +3028,6 @@
 
             if (e.key === '+' || e.key === '=') {
                 e.preventDefault();
-                showToast("Shortcut: Add Key", "var(--theme-color)", "fa-keyboard");
                 openAddKeyModal();
             }
 
@@ -3277,11 +3041,8 @@
                 });
 
                 const numTabs = navItems.length;
-                if (e.key === 'ArrowRight') {
-                    activeIndex = (activeIndex + 1) % numTabs;
-                } else if (e.key === 'ArrowLeft') {
-                    activeIndex = (activeIndex - 1 + numTabs) % numTabs;
-                }
+                if (e.key === 'ArrowRight') activeIndex = (activeIndex + 1) % numTabs;
+                else if (e.key === 'ArrowLeft') activeIndex = (activeIndex - 1 + numTabs) % numTabs;
 
                 navItems[activeIndex].click();
             }
@@ -3330,7 +3091,7 @@
                 const start = performance.now();
                 debugger;
                 if (performance.now() - start > 100) {
-                    document.body.innerHTML = "<div style='display:flex;justify-content:center;align-items:center;height:100vh;background:#06080E;color:#F43F5E;font-size:1.5rem;font-weight:900;text-transform:uppercase;font-family:monospace;'>SECURITY ALERT: TAMPERING DETECTED</div>";
+                    document.body.innerHTML = "<div style='display:flex;justify-content:center;align-items:center;height:100vh;background:#06080E;color:#F43F5E;font-size:1.3rem;font-weight:900;text-transform:uppercase;font-family:monospace;text-align:center;padding:20px;'>SECURITY ALERT: TAMPERING DETECTED</div>";
                 }
             }, 2000);
 
