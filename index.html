@@ -13,13 +13,22 @@
         rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <script src="https://cdn.jsdelivr.net/particles.js/2.0.0/particles.min.js"></script>
+    <script type="importmap">
+        {
+            "imports": {
+                "three": "https://unpkg.com/three@0.160.0/build/three.module.js",
+                "three/addons/": "https://unpkg.com/three@0.160.0/examples/jsm/",
+                "gsap": "https://unpkg.com/gsap@3.12.5/index.js"
+            }
+        }
+    </script>
     <style>
         /* 🌌 ULTRA-MODERN CYBER CHIC DESIGN SYSTEM */
         :root {
             --bg-base: #06080E;
             --bg-surface: #0B0E17;
-            --bg-card: rgba(15, 19, 29, 0.72);
-            --bg-card-hover: rgba(22, 28, 42, 0.85);
+            --bg-card: rgba(14, 18, 28, 0.94);
+            --bg-card-hover: rgba(20, 26, 40, 0.97);
 
             /* Dynamic Monet Accents */
             --theme-color: #F43F5E;
@@ -27,14 +36,14 @@
             --theme-faded: rgba(244, 63, 94, 0.12);
             --theme-border: rgba(244, 63, 94, 0.35);
 
-            /* Glassmorphism Specs */
-            --glass-bg: rgba(14, 18, 28, 0.65);
-            --glass-border: rgba(255, 255, 255, 0.08);
-            --glass-border-subtle: rgba(255, 255, 255, 0.04);
-            --glass-shadow: 0 20px 40px -15px rgba(0, 0, 0, 0.75);
-            --glass-inner: inset 0 1px 0 rgba(255, 255, 255, 0.12);
-            --glass-blur: blur(20px) saturate(160%);
-            --glass-input: rgba(8, 10, 16, 0.82);
+            /* High-Contrast Solid Glassmorphism Specs */
+            --glass-bg: rgba(14, 18, 28, 0.94);
+            --glass-border: rgba(255, 255, 255, 0.12);
+            --glass-border-subtle: rgba(255, 255, 255, 0.08);
+            --glass-shadow: 0 24px 50px -15px rgba(0, 0, 0, 0.95);
+            --glass-inner: inset 0 1px 0 rgba(255, 255, 255, 0.16);
+            --glass-blur: blur(28px) saturate(140%);
+            --glass-input: rgba(8, 10, 16, 0.94);
 
             /* State Indicators */
             --danger: #FF3B5C;
@@ -85,12 +94,25 @@
 
         body {
             background-color: var(--bg-base);
+            background-color: #000000;
             color: var(--text-main);
             font-family: var(--font-main);
             overflow-x: hidden;
             min-height: 100dvh;
             transition: background-color 0.5s ease;
             position: relative;
+        }
+
+        /* 🌌 3D COSMOS BLACK HOLE BACKGROUND */
+        #cosmos-canvas {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100vw;
+            height: 100vh;
+            z-index: 0;
+            display: block;
+            touch-action: none;
         }
 
         /* 🌌 Glowing Multi-Layer Aurora Atmosphere */
@@ -100,6 +122,7 @@
             pointer-events: none;
             z-index: -3;
             overflow: hidden;
+            display: none;
         }
 
         .aurora-orb {
@@ -143,9 +166,11 @@
             0% {
                 transform: translate(0, 0) scale(1);
             }
+
             50% {
                 transform: translate(60px, -40px) scale(1.08);
             }
+
             100% {
                 transform: translate(-40px, 60px) scale(0.95);
             }
@@ -179,12 +204,14 @@
             transform: perspective(700px) rotateX(65deg) translateY(0);
             will-change: transform;
             animation: gridMove 20s linear infinite;
+            display: none;
         }
 
         @keyframes gridMove {
             0% {
                 transform: perspective(700px) rotateX(65deg) translateY(0);
             }
+
             100% {
                 transform: perspective(700px) rotateX(65deg) translateY(50px);
             }
@@ -196,6 +223,7 @@
             z-index: -2;
             pointer-events: none;
             opacity: 0.45;
+            display: none;
         }
 
         /* 🌊 Dynamic Gradient Waves */
@@ -209,6 +237,7 @@
             z-index: -3;
             pointer-events: none;
             opacity: 0.35;
+            display: none;
         }
 
         .wave {
@@ -240,15 +269,31 @@
         }
 
         @keyframes waveMove {
-            0% { transform: translateX(0) scaleY(1); }
-            50% { transform: translateX(-25%) scaleY(0.92); }
-            100% { transform: translateX(-50%) scaleY(1); }
+            0% {
+                transform: translateX(0) scaleY(1);
+            }
+
+            50% {
+                transform: translateX(-25%) scaleY(0.92);
+            }
+
+            100% {
+                transform: translateX(-50%) scaleY(1);
+            }
         }
 
         @keyframes waveMoveReverse {
-            0% { transform: translateX(-50%) scaleY(1); }
-            50% { transform: translateX(-25%) scaleY(1.08); }
-            100% { transform: translateX(0) scaleY(1); }
+            0% {
+                transform: translateX(-50%) scaleY(1);
+            }
+
+            50% {
+                transform: translateX(-25%) scaleY(1.08);
+            }
+
+            100% {
+                transform: translateX(0) scaleY(1);
+            }
         }
 
         /* 💎 PREMIUM FROSTED GLASS CARDS */
@@ -316,8 +361,15 @@
         }
 
         @keyframes softPulse {
-            0%, 100% { transform: scale(1); }
-            50% { transform: scale(1.025); }
+
+            0%,
+            100% {
+                transform: scale(1);
+            }
+
+            50% {
+                transform: scale(1.025);
+            }
         }
 
         .elastic-click {
@@ -393,11 +445,22 @@
             flex-direction: column;
             align-items: center;
             padding-bottom: 120px;
+            position: relative;
+            z-index: 10;
         }
 
         #screen-login {
             justify-content: center;
             padding: 20px;
+            pointer-events: none;
+        }
+
+        .login-card-outer {
+            pointer-events: auto;
+        }
+
+        #screen-dashboard {
+            pointer-events: auto;
         }
 
         #screen-login.active {
@@ -416,6 +479,7 @@
                 transform: translateY(18px) scale(0.98);
                 filter: blur(4px);
             }
+
             to {
                 opacity: 1;
                 transform: translateY(0) scale(1);
@@ -437,6 +501,7 @@
                 opacity: 0;
                 transform: translateY(14px);
             }
+
             to {
                 opacity: 1;
                 transform: translateY(0);
@@ -463,19 +528,26 @@
         }
 
         @keyframes borderPulse {
-            0% { opacity: 0.35; transform: scale(0.99); }
-            100% { opacity: 0.7; transform: scale(1.01); }
+            0% {
+                opacity: 0.35;
+                transform: scale(0.99);
+            }
+
+            100% {
+                opacity: 0.7;
+                transform: scale(1.01);
+            }
         }
 
         .login-glass-box {
             position: relative;
             z-index: 1;
-            background: rgba(11, 14, 22, 0.88);
-            backdrop-filter: blur(28px) saturate(180%);
-            border: 1px solid rgba(255, 255, 255, 0.1);
+            background: rgba(10, 13, 20, 0.96);
+            backdrop-filter: blur(30px) saturate(140%);
+            border: 1.5px solid rgba(255, 255, 255, 0.12);
             border-radius: 32px;
             padding: 40px 32px;
-            box-shadow: 0 30px 60px rgba(0, 0, 0, 0.85), inset 0 1px 0 rgba(255, 255, 255, 0.15);
+            box-shadow: 0 30px 70px rgba(0, 0, 0, 0.95), inset 0 1px 0 rgba(255, 255, 255, 0.16);
         }
 
         .login-avatar-wrap {
@@ -506,7 +578,9 @@
         }
 
         @keyframes ringSpin {
-            100% { transform: rotate(360deg); }
+            100% {
+                transform: rotate(360deg);
+            }
         }
 
         .login-avatar-img {
@@ -745,8 +819,15 @@
         }
 
         @keyframes radarPing {
-            0% { transform: scale(1); opacity: 0.8; }
-            100% { transform: scale(2.6); opacity: 0; }
+            0% {
+                transform: scale(1);
+                opacity: 0.8;
+            }
+
+            100% {
+                transform: scale(2.6);
+                opacity: 0;
+            }
         }
 
         .btn-disconnect {
@@ -998,6 +1079,7 @@
         }
 
         @media (min-width: 768px) {
+
             #list-keys,
             #list-bans,
             #list-devices {
@@ -1238,11 +1320,11 @@
         }
 
         .navbar {
-            background: rgba(12, 16, 26, 0.88);
-            backdrop-filter: blur(24px) saturate(180%);
-            -webkit-backdrop-filter: blur(24px) saturate(180%);
-            border: 1px solid rgba(255, 255, 255, 0.1);
-            box-shadow: 0 20px 50px rgba(0, 0, 0, 0.9), 0 0 20px var(--theme-faded);
+            background: rgba(10, 14, 22, 0.95);
+            backdrop-filter: blur(28px) saturate(160%);
+            -webkit-backdrop-filter: blur(28px) saturate(160%);
+            border: 1.5px solid rgba(255, 255, 255, 0.12);
+            box-shadow: 0 20px 50px rgba(0, 0, 0, 0.95), 0 0 20px var(--theme-faded);
             border-radius: 50px;
             display: flex;
             justify-content: space-between;
@@ -1311,8 +1393,8 @@
         .modal {
             position: fixed;
             inset: 0;
-            background: rgba(4, 6, 12, 0.85);
-            backdrop-filter: blur(16px);
+            background: rgba(4, 6, 12, 0.92);
+            backdrop-filter: blur(20px);
             z-index: 2000;
             display: none;
             justify-content: center;
@@ -1326,8 +1408,13 @@
         }
 
         @keyframes fadeInModal {
-            from { opacity: 0; }
-            to { opacity: 1; }
+            from {
+                opacity: 0;
+            }
+
+            to {
+                opacity: 1;
+            }
         }
 
         .modal-box {
@@ -1339,10 +1426,11 @@
             position: relative;
             max-height: 90vh;
             overflow-y: auto;
-            border: 1px solid var(--theme-border);
-            box-shadow: 0 24px 60px rgba(0, 0, 0, 0.95), 0 0 30px var(--theme-faded);
+            border: 1.5px solid rgba(255, 255, 255, 0.12);
+            box-shadow: 0 24px 60px rgba(0, 0, 0, 0.98), 0 0 30px var(--theme-faded);
             border-radius: var(--radius-xl);
-            background: rgba(14, 18, 28, 0.94);
+            background: rgba(10, 14, 22, 0.97);
+            backdrop-filter: blur(28px);
             transform: scale(0.92) translateY(20px);
             transition: transform 0.35s cubic-bezier(0.16, 1, 0.3, 1);
         }
@@ -1713,7 +1801,9 @@
         }
 
         @keyframes spin {
-            100% { transform: rotate(360deg); }
+            100% {
+                transform: rotate(360deg);
+            }
         }
 
         .flash-glitch {
@@ -1721,8 +1811,13 @@
         }
 
         @keyframes screenFlash {
-            0% { filter: invert(0.8) brightness(1.8); }
-            100% { filter: invert(0) brightness(1); }
+            0% {
+                filter: invert(0.8) brightness(1.8);
+            }
+
+            100% {
+                filter: invert(0) brightness(1);
+            }
         }
     </style>
 </head>
@@ -1730,6 +1825,8 @@
 <body>
 
     <canvas id="colorCanvas" style="display:none;"></canvas>
+    <!-- 🌌 3D COSMOS BLACK HOLE CANVAS -->
+    <canvas id="cosmos-canvas"></canvas>
 
     <!-- 🌌 Ambient Aurora Atmosphere -->
     <div class="aurora-bg">
@@ -1745,13 +1842,16 @@
     <!-- 🌊 Smooth Dynamic Waves -->
     <div class="wave-container">
         <svg class="wave wave1" viewBox="0 0 2000 200" preserveAspectRatio="none">
-            <path d="M0,100 C250,200 250,0 500,100 C750,200 750,0 1000,100 C1250,200 1250,0 1500,100 C1750,200 1750,0 2000,100 L2000,200 L0,200 Z" />
+            <path
+                d="M0,100 C250,200 250,0 500,100 C750,200 750,0 1000,100 C1250,200 1250,0 1500,100 C1750,200 1750,0 2000,100 L2000,200 L0,200 Z" />
         </svg>
         <svg class="wave wave2" viewBox="0 0 2000 200" preserveAspectRatio="none">
-            <path d="M0,100 C250,200 250,0 500,100 C750,200 750,0 1000,100 C1250,200 1250,0 1500,100 C1750,200 1750,0 2000,100 L2000,200 L0,200 Z" />
+            <path
+                d="M0,100 C250,200 250,0 500,100 C750,200 750,0 1000,100 C1250,200 1250,0 1500,100 C1750,200 1750,0 2000,100 L2000,200 L0,200 Z" />
         </svg>
         <svg class="wave wave3" viewBox="0 0 2000 200" preserveAspectRatio="none">
-            <path d="M0,100 C250,200 250,0 500,100 C750,200 750,0 1000,100 C1250,200 1250,0 1500,100 C1750,200 1750,0 2000,100 L2000,200 L0,200 Z" />
+            <path
+                d="M0,100 C250,200 250,0 500,100 C750,200 750,0 1000,100 C1250,200 1250,0 1500,100 C1750,200 1750,0 2000,100 L2000,200 L0,200 Z" />
         </svg>
     </div>
 
@@ -1774,31 +1874,36 @@
                         alt="Avatar">
                 </div>
 
-                <h1 class="login-brand-title">ALPHA<br><span style="color:var(--theme-color); font-size:1.15rem; font-weight:700;">COMMAND TERMINAL</span></h1>
+                <h1 class="login-brand-title">ΛᄂPΉΛ<br><span
+                        style="color:var(--theme-color); font-size:1.15rem; font-weight:700;">Login Systems</span></h1>
 
                 <div class="login-badge-row">
-                    <span class="login-pill-tag online"><span class="status-dot-mini" style="background:var(--theme-color);"></span> v2.4 SECURE</span>
-                    <span class="login-pill-tag">FIREBASE REST</span>
+                    <span class="login-pill-tag online"><span class="status-dot-mini"
+                            style="background:var(--theme-color);"></span> V-8.0 Secure</span>
+                    <span class="login-pill-tag">FIREBASE</span>
                 </div>
 
                 <div class="field-group">
                     <i class="fas fa-database input-icon"></i>
-                    <input type="text" id="auth-url" class="sleek-input" placeholder="Firebase Database URL...">
+                    <input type="text" id="auth-url" class="sleek-input" placeholder="Authencation Url">
                 </div>
 
                 <div class="field-group" style="margin-bottom: 24px;">
                     <i class="fas fa-key input-icon"></i>
-                    <input type="password" id="auth-secret" class="sleek-input" placeholder="Master Secret Token...">
+                    <input type="password" id="auth-secret" class="sleek-input" placeholder="Access Token">
                 </div>
 
                 <div style="display: flex; gap: 10px; align-items: stretch;">
-                    <button type="button" id="btn-login" onclick="login()" class="btn-primary ripple-click elastic-click" style="flex:1; padding:16px;">
+                    <button type="button" id="btn-login" onclick="login()"
+                        class="btn-primary ripple-click elastic-click" style="flex:1; padding:16px;">
                         INITIALIZE CONSOLE <i class="fas fa-arrow-right"></i>
                     </button>
-                    <button type="button" onclick="saveCurrentSession()" class="btn-icon-circular elastic-click" title="Save Active Session">
+                    <button type="button" onclick="saveCurrentSession()" class="btn-icon-circular elastic-click"
+                        title="Save Active Session">
                         <i class="fas fa-save"></i>
                     </button>
-                    <button type="button" onclick="openModal('m-saved')" class="btn-icon-circular elastic-click" title="Saved Connections">
+                    <button type="button" onclick="openModal('m-saved')" class="btn-icon-circular elastic-click"
+                        title="Saved Connections">
                         <i class="fas fa-shield-alt"></i>
                     </button>
                 </div>
@@ -1813,17 +1918,19 @@
             <!-- Top Header -->
             <div class="dash-header">
                 <div class="dash-header-title-box">
-                    <h1>CONTROLLER</h1>
+                    <h1>Admin Console</h1>
                     <div style="display:flex; align-items:center; gap:10px;">
                         <div class="live-status-pill">
-                            <div class="live-status-dot"></div> SYSTEM ONLINE
+                            <div class="live-status-dot"></div> Server ONLINE
                         </div>
-                        <span style="font-size:0.7rem; font-weight:700; color:var(--text-muted); text-transform:uppercase; letter-spacing:1px;">LIVE SYNC</span>
+                        <span
+                            style="font: size 0.7em;rem; font-weight:700; color:var(--text-muted); text-transform:uppercase; letter-spacing:1px;">
+                        </span>
                     </div>
                 </div>
                 <div>
                     <button onclick="disconnectSession()" class="btn-disconnect elastic-click">
-                        <i class="fas fa-power-off"></i> DISCONNECT
+                        <i class="fas fa-power-off"></i> LogOut
                     </button>
                 </div>
             </div>
@@ -1852,7 +1959,7 @@
                 <div class="search-row">
                     <div class="search-capsule">
                         <i class="fas fa-search"></i>
-                        <input type="text" id="search-input" placeholder="Search access key, phone or HWID...">
+                        <input type="text" id="search-input" placeholder="Search access key, Devices or HWID...">
                     </div>
                     <button class="fab-add elastic-click" onclick="openAddKeyModal()" title="Authorize New Key">
                         <i class="fas fa-plus"></i>
@@ -1867,13 +1974,16 @@
                 </div>
 
                 <div class="quick-action-strip">
-                    <button class="btn-strip-action elastic-click" style="--btn-color: var(--danger);" onclick="deleteUnusedKeys()">
+                    <button class="btn-strip-action elastic-click" style="--btn-color: var(--danger);"
+                        onclick="deleteUnusedKeys()">
                         <i class="fas fa-trash-alt"></i> DELETE UNUSED
                     </button>
-                    <button class="btn-strip-action elastic-click" style="--btn-color: var(--danger);" onclick="deleteExpiredKeys()">
+                    <button class="btn-strip-action elastic-click" style="--btn-color: var(--danger);"
+                        onclick="deleteExpiredKeys()">
                         <i class="fas fa-calendar-times"></i> DELETE EXPIRED
                     </button>
-                    <button class="btn-strip-action elastic-click" style="--btn-color: var(--warning);" onclick="unbindAllKeys()">
+                    <button class="btn-strip-action elastic-click" style="--btn-color: var(--warning);"
+                        onclick="unbindAllKeys()">
                         <i class="fas fa-unlink"></i> UNBIND ALL
                     </button>
                 </div>
@@ -1883,22 +1993,32 @@
 
             <!-- 💀 TAB 2: CRASH -->
             <div id="tab-bans" class="tab-content">
-                <h2 style="font-family:var(--font-display); font-size:1.4rem; font-weight:800; color:#fff; margin-bottom:16px; display:flex; align-items:center; gap:10px;">
-                    <i class="fas fa-skull" style="color:var(--danger); filter:drop-shadow(0 0 10px var(--danger-glow));"></i> CRASH & BAN ENGINE
+                <h2
+                    style="font-family:var(--font-display); font-size:1.4rem; font-weight:800; color:#fff; margin-bottom:16px; display:flex; align-items:center; gap:10px;">
+                    <i class="fas fa-skull"
+                        style="color:var(--danger); filter:drop-shadow(0 0 10px var(--danger-glow));"></i> CRASH & BAN
+                    ENGINE
                 </h2>
 
-                <div class="glass-card hover-lift" style="padding:22px 18px; margin-bottom:24px; border-color:rgba(255,59,92,0.3);">
-                    <h3 style="font-size:0.85rem; font-weight:800; color:var(--danger); margin-bottom:12px; text-transform:uppercase; letter-spacing:1px;">
-                        <i class="fas fa-biohazard"></i> Manual HWID Killswitch
+                <div class="glass-card hover-lift"
+                    style="padding:22px 18px; margin-bottom:24px; border-color:rgba(255,59,92,0.3);">
+                    <h3
+                        style="font-size:0.85rem; font-weight:800; color:var(--danger); margin-bottom:12px; text-transform:uppercase; letter-spacing:1px;">
+                        <i class="fas fa-biohazard"></i> Manual HWID Ovveride
                     </h3>
                     <div style="display:flex; gap:10px; margin-bottom:12px;">
-                        <input type="text" id="ban-hwid-input" class="sleek-input" style="padding:14px 18px; font-family:var(--font-code);" placeholder="Paste device HWID to crash...">
-                        <button class="btn-primary elastic-click" style="background:var(--danger); border-color:var(--danger); padding:14px 20px; white-space:nowrap;" onclick="executeBan()">
+                        <input type="text" id="ban-hwid-input" class="sleek-input"
+                            style="padding:14px 18px; font-family:var(--font-code);"
+                            placeholder="Paste device HWID to crash...">
+                        <button class="btn-primary elastic-click"
+                            style="background:var(--danger); border-color:var(--danger); padding:14px 20px; white-space:nowrap;"
+                            onclick="executeBan()">
                             <i class="fas fa-bomb"></i> CRASH
                         </button>
                     </div>
                     <div style="display:flex; justify-content:flex-end;">
-                        <button class="btn-strip-action elastic-click" style="--btn-color:var(--danger); max-width:180px;" onclick="clearAllCrashes()">
+                        <button class="btn-strip-action elastic-click"
+                            style="--btn-color:var(--danger); max-width:180px;" onclick="clearAllCrashes()">
                             <i class="fas fa-trash"></i> CLEAR ALL CRASHES
                         </button>
                     </div>
@@ -1909,8 +2029,11 @@
 
             <!-- 📱 TAB 3: DEVICES -->
             <div id="tab-devices" class="tab-content">
-                <h2 style="font-family:var(--font-display); font-size:1.4rem; font-weight:800; color:#fff; margin-bottom:16px; display:flex; align-items:center; gap:10px;">
-                    <i class="fas fa-mobile-alt" style="color:var(--theme-color); filter:drop-shadow(0 0 10px var(--theme-glow));"></i> CONNECTED HARDWARE
+                <h2
+                    style="font-family:var(--font-display); font-size:1.4rem; font-weight:800; color:#fff; margin-bottom:16px; display:flex; align-items:center; gap:10px;">
+                    <i class="fas fa-mobile-alt"
+                        style="color:var(--theme-color); filter:drop-shadow(0 0 10px var(--theme-glow));"></i> CONNECTED
+                    Devices
                 </h2>
 
                 <div class="search-row" style="margin-bottom:20px;">
@@ -1925,7 +2048,8 @@
 
             <!-- ⚙️ TAB 4: SETTINGS -->
             <div id="tab-config" class="tab-content">
-                <h2 style="font-family:var(--font-display); font-size:1.4rem; font-weight:800; color:#fff; margin-bottom:20px; display:flex; align-items:center; gap:10px;">
+                <h2
+                    style="font-family:var(--font-display); font-size:1.4rem; font-weight:800; color:#fff; margin-bottom:20px; display:flex; align-items:center; gap:10px;">
                     <i class="fas fa-sliders-h" style="color:var(--theme-color);"></i> SYSTEM SETTINGS
                 </h2>
 
@@ -1933,7 +2057,8 @@
                 <div class="glass-card" style="padding:22px 18px; margin-bottom:16px;">
                     <label class="cfg-label"><i class="fas fa-palette"></i> Active Theme Preset</label>
                     <div class="field-group" style="margin-bottom:0;">
-                        <select id="cfg-theme" class="sleek-input" style="padding:14px 18px; appearance:none; cursor:pointer;" onchange="changeTheme()">
+                        <select id="cfg-theme" class="sleek-input"
+                            style="padding:14px 18px; appearance:none; cursor:pointer;" onchange="changeTheme()">
                             <option value="neon_purple">Neon Purple</option>
                             <option value="cyber_red">Cyberpunk Red</option>
                             <option value="matrix_green">Matrix Green</option>
@@ -1950,7 +2075,8 @@
 
                 <!-- Client App Overrides -->
                 <div class="glass-card" style="padding:22px 18px; margin-bottom:16px;">
-                    <h3 style="font-size:0.88rem; font-weight:800; color:#fff; margin-bottom:16px; text-transform:uppercase; letter-spacing:0.8px;">
+                    <h3
+                        style="font-size:0.88rem; font-weight:800; color:#fff; margin-bottom:16px; text-transform:uppercase; letter-spacing:0.8px;">
                         Client UI Overrides
                     </h3>
 
@@ -1959,20 +2085,24 @@
                         <input type="checkbox" id="cfg-maint" class="switch danger">
                     </div>
                     <label class="cfg-label">Maintenance Notice</label>
-                    <textarea id="cfg-maint-msg" class="sleek-input" style="min-height:75px; resize:vertical; margin-bottom:16px; padding:12px;"></textarea>
+                    <textarea id="cfg-maint-msg" class="sleek-input"
+                        style="min-height:75px; resize:vertical; margin-bottom:16px; padding:12px;"></textarea>
 
                     <div class="toggle-row">
                         <span>Broadcast Alert</span>
                         <input type="checkbox" id="cfg-broadcast" class="switch">
                     </div>
                     <label class="cfg-label">Broadcast Banner Text</label>
-                    <textarea id="cfg-broadcast-msg" class="sleek-input" style="min-height:75px; resize:vertical; margin-bottom:16px; padding:12px;"></textarea>
+                    <textarea id="cfg-broadcast-msg" class="sleek-input"
+                        style="min-height:75px; resize:vertical; margin-bottom:16px; padding:12px;"></textarea>
 
                     <label class="cfg-label">App Title Name</label>
-                    <input type="text" id="cfg-main-name" class="sleek-input" style="margin-bottom:14px; padding:12px 16px;">
+                    <input type="text" id="cfg-main-name" class="sleek-input"
+                        style="margin-bottom:14px; padding:12px 16px;">
 
                     <label class="cfg-label">Main Bio Tagline</label>
-                    <input type="text" id="cfg-main-bio" class="sleek-input" style="margin-bottom:14px; padding:12px 16px;">
+                    <input type="text" id="cfg-main-bio" class="sleek-input"
+                        style="margin-bottom:14px; padding:12px 16px;">
 
                     <div class="grid-2" style="margin-bottom:14px;">
                         <div>
@@ -1991,35 +2121,44 @@
 
                 <!-- Info & Links -->
                 <div class="glass-card" style="padding:22px 18px; margin-bottom:20px;">
-                    <h3 style="font-size:0.88rem; font-weight:800; color:#fff; margin-bottom:16px; text-transform:uppercase; letter-spacing:0.8px;">
+                    <h3
+                        style="font-size:0.88rem; font-weight:800; color:#fff; margin-bottom:16px; text-transform:uppercase; letter-spacing:0.8px;">
                         Info & Developer Profile
                     </h3>
 
                     <label class="cfg-label">Dialog Title</label>
-                    <input type="text" id="cfg-title" class="sleek-input" style="margin-bottom:12px; padding:12px 16px;">
+                    <input type="text" id="cfg-title" class="sleek-input"
+                        style="margin-bottom:12px; padding:12px 16px;">
 
                     <label class="cfg-label">Developer Alias</label>
-                    <input type="text" id="cfg-dev-name" class="sleek-input" style="margin-bottom:12px; padding:12px 16px;">
+                    <input type="text" id="cfg-dev-name" class="sleek-input"
+                        style="margin-bottom:12px; padding:12px 16px;">
 
                     <label class="cfg-label">Developer Skills</label>
-                    <input type="text" id="cfg-dev-skills" class="sleek-input" style="margin-bottom:12px; padding:12px 16px;">
+                    <input type="text" id="cfg-dev-skills" class="sleek-input"
+                        style="margin-bottom:12px; padding:12px 16px;">
 
                     <label class="cfg-label">Close Button Label</label>
-                    <input type="text" id="cfg-close-btn" class="sleek-input" style="margin-bottom:12px; padding:12px 16px;">
+                    <input type="text" id="cfg-close-btn" class="sleek-input"
+                        style="margin-bottom:12px; padding:12px 16px;">
 
                     <label class="cfg-label">Developer Telegram Handle</label>
-                    <input type="text" id="cfg-dev-tele" class="sleek-input" style="margin-bottom:12px; padding:12px 16px;" placeholder="t.me/...">
+                    <input type="text" id="cfg-dev-tele" class="sleek-input"
+                        style="margin-bottom:12px; padding:12px 16px;" placeholder="t.me/...">
 
                     <label class="cfg-label">Support / Admin Link</label>
-                    <input type="text" id="cfg-admin-link" class="sleek-input" style="margin-bottom:20px; padding:12px 16px;" placeholder="https://t.me/...">
+                    <input type="text" id="cfg-admin-link" class="sleek-input"
+                        style="margin-bottom:20px; padding:12px 16px;" placeholder="https://t.me/...">
 
-                    <button class="btn-primary ripple-click elastic-click" style="width:100%; padding:16px;" onclick="saveConfig()">
+                    <button class="btn-primary ripple-click elastic-click" style="width:100%; padding:16px;"
+                        onclick="saveConfig()">
                         <i class="fas fa-cloud-upload-alt"></i> PUSH CONFIG TO DATABASE
                     </button>
                 </div>
             </div>
 
-            <div style="text-align:center; margin:30px 0 10px 0; color:var(--text-muted); font-size:0.68rem; font-weight:700; letter-spacing:2px; text-transform:uppercase;">
+            <div
+                style="text-align:center; margin:30px 0 10px 0; color:var(--text-muted); font-size:0.68rem; font-weight:700; letter-spacing:2px; text-transform:uppercase;">
                 POWERED BY <span style="color:var(--theme-color); font-weight:800;">ALPHA OS</span>
             </div>
 
@@ -2033,7 +2172,7 @@
                 <i class="fas fa-key"></i><span>KEYS</span>
             </div>
             <div class="nav-item ripple-click elastic-click" onclick="nav('bans', this)">
-                <i class="fas fa-skull"></i><span>CRASH</span>
+                <i class="fas fa-skull"></i><span>Crash Engine</span>
             </div>
             <div class="nav-item ripple-click elastic-click" onclick="nav('devices', this)">
                 <i class="fas fa-mobile-alt"></i><span>DEVICES</span>
@@ -2056,7 +2195,9 @@
 
             <label class="cfg-label">Access Key String</label>
             <div style="position:relative; margin-bottom:14px;">
-                <input type="text" id="mk-key" class="sleek-input" style="padding-right:75px; font-family:var(--font-code); font-weight:700;" placeholder="DP-KEY-XXXXXX">
+                <input type="text" id="mk-key" class="sleek-input"
+                    style="padding-right:75px; font-family:var(--font-code); font-weight:700;"
+                    placeholder="DP-KEY-XXXXXX">
                 <button onclick="copyToClipboard(document.getElementById('mk-key').value, event)"
                     style="position:absolute; right:8px; top:50%; transform:translateY(-50%); background:rgba(255,255,255,0.1); border:none; color:#fff; padding:6px 12px; border-radius:8px; font-weight:800; font-size:0.65rem; cursor:pointer;">
                     COPY
@@ -2064,29 +2205,38 @@
             </div>
 
             <label class="cfg-label">Remarks / Customer Note</label>
-            <input type="text" id="mk-remarks" class="sleek-input" style="margin-bottom:14px; padding:12px 16px;" placeholder="e.g. VIP Customer">
+            <input type="text" id="mk-remarks" class="sleek-input" style="margin-bottom:14px; padding:12px 16px;"
+                placeholder="e.g. VIP Customer">
 
             <label class="cfg-label">Bulk Key Count</label>
-            <input type="number" id="mk-bulk" class="sleek-input" style="margin-bottom:16px; padding:12px 16px;" value="1" min="1">
+            <input type="number" id="mk-bulk" class="sleek-input" style="margin-bottom:16px; padding:12px 16px;"
+                value="1" min="1">
 
             <button class="btn-gen elastic-click" onclick="genRandomKey()">
                 <i class="fas fa-dice"></i> GENERATE RANDOM KEY
             </button>
 
             <label class="cfg-label" style="margin-top:6px;">Duration (Days) - Starts on Bind</label>
-            <input type="number" id="mk-duration" class="sleek-input" style="margin-bottom:10px; padding:12px 16px;" value="30" min="0">
+            <input type="number" id="mk-duration" class="sleek-input" style="margin-bottom:10px; padding:12px 16px;"
+                value="30" min="0">
 
             <div style="display:flex; gap:6px; margin-bottom:18px;">
-                <button class="filter-chip" style="flex:1; padding:8px 0; text-align:center;" onclick="addDaysToInput(8)">+8 DAYS</button>
-                <button class="filter-chip" style="flex:1; padding:8px 0; text-align:center;" onclick="addDaysToInput(16)">+16 DAYS</button>
-                <button class="filter-chip" style="flex:1; padding:8px 0; text-align:center;" onclick="addDaysToInput(30)">+30 DAYS</button>
-                <button class="filter-chip" style="flex:1; padding:8px 0; text-align:center; color:var(--theme-color); border-color:var(--theme-color);" onclick="setLifetime()">LIFETIME</button>
+                <button class="filter-chip" style="flex:1; padding:8px 0; text-align:center;"
+                    onclick="addDaysToInput(8)">+8 DAYS</button>
+                <button class="filter-chip" style="flex:1; padding:8px 0; text-align:center;"
+                    onclick="addDaysToInput(16)">+16 DAYS</button>
+                <button class="filter-chip" style="flex:1; padding:8px 0; text-align:center;"
+                    onclick="addDaysToInput(30)">+30 DAYS</button>
+                <button class="filter-chip"
+                    style="flex:1; padding:8px 0; text-align:center; color:var(--theme-color); border-color:var(--theme-color);"
+                    onclick="setLifetime()">LIFETIME</button>
             </div>
 
             <div class="grid-2" style="margin-bottom:16px;">
                 <div>
                     <label class="cfg-label">Max Devices</label>
-                    <input type="number" id="mk-max" class="sleek-input" style="padding:12px 16px; margin-bottom:12px;" value="1" min="1">
+                    <input type="number" id="mk-max" class="sleek-input" style="padding:12px 16px; margin-bottom:12px;"
+                        value="1" min="1">
 
                     <label class="cfg-label">Status</label>
                     <select id="mk-status" class="sleek-input" style="padding:12px 16px; appearance:none;">
@@ -2096,39 +2246,51 @@
                 </div>
                 <div>
                     <label class="cfg-label">Expiry Date</label>
-                    <input type="date" id="mk-expiry" class="sleek-input" style="padding:12px 16px; margin-bottom:12px; font-family:var(--font-code);">
+                    <input type="date" id="mk-expiry" class="sleek-input"
+                        style="padding:12px 16px; margin-bottom:12px; font-family:var(--font-code);">
 
                     <label class="cfg-label">Expiry Time</label>
-                    <input type="time" id="mk-expiry-time" class="sleek-input" style="padding:12px 16px; font-family:var(--font-code);" value="23:59">
+                    <input type="time" id="mk-expiry-time" class="sleek-input"
+                        style="padding:12px 16px; font-family:var(--font-code);" value="23:59">
                 </div>
             </div>
 
             <input type="hidden" id="mk-hwid">
 
-            <button id="btn-save-key" class="btn-primary ripple-click elastic-click" style="width:100%; padding:16px; background:var(--success); border-color:var(--success);" onclick="saveKey()">
-                <i class="fas fa-check-circle"></i> SAVE & AUTHORIZE KEY
+            <button id="btn-save-key" class="btn-primary ripple-click elastic-click"
+                style="width:100%; padding:16px; background:var(--success); border-color:var(--success);"
+                onclick="saveKey()">
+                <i class="fas fa-check-circle"></i> AUTHORIZE KEY
             </button>
         </div>
     </div>
 
     <!-- 🛡️ MODAL: SAVED CONNECTIONS (Bulky & Butter-Smooth) -->
     <div class="modal" id="m-saved">
-        <div class="modal-box glass-card" style="padding:24px 20px 20px 20px; max-width:440px; border-radius:26px; border:1.5px solid var(--theme-border); -webkit-overflow-scrolling:touch;">
+        <div class="modal-box glass-card"
+            style="padding:24px 20px 20px 20px; max-width:440px; border-radius:26px; border:1.5px solid var(--theme-border); -webkit-overflow-scrolling:touch;">
             <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:18px;">
-                <h2 style="font-family:var(--font-display); font-size:1.25rem; font-weight:800; color:#fff; display:flex; align-items:center; gap:10px; letter-spacing:-0.5px;">
+                <h2
+                    style="font-family:var(--font-display); font-size:1.25rem; font-weight:800; color:#fff; display:flex; align-items:center; gap:10px; letter-spacing:-0.5px;">
                     <i class="fas fa-shield-alt" style="color:var(--theme-color); font-size:1.2rem;"></i> SAVED SESSIONS
                 </h2>
-                <button type="button" class="btn-close" onclick="closeModal('m-saved')"><i class="fas fa-times"></i></button>
+                <button type="button" class="btn-close" onclick="closeModal('m-saved')"><i
+                        class="fas fa-times"></i></button>
             </div>
 
             <!-- In-App Save Current Bar -->
-            <div style="background:linear-gradient(145deg, rgba(20,26,40,0.7), rgba(12,16,26,0.85)); border:1.5px solid rgba(255,255,255,0.08); border-radius:18px; padding:14px 16px; margin-bottom:16px; flex-shrink:0; box-shadow:0 6px 20px rgba(0,0,0,0.5);">
-                <label class="cfg-label" style="margin-bottom:8px; font-weight:800; font-size:0.7rem; color:var(--text-sub); display:flex; align-items:center; gap:6px;">
+            <div
+                style="background:linear-gradient(145deg, rgba(20,26,40,0.95), rgba(12,16,26,0.98)); border:1.5px solid rgba(255,255,255,0.12); border-radius:18px; padding:14px 16px; margin-bottom:16px; flex-shrink:0; box-shadow:0 6px 20px rgba(0,0,0,0.7);">
+                <label class="cfg-label"
+                    style="margin-bottom:8px; font-weight:800; font-size:0.7rem; color:var(--text-sub); display:flex; align-items:center; gap:6px;">
                     <i class="fas fa-bookmark" style="color:var(--theme-color);"></i> SAVE CURRENT CONNECTION
                 </label>
                 <div style="display:flex; gap:10px;">
-                    <input type="text" id="save-session-name" class="sleek-input" style="padding:12px 16px; font-size:0.85rem; font-weight:600; flex:1; border-radius:12px;" placeholder="Session nickname...">
-                    <button type="button" onclick="saveActiveSessionWithName()" class="btn-primary elastic-click" style="padding:12px 20px; font-size:0.78rem; font-weight:800; white-space:nowrap; border-radius:12px;">
+                    <input type="text" id="save-session-name" class="sleek-input"
+                        style="padding:12px 16px; font-size:0.85rem; font-weight:600; flex:1; border-radius:12px;"
+                        placeholder="Session nickname...">
+                    <button type="button" onclick="saveActiveSessionWithName()" class="btn-primary elastic-click"
+                        style="padding:12px 20px; font-size:0.78rem; font-weight:800; white-space:nowrap; border-radius:12px;">
                         <i class="fas fa-save"></i> SAVE
                     </button>
                 </div>
@@ -2607,10 +2769,23 @@
                 switchView('screen-dashboard');
                 document.body.classList.add('flash-glitch');
                 setTimeout(() => document.body.classList.remove('flash-glitch'), 450);
+                const onLoginComplete = () => {
+                    switchView('screen-dashboard');
+                    document.body.classList.add('flash-glitch');
+                    setTimeout(() => document.body.classList.remove('flash-glitch'), 450);
+                    refreshUI();
+                    showToast("Connected Successfully ✓", "var(--success)", "fa-check-circle");
+                    startAutoSync();
+                };
 
                 refreshUI();
                 showToast("Connected Successfully ✓", "var(--success)", "fa-check-circle");
                 startAutoSync();
+                if (typeof window.startDive === 'function') {
+                    window.startDive(onLoginComplete);
+                } else {
+                    onLoginComplete();
+                }
 
             } catch (e) {
                 console.error(e);
@@ -2645,6 +2820,14 @@
             Storage.remove('alpha_secret_p14');
             stopAutoSync();
             window.location.reload();
+            if (typeof window.resetDive === 'function') {
+                window.resetDive(() => {
+                    switchView('screen-login');
+                    resetLoginBtn();
+                });
+            } else {
+                window.location.reload();
+            }
         }
 
         async function syncDB(silent = false) {
@@ -3032,14 +3215,14 @@
                                     <button class="btn-card-ctrl" style="--c:#FFFFFF;" onclick="editKey('${keyString}')"><i class="fas fa-pen"></i> EDIT</button>
                                     
                                     ${isBanned ?
-                                        `<button class="btn-card-ctrl" style="--c:var(--success);" onclick="toggleBanKey('${keyString}', false)"><i class="fas fa-check-circle"></i> UNBAN</button>` :
-                                        `<button class="btn-card-ctrl" style="--c:var(--warning);" onclick="toggleBanKey('${keyString}', true)"><i class="fas fa-ban"></i> BAN</button>`
-                                    }
+                            `<button class="btn-card-ctrl" style="--c:var(--success);" onclick="toggleBanKey('${keyString}', false)"><i class="fas fa-check-circle"></i> UNBAN</button>` :
+                            `<button class="btn-card-ctrl" style="--c:var(--warning);" onclick="toggleBanKey('${keyString}', true)"><i class="fas fa-ban"></i> BAN</button>`
+                        }
                                     
                                     ${isCrashed ?
-                                        `<button class="btn-card-ctrl" style="--c:var(--success);" onclick="fixCrashKeyDevices('${keyString}')"><i class="fas fa-hammer"></i> FIX</button>` :
-                                        `<button class="btn-card-ctrl" style="--c:var(--danger);" onclick="crashKeyDevices('${keyString}')"><i class="fas fa-skull"></i> CRASH</button>`
-                                    }
+                            `<button class="btn-card-ctrl" style="--c:var(--success);" onclick="fixCrashKeyDevices('${keyString}')"><i class="fas fa-hammer"></i> FIX</button>` :
+                            `<button class="btn-card-ctrl" style="--c:var(--danger);" onclick="crashKeyDevices('${keyString}')"><i class="fas fa-skull"></i> CRASH</button>`
+                        }
                                     
                                     <button class="btn-card-ctrl" style="--c:var(--danger);" onclick="deleteKeyDirect('${keyString}')"><i class="fas fa-trash"></i> DEL</button>
                                 </div>
@@ -3118,9 +3301,9 @@
                                     <i class="fas fa-unlink"></i> UNBIND
                                 </button>
                                 ${isCrashed ?
-                                    `<button class="btn-card-ctrl elastic-click" style="--c:var(--success); flex:1; padding:8px;" onclick="removeBan('${hwid}')"><i class="fas fa-check-circle"></i> REMOVE CRASH</button>` :
-                                    `<button class="btn-card-ctrl elastic-click" style="--c:var(--danger); flex:1; padding:8px;" onclick="crashSpecificDevice('${hwid}')"><i class="fas fa-skull"></i> CRASH</button>`
-                                }
+                            `<button class="btn-card-ctrl elastic-click" style="--c:var(--success); flex:1; padding:8px;" onclick="removeBan('${hwid}')"><i class="fas fa-check-circle"></i> REMOVE CRASH</button>` :
+                            `<button class="btn-card-ctrl elastic-click" style="--c:var(--danger); flex:1; padding:8px;" onclick="crashSpecificDevice('${hwid}')"><i class="fas fa-skull"></i> CRASH</button>`
+                        }
                             </div>
                         </div>
                     `;
@@ -3688,6 +3871,284 @@
             document.body.style.userSelect = "none";
             document.body.style.webkitUserSelect = "none";
         })();
+    </script>
+
+    <!-- 🌌 3D COSMOS BLACK HOLE ENGINE -->
+    <script type="module">
+        import * as THREE from 'three';
+        import { OrbitControls } from 'three/addons/controls/OrbitControls.js';
+        import gsap from 'gsap';
+
+        try {
+            const canvas = document.getElementById('cosmos-canvas');
+            const scene = new THREE.Scene();
+            const camera = new THREE.PerspectiveCamera(40, window.innerWidth / window.innerHeight, 0.1, 1000);
+            camera.position.set(60, 30, 60);
+
+            const renderer = new THREE.WebGLRenderer({ canvas: canvas, antialias: false, powerPreference: "high-performance", alpha: false });
+            renderer.setClearColor(0x000000, 1);
+            renderer.setSize(window.innerWidth, window.innerHeight);
+            renderer.setPixelRatio(Math.min(window.devicePixelRatio, 1.5));
+            renderer.toneMapping = THREE.ACESFilmicToneMapping;
+            renderer.toneMappingExposure = 1.6;
+
+            const controls = new OrbitControls(camera, renderer.domElement);
+            controls.enableDamping = true;
+            controls.dampingFactor = 0.03;
+            controls.autoRotate = false;
+            controls.autoRotateSpeed = 0.2;
+            controls.target.set(0, -12, 0);
+
+            const noiseChunk = `
+                vec3 mod289(vec3 x) { return x - floor(x * (1.0 / 289.0)) * 289.0; }
+                vec4 mod289(vec4 x) { return x - floor(x * (1.0 / 289.0)) * 289.0; }
+                vec4 permute(vec4 x) { return mod289(((x*34.0)+1.0)*x); }
+                vec4 taylorInvSqrt(vec4 r) { return 1.79284291400159 - 0.85373472095314 * r; }
+                float snoise(vec3 v) {
+                    const vec2  C = vec2(1.0/6.0, 1.0/3.0) ;
+                    const vec4  D = vec4(0.0, 0.5, 1.0, 2.0);
+                    vec3 i  = floor(v + dot(v, C.yyy) );
+                    vec3 x0 = v - i + dot(i, C.xxx) ;
+                    vec3 g = step(x0.yzx, x0.xyz);
+                    vec3 l = 1.0 - g;
+                    vec3 i1 = min( g.xyz, l.zxy );
+                    vec3 i2 = max( g.xyz, l.zxy );
+                    vec3 x1 = x0 - i1 + C.xxx;
+                    vec3 x2 = x0 - i2 + C.yyy;
+                    vec3 x3 = x0 - D.yyy;
+                    i = mod289(i);
+                    vec4 p = permute( permute( permute( i.z + vec4(0.0, i1.z, i2.z, 1.0 )) + i.y + vec4(0.0, i1.y, i2.y, 1.0 )) + i.x + vec4(0.0, i1.x, i2.x, 1.0 ));
+                    float n_ = 0.142857142857;
+                    vec3  ns = n_ * D.wyz - D.xzx;
+                    vec4 j = p - 49.0 * floor(p * ns.z * ns.z);
+                    vec4 x_ = floor(j * ns.z);
+                    vec4 y_ = floor(j - 7.0 * x_ );
+                    vec4 x = x_ *ns.x + ns.yyyy;
+                    vec4 y = y_ *ns.x + ns.yyyy;
+                    vec4 h = 1.0 - abs(x) - abs(y);
+                    vec4 b0 = vec4( x.xy, y.xy );
+                    vec4 b1 = vec4( x.zw, y.zw );
+                    vec4 s0 = floor(b0)*2.0 + 1.0;
+                    vec4 s1 = floor(b1)*2.0 + 1.0;
+                    vec4 sh = -step(h, vec4(0.0));
+                    vec4 a0 = b0.xzyw + s0.xzyw*sh.xxyy ;
+                    vec4 a1 = b1.xzyw + s1.xzyw*sh.zzww ;
+                    vec3 p0 = vec3(a0.xy,h.x);
+                    vec3 p1 = vec3(a0.zw,h.y);
+                    vec3 p2 = vec3(a1.xy,h.z);
+                    vec3 p3 = vec3(a1.zw,h.w);
+                    vec4 norm = taylorInvSqrt(vec4(dot(p0,p0), dot(p1,p1), dot(p2,p2), dot(p3,p3)));
+                    p0 *= norm.x; p1 *= norm.y; p2 *= norm.z; p3 *= norm.w;
+                    vec4 m = max(0.6 - vec4(dot(x0,x0), dot(x1,x1), dot(x2,x2), dot(x3,x3)), 0.0);
+                    m = m * m;
+                    return 42.0 * dot( m*m, vec4( dot(p0,x0), dot(p1,x1), dot(p2,x2), dot(p3,x3) ) );
+                }
+            `;
+
+            const coreGroup = new THREE.Group();
+            scene.add(coreGroup);
+
+            const bhMat = new THREE.MeshBasicMaterial({ color: 0x000000 });
+            const bhGeo = new THREE.SphereGeometry(4, 64, 64);
+            coreGroup.add(new THREE.Mesh(bhGeo, bhMat));
+
+            const auraMat = new THREE.ShaderMaterial({
+                uniforms: { uTime: { value: 0 }, uIntensity: { value: 1.0 } },
+                vertexShader: `
+                    varying vec3 vNormal;
+                    varying vec3 vView;
+                    void main() {
+                        vNormal = normalize(normalMatrix * normal);
+                        vView = normalize(-(modelViewMatrix * vec4(position, 1.0)).xyz);
+                        gl_Position = projectionMatrix * modelViewMatrix * vec4(position, 1.0);
+                    }
+                `,
+                fragmentShader: `
+                    uniform float uIntensity;
+                    varying vec3 vNormal;
+                    varying vec3 vView;
+                    void main() {
+                        float rim = pow(1.0 - max(dot(vNormal, vView), 0.0), 4.0);
+                        gl_FragColor = vec4(vec3(1.0, 0.7, 0.1) * rim * uIntensity * 5.0, 1.0); // Golden aura
+                    }
+                `,
+                side: THREE.BackSide, transparent: true, blending: THREE.AdditiveBlending
+            });
+            coreGroup.add(new THREE.Mesh(new THREE.SphereGeometry(4.25, 64, 64), auraMat));
+
+            const instanceCount = 2500;
+            const streakGeo = new THREE.CylinderGeometry(0.015, 0.1, 2.2, 3);
+            streakGeo.rotateX(Math.PI / 2);
+
+            const diskMaterial = new THREE.ShaderMaterial({
+                uniforms: {
+                    uTime: { value: 0 },
+                    uMorph: { value: 0.1 },
+                    uCompression: { value: 1.0 },
+                    uIntensity: { value: 1.0 },
+                    uOrbitScale: { value: 1.0 }
+                },
+                vertexShader: `
+                    ${noiseChunk}
+                    uniform float uTime;
+                    uniform float uMorph;
+                    uniform float uCompression;
+                    uniform float uIntensity;
+                    uniform float uOrbitScale;
+                    varying vec3 vColor;
+                    varying float vOpacity;
+                    void main() {
+                        vec4 instPos = instanceMatrix * vec4(0.0, 0.0, 0.0, 1.0);
+                        float rOriginal = length(instPos.xz);
+                        float r = rOriginal * uCompression;
+                        float initialAngle = atan(instPos.z, instPos.x);
+                        float orbitalVelocity = (1.5 / sqrt(rOriginal)) * uOrbitScale;
+                        float currentAngle = initialAngle + (uTime * orbitalVelocity);
+                        vec3 morphedWorldPos = vec3(cos(currentAngle) * r, instPos.y, sin(currentAngle) * r);
+                        float noise = snoise(vec3(morphedWorldPos.x * 0.08, morphedWorldPos.z * 0.08, uTime * 0.3));
+                        morphedWorldPos.y += noise * uMorph * 4.0;
+                        vec3 viewDir = normalize(cameraPosition - morphedWorldPos);
+                        vec3 orbitDir = normalize(vec3(-sin(currentAngle), 0.0, cos(currentAngle)));
+                        float doppler = dot(orbitDir, viewDir);
+                        
+                        vec3 hot = vec3(1.0, 0.95, 0.5);
+                        vec3 warm = vec3(1.0, 0.65, 0.1);
+                        vec3 cool = vec3(0.85, 0.35, 0.05);
+                        
+                        vec3 color = mix(cool, warm, smoothstep(45.0, 12.0, r));
+                        color = mix(color, hot, smoothstep(10.0, 4.0, r));
+                        vColor = color * (1.3 + doppler * 0.7) * uIntensity;
+                        vOpacity = (smoothstep(3.8, 5.5, r) * (1.0 - smoothstep(38.0, 48.0, r))) * 0.8;
+                        float deltaAngle = currentAngle - initialAngle;
+                        float c = cos(deltaAngle);
+                        float s = sin(deltaAngle);
+                        mat3 rotY = mat3(
+                            c, 0, s,
+                            0, 1, 0,
+                           -s, 0, c
+                        );
+                        vec3 localPos = (instanceMatrix * vec4(position, 0.0)).xyz;
+                        vec3 rotatedLocalPos = rotY * localPos;
+                        gl_Position = projectionMatrix * viewMatrix * vec4(morphedWorldPos + rotatedLocalPos, 1.0);
+                    }
+                `,
+                fragmentShader: `
+                    varying vec3 vColor;
+                    varying float vOpacity;
+                    void main() {
+                        gl_FragColor = vec4(vColor, vOpacity);
+                    }
+                `,
+                transparent: true, blending: THREE.AdditiveBlending, depthWrite: false
+            });
+
+            const instancedDisk = new THREE.InstancedMesh(streakGeo, diskMaterial, instanceCount);
+            const dummy = new THREE.Object3D();
+
+            for (let i = 0; i < instanceCount; i++) {
+                const r = 5 + Math.pow(Math.random(), 1.3) * 40;
+                const angle = Math.random() * Math.PI * 2;
+                dummy.position.set(Math.cos(angle) * r, (Math.random() - 0.5) * (8 / r), Math.sin(angle) * r);
+                dummy.lookAt(dummy.position.x + Math.sin(angle), dummy.position.y, dummy.position.z - Math.cos(angle));
+                dummy.updateMatrix();
+                instancedDisk.setMatrixAt(i, dummy.matrix);
+            }
+            scene.add(instancedDisk);
+
+            window.isHomeActive = false;
+            const camControl = { distance: 85 };
+            const clock = new THREE.Clock();
+
+            function animate() {
+                const time = clock.getElapsedTime();
+                diskMaterial.uniforms.uTime.value = time;
+                auraMat.uniforms.uTime.value = time;
+
+                if (window.isHomeActive) {
+                    instancedDisk.rotation.y += 0.0002;
+                }
+                const currentDir = new THREE.Vector3().subVectors(camera.position, controls.target).normalize();
+                camera.position.x = controls.target.x + currentDir.x * camControl.distance;
+                camera.position.z = controls.target.z + currentDir.z * camControl.distance;
+                controls.update();
+                renderer.render(scene, camera);
+                requestAnimationFrame(animate);
+            }
+
+            window.addEventListener('resize', () => {
+                camera.aspect = window.innerWidth / window.innerHeight;
+                camera.updateProjectionMatrix();
+                renderer.setSize(window.innerWidth, window.innerHeight);
+            });
+
+            animate();
+
+            // Standardized dive functions
+            window.startDive = (onComplete) => {
+                const diveTl = gsap.timeline();
+                diveTl.to(camControl, { distance: 15, duration: 0.8, ease: "power2.in" }, 0);
+                diveTl.to(diskMaterial.uniforms.uIntensity, { value: 0.0, duration: 0.6, ease: "power2.in" }, 0.2);
+                diveTl.to(auraMat.uniforms.uIntensity, { value: 0.0, duration: 0.6, ease: "power2.in" }, 0.2);
+
+                const blackout = document.createElement('div');
+                blackout.style.position = 'fixed';
+                blackout.style.inset = '0';
+                blackout.style.background = '#000';
+                blackout.style.zIndex = '99999';
+                blackout.style.opacity = '0';
+                blackout.style.pointerEvents = 'none';
+                document.body.appendChild(blackout);
+
+                diveTl.to(blackout, { opacity: 1, duration: 0.3 }, 0.5);
+
+                diveTl.call(() => {
+                    if (onComplete) onComplete();
+                    camControl.distance = 75;
+                    camera.position.set(0, 60, 20);
+                    controls.target.set(0, -10, 0);
+                    controls.autoRotate = true;
+                    window.isHomeActive = true;
+                });
+
+                diveTl.to(diskMaterial.uniforms.uIntensity, { value: 1.0, duration: 0.8, ease: "power2.out" }, 1.0);
+                diveTl.to(auraMat.uniforms.uIntensity, { value: 1.0, duration: 0.8, ease: "power2.out" }, 1.0);
+                diveTl.to(blackout, { opacity: 0, duration: 0.8 }, 0.8);
+                diveTl.call(() => blackout.remove());
+            };
+
+            window.resetDive = (onComplete) => {
+                const diveTl = gsap.timeline();
+                diveTl.to(diskMaterial.uniforms.uIntensity, { value: 0.0, duration: 0.6, ease: "power2.in" }, 0);
+                diveTl.to(auraMat.uniforms.uIntensity, { value: 0.0, duration: 0.6, ease: "power2.in" }, 0);
+
+                const blackout = document.createElement('div');
+                blackout.style.position = 'fixed';
+                blackout.style.inset = '0';
+                blackout.style.background = '#000';
+                blackout.style.zIndex = '99999';
+                blackout.style.opacity = '0';
+                blackout.style.pointerEvents = 'none';
+                document.body.appendChild(blackout);
+
+                diveTl.to(blackout, { opacity: 1, duration: 0.3 }, 0.3);
+
+                diveTl.call(() => {
+                    if (onComplete) onComplete();
+                    camControl.distance = 80;
+                    camera.position.set(60, 30, 60);
+                    controls.target.set(0, -12, 0);
+                    controls.autoRotate = false;
+                    window.isHomeActive = false;
+                });
+
+                diveTl.to(diskMaterial.uniforms.uIntensity, { value: 1.0, duration: 0.8, ease: "power2.out" }, 0.6);
+                diveTl.to(auraMat.uniforms.uIntensity, { value: 1.0, duration: 0.8, ease: "power2.out" }, 0.6);
+                diveTl.to(blackout, { opacity: 0, duration: 0.8 }, 0.6);
+                diveTl.call(() => blackout.remove());
+            };
+        } catch (err) {
+            console.warn("Cosmos 3D Background failed to initialize:", err);
+        }
     </script>
 </body>
 
