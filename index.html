@@ -863,8 +863,11 @@
         }
 
         .stat-bento-card {
-            background: rgba(14, 18, 28, 0.75);
-            border: 1px solid rgba(255, 255, 255, 0.06);
+            background: linear-gradient(145deg, rgba(16, 21, 32, 0.96) 0%, rgba(10, 14, 22, 0.98) 100%);
+            border: 1.5px solid rgba(255, 255, 255, 0.1);
+            backdrop-filter: blur(28px) saturate(140%);
+            -webkit-backdrop-filter: blur(28px) saturate(140%);
+            box-shadow: 0 10px 26px -6px rgba(0, 0, 0, 0.8), inset 0 1px 0 rgba(255, 255, 255, 0.12);
             border-radius: var(--radius-md);
             padding: 16px 12px;
             display: flex;
@@ -950,8 +953,8 @@
 
         .search-capsule input {
             width: 100%;
-            background: rgba(12, 16, 26, 0.7);
-            border: 1px solid rgba(255, 255, 255, 0.08);
+            background: rgba(10, 14, 22, 0.96);
+            border: 1.5px solid rgba(255, 255, 255, 0.12);
             border-radius: 50px;
             padding: 14px 20px 14px 48px;
             color: #FFFFFF;
@@ -960,12 +963,12 @@
             font-weight: 600;
             outline: none;
             transition: all 0.3s ease;
-            box-shadow: inset 0 2px 6px rgba(0, 0, 0, 0.5);
+            box-shadow: inset 0 2px 6px rgba(0, 0, 0, 0.6), 0 4px 14px rgba(0, 0, 0, 0.4);
         }
 
         .search-capsule input:focus {
             border-color: var(--theme-color);
-            background: rgba(16, 22, 34, 0.9);
+            background: rgba(14, 18, 30, 0.98);
             box-shadow: 0 0 0 3px var(--theme-faded), 0 0 20px var(--theme-glow);
         }
 
@@ -1005,7 +1008,7 @@
         }
 
         .filter-chip {
-            padding: 7px 18px;
+            padding: 8px 18px;
             border-radius: 50px;
             font-size: 0.68rem;
             font-weight: 800;
@@ -1013,16 +1016,17 @@
             text-transform: uppercase;
             cursor: pointer;
             transition: all 0.25s ease;
-            background: rgba(255, 255, 255, 0.03);
-            border: 1px solid rgba(255, 255, 255, 0.08);
+            background: rgba(14, 19, 30, 0.94);
+            border: 1px solid rgba(255, 255, 255, 0.1);
             color: var(--text-sub);
             white-space: nowrap;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.4);
         }
 
         .filter-chip:hover {
             color: #FFFFFF;
-            border-color: rgba(255, 255, 255, 0.2);
-            background: rgba(255, 255, 255, 0.06);
+            border-color: rgba(255, 255, 255, 0.22);
+            background: rgba(20, 26, 42, 0.98);
         }
 
         .filter-chip.active {
@@ -1043,10 +1047,10 @@
         .btn-strip-action {
             flex: 1;
             min-width: 100px;
-            background: rgba(20, 24, 36, 0.6);
-            border: 1px solid rgba(255, 255, 255, 0.06);
+            background: rgba(16, 22, 34, 0.94);
+            border: 1px solid rgba(255, 255, 255, 0.1);
             color: var(--btn-color, var(--text-main));
-            padding: 9px 12px;
+            padding: 10px 14px;
             border-radius: var(--radius-sm);
             font-size: 0.68rem;
             font-weight: 800;
@@ -1058,13 +1062,14 @@
             justify-content: center;
             gap: 7px;
             transition: all 0.25s ease;
+            box-shadow: 0 6px 16px rgba(0, 0, 0, 0.4);
         }
 
         .btn-strip-action:hover {
-            background: rgba(255, 255, 255, 0.06);
-            border-color: var(--btn-color, rgba(255, 255, 255, 0.2));
+            background: rgba(22, 30, 48, 0.98);
+            border-color: var(--btn-color, rgba(255, 255, 255, 0.25));
             transform: translateY(-2px);
-            box-shadow: 0 6px 16px rgba(0, 0, 0, 0.4);
+            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.6);
         }
 
         .btn-strip-action:active {
@@ -1091,12 +1096,15 @@
         }
 
         .data-card {
-            padding: 14px 16px;
+            padding: 16px 18px;
             border-radius: var(--radius-md);
-            margin-bottom: 10px;
-            background: rgba(14, 18, 28, 0.65);
-            border: 1px solid rgba(255, 255, 255, 0.06);
-            border-left: 3px solid var(--card-accent, rgba(255, 255, 255, 0.15));
+            margin-bottom: 12px;
+            background: linear-gradient(145deg, rgba(16, 21, 32, 0.96) 0%, rgba(10, 14, 22, 0.98) 100%) !important;
+            border: 1.5px solid rgba(255, 255, 255, 0.1) !important;
+            border-left: 4px solid var(--card-accent, rgba(255, 255, 255, 0.2)) !important;
+            box-shadow: 0 10px 28px -6px rgba(0, 0, 0, 0.85), inset 0 1px 0 rgba(255, 255, 255, 0.12) !important;
+            backdrop-filter: blur(28px) saturate(140%);
+            -webkit-backdrop-filter: blur(28px) saturate(140%);
             opacity: 0;
             transform: translateY(16px) scale(0.98);
             transition: opacity 0.35s cubic-bezier(0.16, 1, 0.3, 1), transform 0.35s cubic-bezier(0.16, 1, 0.3, 1), box-shadow 0.28s ease, border-color 0.28s ease;
@@ -1104,8 +1112,8 @@
 
         .data-card:hover {
             transform: translateY(-3px) scale(1.005);
-            box-shadow: 0 16px 36px -10px rgba(0, 0, 0, 0.8), 0 0 20px var(--theme-faded);
-            border-color: rgba(255, 255, 255, 0.14);
+            box-shadow: 0 16px 36px -10px rgba(0, 0, 0, 0.9), 0 0 20px var(--theme-faded);
+            border-color: rgba(255, 255, 255, 0.2) !important;
         }
 
         .card-active {
@@ -1178,9 +1186,9 @@
         }
 
         .card-details-panel {
-            margin-top: 12px;
-            padding-top: 12px;
-            border-top: 1px solid rgba(255, 255, 255, 0.05);
+            margin-top: 14px;
+            padding-top: 14px;
+            border-top: 1px solid rgba(255, 255, 255, 0.08);
         }
 
         .card-info-chips {
@@ -1191,11 +1199,11 @@
         }
 
         .info-chip {
-            background: rgba(255, 255, 255, 0.03);
-            border: 1px solid rgba(255, 255, 255, 0.06);
+            background: rgba(6, 9, 16, 0.9);
+            border: 1px solid rgba(255, 255, 255, 0.1);
             border-radius: 8px;
-            padding: 5px 10px;
-            font-size: 0.7rem;
+            padding: 6px 12px;
+            font-size: 0.72rem;
             color: var(--text-sub);
             display: inline-flex;
             align-items: center;
@@ -1208,12 +1216,12 @@
         }
 
         .hwid-badge-code {
-            background: rgba(6, 182, 212, 0.08);
-            border: 1px solid rgba(6, 182, 212, 0.25);
-            padding: 6px 12px;
+            background: rgba(6, 182, 212, 0.12);
+            border: 1px solid rgba(6, 182, 212, 0.35);
+            padding: 7px 12px;
             border-radius: 8px;
             font-family: var(--font-code);
-            font-size: 0.68rem;
+            font-size: 0.7rem;
             color: #67E8F9;
             display: inline-flex;
             align-items: center;
@@ -1232,12 +1240,12 @@
         }
 
         .btn-card-ctrl {
-            background: rgba(255, 255, 255, 0.04);
-            border: 1px solid rgba(255, 255, 255, 0.08);
+            background: rgba(255, 255, 255, 0.07);
+            border: 1px solid rgba(255, 255, 255, 0.12);
             color: var(--c, #FFFFFF);
-            padding: 8px 4px;
+            padding: 9px 6px;
             border-radius: 8px;
-            font-size: 0.62rem;
+            font-size: 0.65rem;
             font-weight: 800;
             letter-spacing: 0.5px;
             text-transform: uppercase;
@@ -1879,7 +1887,7 @@
 
                 <div class="login-badge-row">
                     <span class="login-pill-tag online"><span class="status-dot-mini"
-                            style="background:var(--theme-color);"></span> V-8.0 Secure</span>
+                            style="background:var(--theme-color);"></span> V8 Final</span>
                     <span class="login-pill-tag">FIREBASE</span>
                 </div>
 
@@ -2172,7 +2180,7 @@
                 <i class="fas fa-key"></i><span>KEYS</span>
             </div>
             <div class="nav-item ripple-click elastic-click" onclick="nav('bans', this)">
-                <i class="fas fa-skull"></i><span>Crash Engine</span>
+                <i class="fas fa-skull"></i><span>Crash</span>
             </div>
             <div class="nav-item ripple-click elastic-click" onclick="nav('devices', this)">
                 <i class="fas fa-mobile-alt"></i><span>DEVICES</span>
