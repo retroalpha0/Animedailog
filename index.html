@@ -790,32 +790,61 @@
             transform: scale(0.9);
         }
 
-        /* 🧭 TOP DASHBOARD HEADER (FROSTED GLASS) */
+        /* 🧭 TOP DASHBOARD HEADER (UNBOXED & CLEAN REARRANGED) */
         .dash-header {
-            padding: max(14px, env(safe-area-inset-top)) 16px 12px 16px;
+            padding: max(16px, env(safe-area-inset-top)) 0 12px 0;
             display: flex;
             justify-content: space-between;
             align-items: center;
+            gap: 12px;
             margin-bottom: 14px;
-            background: rgba(10, 14, 22, 0.72);
-            backdrop-filter: blur(20px) saturate(150%);
-            -webkit-backdrop-filter: blur(20px) saturate(150%);
-            border: 1px solid rgba(255, 255, 255, 0.08);
-            border-radius: 20px;
-            box-shadow: 0 10px 30px -10px rgba(0, 0, 0, 0.7);
+            border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+            background: transparent !important;
+            backdrop-filter: none !important;
+            -webkit-backdrop-filter: none !important;
+            box-shadow: none !important;
+            border-radius: 0 !important;
         }
 
-        .dash-header-title-box h1 {
+        .dash-header-left {
+            display: flex;
+            align-items: center;
+            gap: 14px;
+            flex-wrap: wrap;
+            min-width: 0;
+        }
+
+        .dash-title-wrap {
+            display: inline-flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .dash-header h1 {
             font-family: var(--font-display);
-            font-size: 1.85rem;
+            font-size: 1.65rem;
             font-weight: 900;
             letter-spacing: -0.5px;
             text-transform: uppercase;
-            line-height: 1.1;
-            margin-bottom: 4px;
+            line-height: 1;
+            margin: 0;
             color: #FFFFFF;
-            -webkit-text-stroke: 1px rgba(0, 0, 0, 0.8);
-            text-shadow: 0 2px 10px rgba(0, 0, 0, 0.95), 0 0 20px rgba(255, 255, 255, 0.4);
+            -webkit-text-stroke: 1px rgba(0, 0, 0, 0.85);
+            text-shadow: 0 2px 10px rgba(0, 0, 0, 0.95), 0 0 20px rgba(255, 255, 255, 0.35);
+            white-space: nowrap;
+        }
+
+        @media (max-width: 480px) {
+            .dash-header h1 {
+                font-size: 1.35rem;
+            }
+        }
+
+        .dash-header-right {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            flex-shrink: 0;
         }
 
         .live-status-pill {
@@ -2259,18 +2288,19 @@
     <div id="screen-dashboard" class="view-section">
         <div class="app-container">
 
-            <!-- Top Header -->
+            <!-- Top Header (Clean Unboxed & Rearranged) -->
             <div class="dash-header">
-                <div class="dash-header-title-box">
-                    <h1>Admin Console</h1>
-                    <div style="display:flex; align-items:center; gap:10px;">
-                        <div class="live-status-pill">
-                            <div class="live-status-dot"></div> Server ONLINE
-                        </div>
+                <div class="dash-header-left">
+                    <div class="dash-title-wrap">
+                        <i class="fas fa-terminal" style="color:var(--theme-color); font-size:1.15rem; filter:drop-shadow(0 0 10px var(--theme-glow));"></i>
+                        <h1>Admin Console</h1>
+                    </div>
+                    <div class="live-status-pill">
+                        <div class="live-status-dot"></div> Server ONLINE
                     </div>
                 </div>
-                <div>
-                    <button onclick="disconnectSession()" class="btn-disconnect elastic-click">
+                <div class="dash-header-right">
+                    <button onclick="disconnectSession()" class="btn-disconnect elastic-click" title="Disconnect Session">
                         <i class="fas fa-power-off"></i> LogOut
                     </button>
                 </div>
