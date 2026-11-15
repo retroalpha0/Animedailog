@@ -764,40 +764,42 @@
 
         /* 🧭 TOP DASHBOARD HEADER */
         .dash-header {
-            padding: max(28px, env(safe-area-inset-top)) 0 18px 0;
+            padding: max(14px, env(safe-area-inset-top)) 0 10px 0;
             display: flex;
             justify-content: space-between;
             align-items: center;
-            margin-bottom: 22px;
-            border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+            margin-bottom: 12px;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.08);
         }
 
         .dash-header-title-box h1 {
             font-family: var(--font-display);
             font-size: 1.85rem;
-            font-weight: 800;
+            font-weight: 900;
             letter-spacing: -0.5px;
             text-transform: uppercase;
             line-height: 1.1;
             margin-bottom: 4px;
-            background: linear-gradient(135deg, #FFFFFF 0%, #CBD5E1 100%);
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
+            color: #FFFFFF;
+            -webkit-text-stroke: 1px rgba(0, 0, 0, 0.8);
+            text-shadow: 0 2px 10px rgba(0, 0, 0, 0.95), 0 0 20px rgba(255, 255, 255, 0.4);
         }
 
         .live-status-pill {
             display: inline-flex;
             align-items: center;
             gap: 8px;
-            background: rgba(16, 185, 129, 0.1);
-            border: 1px solid rgba(16, 185, 129, 0.35);
+            background: rgba(10, 14, 22, 0.95);
+            border: 1.5px solid rgba(16, 185, 129, 0.6);
             color: var(--success);
-            padding: 4px 12px;
+            padding: 5px 14px;
             border-radius: 50px;
             font-size: 0.68rem;
-            font-weight: 800;
+            font-weight: 900;
             letter-spacing: 1px;
             text-transform: uppercase;
+            box-shadow: 0 4px 14px rgba(0, 0, 0, 0.8), 0 0 10px rgba(16, 185, 129, 0.25);
+            text-shadow: 0 1px 4px rgba(0, 0, 0, 0.9), 0 0 8px rgba(16, 185, 129, 0.5);
         }
 
         .live-status-dot {
@@ -831,8 +833,8 @@
         }
 
         .btn-disconnect {
-            background: rgba(255, 59, 92, 0.1);
-            border: 1px solid rgba(255, 59, 92, 0.3);
+            background: rgba(20, 10, 16, 0.95);
+            border: 1.5px solid rgba(255, 59, 92, 0.55);
             color: var(--danger);
             padding: 8px 16px;
             border-radius: var(--radius-sm);
@@ -845,10 +847,13 @@
             align-items: center;
             gap: 8px;
             transition: all 0.28s ease;
+            box-shadow: 0 4px 16px rgba(0, 0, 0, 0.8), 0 0 12px rgba(255, 59, 92, 0.25);
+            text-shadow: 0 1px 4px rgba(0, 0, 0, 0.9), 0 0 8px rgba(255, 59, 92, 0.4);
         }
 
         .btn-disconnect:hover {
             background: var(--danger);
+            border-color: var(--danger);
             color: #FFFFFF;
             box-shadow: 0 6px 20px var(--danger-glow);
             transform: translateY(-2px);
@@ -858,8 +863,8 @@
         .stats-bento {
             display: grid;
             grid-template-columns: repeat(3, 1fr);
-            gap: 12px;
-            margin-bottom: 24px;
+            gap: 8px;
+            margin-bottom: 12px;
         }
 
         .stat-bento-card {
@@ -869,12 +874,12 @@
             -webkit-backdrop-filter: blur(28px) saturate(140%);
             box-shadow: 0 10px 26px -6px rgba(0, 0, 0, 0.8), inset 0 1px 0 rgba(255, 255, 255, 0.12);
             border-radius: var(--radius-md);
-            padding: 16px 12px;
+            padding: 10px 8px;
             display: flex;
             flex-direction: column;
             align-items: center;
             justify-content: center;
-            gap: 6px;
+            gap: 4px;
             position: relative;
             overflow: hidden;
             transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
@@ -933,7 +938,7 @@
             display: flex;
             gap: 12px;
             align-items: center;
-            margin-bottom: 16px;
+            margin-bottom: 8px;
         }
 
         .search-capsule {
@@ -1003,8 +1008,8 @@
             display: flex;
             gap: 8px;
             overflow-x: auto;
-            margin-bottom: 16px;
-            padding-bottom: 4px;
+            margin-bottom: 8px;
+            padding-bottom: 2px;
         }
 
         .filter-chip {
@@ -1040,7 +1045,7 @@
         .quick-action-strip {
             display: flex;
             gap: 8px;
-            margin-bottom: 20px;
+            margin-bottom: 12px;
             flex-wrap: wrap;
         }
 
@@ -1814,23 +1819,288 @@
             }
         }
 
-        .flash-glitch {
-            animation: screenFlash 0.45s ease-out forwards;
+        /* 🪐 3D GYROSCOPE PLANETARY SPINNER (REPLACES HARSH WHITE FLASH) */
+        .gyro-overlay {
+            position: fixed;
+            inset: 0;
+            z-index: 99998;
+            background: rgba(4, 6, 12, 0.88);
+            backdrop-filter: blur(20px);
+            display: none;
+            align-items: center;
+            justify-content: center;
+            flex-direction: column;
+            opacity: 0;
+            transition: opacity 0.35s cubic-bezier(0.16, 1, 0.3, 1);
+            pointer-events: none;
         }
 
-        @keyframes screenFlash {
+        .gyro-overlay.active {
+            display: flex;
+            opacity: 1;
+            pointer-events: auto;
+        }
+
+        .gyro-system {
+            position: relative;
+            width: 140px;
+            height: 140px;
+            perspective: 800px;
+            transform-style: preserve-3d;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-bottom: 24px;
+        }
+
+        /* Glowing Planet Core */
+        .gyro-core-planet {
+            position: absolute;
+            width: 46px;
+            height: 46px;
+            border-radius: 50%;
+            background: radial-gradient(circle at 35% 35%, #FFFFFF 0%, var(--theme-color) 45%, #881337 90%);
+            box-shadow: 0 0 25px var(--theme-color), 0 0 50px var(--theme-glow), inset -4px -4px 10px rgba(0, 0, 0, 0.7);
+            animation: planetPulse 2.5s ease-in-out infinite alternate;
+        }
+
+        @keyframes planetPulse {
+            0% { transform: scale(0.94); filter: brightness(0.95); }
+            100% { transform: scale(1.06); filter: brightness(1.2) drop-shadow(0 0 25px var(--theme-glow)); }
+        }
+
+        /* 3D Gyroscope Orbital Rings */
+        .gyro-ring {
+            position: absolute;
+            border-radius: 50%;
+            border: 2px solid transparent;
+            pointer-events: none;
+        }
+
+        .gyro-ring-1 {
+            width: 110px;
+            height: 110px;
+            border-top: 2.5px solid var(--theme-color);
+            border-bottom: 2.5px solid rgba(244, 63, 94, 0.3);
+            filter: drop-shadow(0 0 10px var(--theme-color));
+            animation: gyroSpin1 2.2s linear infinite;
+        }
+
+        .gyro-ring-2 {
+            width: 130px;
+            height: 130px;
+            border-left: 2.5px solid #06B6D4;
+            border-right: 2.5px solid rgba(6, 182, 212, 0.3);
+            filter: drop-shadow(0 0 12px #06B6D4);
+            animation: gyroSpin2 3.2s linear infinite reverse;
+        }
+
+        .gyro-ring-3 {
+            width: 90px;
+            height: 90px;
+            border-top: 2px solid #F59E0B;
+            border-left: 2px solid rgba(245, 158, 11, 0.3);
+            filter: drop-shadow(0 0 8px #F59E0B);
+            animation: gyroSpin3 1.8s ease-in-out infinite;
+        }
+
+        /* Orbiting Satellite Dot */
+        .gyro-satellite {
+            position: absolute;
+            width: 150px;
+            height: 150px;
+            animation: moonOrbit 2.4s linear infinite;
+            pointer-events: none;
+        }
+
+        .gyro-satellite::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 9px;
+            height: 9px;
+            border-radius: 50%;
+            background: #FFFFFF;
+            box-shadow: 0 0 12px #FFFFFF, 0 0 20px #06B6D4;
+        }
+
+        @keyframes gyroSpin1 {
+            0% { transform: rotateX(65deg) rotateY(15deg) rotateZ(0deg); }
+            100% { transform: rotateX(65deg) rotateY(15deg) rotateZ(360deg); }
+        }
+
+        @keyframes gyroSpin2 {
+            0% { transform: rotateX(30deg) rotateY(65deg) rotateZ(0deg); }
+            100% { transform: rotateX(30deg) rotateY(65deg) rotateZ(360deg); }
+        }
+
+        @keyframes gyroSpin3 {
+            0% { transform: rotateX(75deg) rotateY(70deg) rotateZ(0deg); }
+            100% { transform: rotateX(75deg) rotateY(70deg) rotateZ(360deg); }
+        }
+
+        @keyframes moonOrbit {
+            0% { transform: rotateZ(0deg); }
+            100% { transform: rotateZ(360deg); }
+        }
+
+        .gyro-title {
+            font-family: var(--font-display);
+            font-size: 1.05rem;
+            font-weight: 800;
+            color: #FFFFFF;
+            letter-spacing: 1.5px;
+            text-transform: uppercase;
+            text-shadow: 0 2px 10px rgba(0, 0, 0, 0.9), 0 0 20px var(--theme-glow);
+            margin-bottom: 6px;
+        }
+
+        .gyro-sub {
+            font-family: var(--font-code);
+            font-size: 0.72rem;
+            font-weight: 600;
+            color: #06B6D4;
+            letter-spacing: 1px;
+            text-transform: uppercase;
+            opacity: 0.85;
+        }
+
+        /* 3D Gyroscope Orbital Rings */
+        .gyro-ring {
+            position: absolute;
+            border-radius: 50%;
+            border: 2px solid transparent;
+            pointer-events: none;
+        }
+
+        .gyro-ring-1 {
+            width: 110px;
+            height: 110px;
+            border-top: 2.5px solid var(--theme-color);
+            border-bottom: 2.5px solid rgba(244, 63, 94, 0.3);
+            filter: drop-shadow(0 0 10px var(--theme-color));
+            animation: gyroSpin1 2.2s linear infinite;
+        }
+
+        .gyro-ring-2 {
+            width: 130px;
+            height: 130px;
+            border-left: 2.5px solid #06B6D4;
+            border-right: 2.5px solid rgba(6, 182, 212, 0.3);
+            filter: drop-shadow(0 0 12px #06B6D4);
+            animation: gyroSpin2 3.2s linear infinite reverse;
+        }
+
+        .gyro-ring-3 {
+            width: 90px;
+            height: 90px;
+            border-top: 2px solid #F59E0B;
+            border-left: 2px solid rgba(245, 158, 11, 0.3);
+            filter: drop-shadow(0 0 8px #F59E0B);
+            animation: gyroSpin3 1.8s ease-in-out infinite;
+        }
+
+        /* Orbiting Satellite Dot */
+        .gyro-satellite {
+            position: absolute;
+            width: 150px;
+            height: 150px;
+            animation: moonOrbit 2.4s linear infinite;
+            pointer-events: none;
+        }
+
+        .gyro-satellite::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 9px;
+            height: 9px;
+            border-radius: 50%;
+            background: #FFFFFF;
+            box-shadow: 0 0 12px #FFFFFF, 0 0 20px #06B6D4;
+        }
+
+        @keyframes gyroSpin1 {
             0% {
-                filter: invert(0.8) brightness(1.8);
+                transform: rotateX(65deg) rotateY(15deg) rotateZ(0deg);
             }
 
             100% {
-                filter: invert(0) brightness(1);
+                transform: rotateX(65deg) rotateY(15deg) rotateZ(360deg);
             }
+        }
+
+        @keyframes gyroSpin2 {
+            0% {
+                transform: rotateX(30deg) rotateY(65deg) rotateZ(0deg);
+            }
+
+            100% {
+                transform: rotateX(30deg) rotateY(65deg) rotateZ(360deg);
+            }
+        }
+
+        @keyframes gyroSpin3 {
+            0% {
+                transform: rotateX(75deg) rotateY(70deg) rotateZ(0deg);
+            }
+
+            100% {
+                transform: rotateX(75deg) rotateY(70deg) rotateZ(360deg);
+            }
+        }
+
+        @keyframes moonOrbit {
+            0% {
+                transform: rotateZ(0deg);
+            }
+
+            100% {
+                transform: rotateZ(360deg);
+            }
+        }
+
+        .gyro-title {
+            font-family: var(--font-display);
+            font-size: 1.05rem;
+            font-weight: 800;
+            color: #FFFFFF;
+            letter-spacing: 1.5px;
+            text-transform: uppercase;
+            text-shadow: 0 2px 10px rgba(0, 0, 0, 0.9), 0 0 20px var(--theme-glow);
+            margin-bottom: 6px;
+        }
+
+        .gyro-sub {
+            font-family: var(--font-code);
+            font-size: 0.72rem;
+            font-weight: 600;
+            color: #06B6D4;
+            letter-spacing: 1px;
+            text-transform: uppercase;
+            opacity: 0.85;
         }
     </style>
 </head>
 
 <body>
+
+    <!-- 🪐 3D GYROSCOPE PLANETARY SPINNER -->
+    <div id="gyro-overlay" class="gyro-overlay">
+        <div class="gyro-system">
+            <div class="gyro-core-planet"></div>
+            <div class="gyro-ring gyro-ring-1"></div>
+            <div class="gyro-ring gyro-ring-2"></div>
+            <div class="gyro-ring gyro-ring-3"></div>
+            <div class="gyro-satellite"></div>
+        </div>
+        <div class="gyro-title">ORBITAL SYNCHRONIZATION</div>
+        <div class="gyro-sub">INITIALIZING SECURE SESSION...</div>
+    </div>
 
     <canvas id="colorCanvas" style="display:none;"></canvas>
     <!-- 🌌 3D COSMOS BLACK HOLE CANVAS -->
@@ -1931,9 +2201,6 @@
                         <div class="live-status-pill">
                             <div class="live-status-dot"></div> Server ONLINE
                         </div>
-                        <span
-                            style="font: size 0.7em;rem; font-weight:700; color:var(--text-muted); text-transform:uppercase; letter-spacing:1px;">
-                        </span>
                     </div>
                 </div>
                 <div>
@@ -2167,7 +2434,7 @@
 
             <div
                 style="text-align:center; margin:30px 0 10px 0; color:var(--text-muted); font-size:0.68rem; font-weight:700; letter-spacing:2px; text-transform:uppercase;">
-                POWERED BY <span style="color:var(--theme-color); font-weight:800;">ALPHA OS</span>
+                POWERED BY <span style="color:var(--theme-color); font-weight:800;">ALPHA </span>
             </div>
 
         </div>
@@ -2180,7 +2447,7 @@
                 <i class="fas fa-key"></i><span>KEYS</span>
             </div>
             <div class="nav-item ripple-click elastic-click" onclick="nav('bans', this)">
-                <i class="fas fa-skull"></i><span>Crash</span>
+                <i class="fas fa-skull"></i><span>Armour</span>
             </div>
             <div class="nav-item ripple-click elastic-click" onclick="nav('devices', this)">
                 <i class="fas fa-mobile-alt"></i><span>DEVICES</span>
@@ -2703,7 +2970,7 @@
         function resetLoginBtn() {
             const btn = document.getElementById('btn-login');
             if (btn) {
-                btn.innerHTML = 'INITIALIZE CONSOLE <i class="fas fa-arrow-right"></i>';
+                btn.innerHTML = 'INITIALIZE  <i class="fas fa-arrow-right"></i>';
                 btn.disabled = false;
             }
         }
@@ -2724,6 +2991,9 @@
                 resetLoginBtn();
                 return;
             }
+
+            const gyro = document.getElementById('gyro-overlay');
+            if (gyro) gyro.classList.add('active');
 
             urlInput = urlInput.replace(/\/+$/, "").replace(/\.json$/i, "");
             if (!urlInput.startsWith('http://') && !urlInput.startsWith('https://')) {
@@ -2774,21 +3044,15 @@
 
                 await cleanDatabase();
 
-                switchView('screen-dashboard');
-                document.body.classList.add('flash-glitch');
-                setTimeout(() => document.body.classList.remove('flash-glitch'), 450);
                 const onLoginComplete = () => {
                     switchView('screen-dashboard');
-                    document.body.classList.add('flash-glitch');
-                    setTimeout(() => document.body.classList.remove('flash-glitch'), 450);
                     refreshUI();
                     showToast("Connected Successfully ✓", "var(--success)", "fa-check-circle");
                     startAutoSync();
+                    const gyro = document.getElementById('gyro-overlay');
+                    if (gyro) gyro.classList.remove('active');
                 };
 
-                refreshUI();
-                showToast("Connected Successfully ✓", "var(--success)", "fa-check-circle");
-                startAutoSync();
                 if (typeof window.startDive === 'function') {
                     window.startDive(onLoginComplete);
                 } else {
@@ -2797,6 +3061,8 @@
 
             } catch (e) {
                 console.error(e);
+                const gyro = document.getElementById('gyro-overlay');
+                if (gyro) gyro.classList.remove('active');
                 Storage.remove('alpha_secret_p14');
                 switchView('screen-login');
                 stopAutoSync();
@@ -4110,6 +4376,8 @@
                 diveTl.to(blackout, { opacity: 1, duration: 0.3 }, 0.5);
 
                 diveTl.call(() => {
+                    const gyro = document.getElementById('gyro-overlay');
+                    if (gyro) gyro.classList.remove('active');
                     if (onComplete) onComplete();
                     camControl.distance = 75;
                     camera.position.set(0, 60, 20);
