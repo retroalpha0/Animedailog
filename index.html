@@ -1351,6 +1351,40 @@
             transform: scale(1) translateY(0);
         }
 
+        .saved-session-card {
+            flex-shrink: 0 !important;
+            min-height: 92px !important;
+            background: rgba(18, 22, 34, 0.8) !important;
+            border: 1px solid rgba(255, 255, 255, 0.08) !important;
+            border-radius: var(--radius-md) !important;
+            padding: 12px 14px !important;
+            display: flex !important;
+            flex-direction: column !important;
+            gap: 8px !important;
+            box-sizing: border-box !important;
+            transition: all 0.25s ease;
+        }
+
+        .saved-session-card:hover {
+            border-color: var(--theme-color) !important;
+            background: rgba(24, 30, 46, 0.9) !important;
+        }
+
+        #saved-logins::-webkit-scrollbar {
+            width: 4px;
+            display: block !important;
+        }
+
+        #saved-logins::-webkit-scrollbar-track {
+            background: rgba(255, 255, 255, 0.02);
+            border-radius: 4px;
+        }
+
+        #saved-logins::-webkit-scrollbar-thumb {
+            background: var(--theme-border);
+            border-radius: 4px;
+        }
+
         .modal-title {
             font-family: var(--font-display);
             font-size: 1.25rem;
@@ -1919,7 +1953,7 @@
             </div>
 
             <!-- In-App Save Current Bar: Eliminates Android APK prompt() freeze -->
-            <div style="background:rgba(255,255,255,0.03); border:1px solid rgba(255,255,255,0.07); border-radius:var(--radius-sm); padding:12px; margin-bottom:16px;">
+            <div style="background:rgba(255,255,255,0.03); border:1px solid rgba(255,255,255,0.07); border-radius:var(--radius-sm); padding:12px; margin-bottom:16px; flex-shrink:0;">
                 <label class="cfg-label" style="margin-bottom:6px;"><i class="fas fa-bookmark"></i> Save Current Connection</label>
                 <div style="display:flex; gap:8px;">
                     <input type="text" id="save-session-name" class="sleek-input" style="padding:10px 14px; font-size:0.82rem; flex:1;" placeholder="Custom name (e.g. Main Server)...">
@@ -1929,7 +1963,7 @@
                 </div>
             </div>
 
-            <div id="saved-logins" style="max-height:300px; overflow-y:auto; -webkit-overflow-scrolling:touch; display:flex; flex-direction:column; gap:10px; touch-action:pan-y;"></div>
+            <div id="saved-logins" style="max-height:380px; overflow-y:auto; overflow-x:hidden; -webkit-overflow-scrolling:touch; display:flex; flex-direction:column; gap:10px; touch-action:pan-y; padding-right:2px; flex:1 1 auto;"></div>
         </div>
     </div>
 
@@ -2201,21 +2235,26 @@
                 const hostUrl = sanitize((login.url || '').replace(/^https?:\/\//i, ''));
 
                 html += `
-                    <div class="glass-card" style="padding:12px 14px; border-radius:var(--radius-sm); display:flex; flex-direction:column; gap:8px; background:rgba(18,22,34,0.7);">
+                    <div class="saved-session-card" style="flex-shrink:0 !important; min-height:92px !important;">
                         <div style="display:flex; justify-content:space-between; align-items:center;">
-                            <div style="flex:1; overflow:hidden; padding-right:8px;">
-                                <div style="font-size:0.86rem; font-weight:800; color:#FFFFFF; overflow:hidden; text-overflow:ellipsis; white-space:nowrap;">
-                                    <i class="fas fa-server" style="color:var(--theme-color); margin-right:6px;"></i> ${displayName}
+                            <div style="display:flex; align-items:center; gap:10px; flex:1; overflow:hidden; padding-right:8px;">
+                                <div style="width:34px; height:34px; border-radius:10px; background:var(--theme-faded); border:1px solid var(--theme-border); color:var(--theme-color); display:flex; align-items:center; justify-content:center; flex-shrink:0;">
+                                    <i class="fas fa-server"></i>
                                 </div>
-                                <div style="font-size:0.65rem; color:var(--text-muted); font-family:var(--font-code); overflow:hidden; text-overflow:ellipsis; white-space:nowrap; margin-top:2px;">
-                                    ${hostUrl}
+                                <div style="flex:1; overflow:hidden;">
+                                    <div style="font-size:0.88rem; font-weight:800; color:#FFFFFF; overflow:hidden; text-overflow:ellipsis; white-space:nowrap;">
+                                        ${displayName}
+                                    </div>
+                                    <div style="font-size:0.65rem; color:var(--text-muted); font-family:var(--font-code); overflow:hidden; text-overflow:ellipsis; white-space:nowrap; margin-top:2px;">
+                                        ${hostUrl}
+                                    </div>
                                 </div>
                             </div>
                             <button type="button" class="btn-strip-action elastic-click" style="--btn-color:var(--danger); width:32px; height:32px; min-width:32px; padding:0; border-radius:50%; flex-shrink:0;" onclick="removeLogin(${idx}, event)" title="Delete session">
                                 <i class="fas fa-trash"></i>
                             </button>
                         </div>
-                        <button type="button" onclick="fillLoginByIndex(${idx})" class="btn-primary elastic-click" style="width:100%; padding:10px; font-size:0.75rem; letter-spacing:0.5px;">
+                        <button type="button" onclick="fillLoginByIndex(${idx})" class="btn-primary elastic-click" style="width:100%; padding:10px; font-size:0.75rem; letter-spacing:0.6px; border-radius:8px;">
                             <i class="fas fa-plug"></i> CONNECT
                         </button>
                     </div>
